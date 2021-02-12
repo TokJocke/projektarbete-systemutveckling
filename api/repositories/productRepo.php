@@ -8,21 +8,17 @@
        
     }
 
-
-/*     function addTestProduct() {
+     function addProduct($name, $price, $description, $unitsInStock, $categoryID) {
+        
+        $query = ('INSERT INTO product (productName, price, description, unitsInStock, categoryID) 
+        VALUES (:productName, :price, :description, :unitsInStock, :categoryID)');
+        $entity = array(':productName' => $name, ':price' => $price, ':description' => $description, 
+        ':unitsInStock' => $unitsInStock, 'categoryID' => $categoryID);
+        
         $db = new Database();
-        $db->addTestProduct();
-    }  */
+        $db->runQuery($query, $entity);
 
-    function addTestProduct() {
-            
-        $db = new Database() ;
-
-        $db->runQuery("INSERT INTO product (productName, price, description, unitsInStock) 
-        VALUES (:productName, :price, :description, :unitsInStock)", 
-        array("productName" => "lakritsknapp", "price" => 10, "description" => "supergod", "unitsInStock" => 3));
-
-    }
+    } 
 
 
 ?>

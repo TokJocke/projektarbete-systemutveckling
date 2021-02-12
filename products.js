@@ -8,7 +8,7 @@ function initSite() {
 	if (body){
         getAllProducts()
         addProdBtn()
-	}
+ 	}
 }
 
 async function getAllProducts() {
@@ -19,8 +19,8 @@ async function getAllProducts() {
 
 async function addProducts() {
     const response = await makeReq("./api/recievers/productReciever.php", "POST")
-
     console.log(response)
+
 }
 
 
