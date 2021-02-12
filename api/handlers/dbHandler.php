@@ -25,19 +25,14 @@
             echo json_encode($preparedQuery->fetchAll(PDO::FETCH_OBJ));
         }
 
-/*         function addTestProduct() {
-            
-            $this->runQuery("INSERT INTO product (productName, price, description, unitsInStock) 
-            VALUES (:productName, :price, :description, :unitsInStock)", 
-            array("productName" => "lakritsknapp", "price" => 10, "description" => "supergod", "unitsInStock" => 3));
-
-        } */
-
+/*         function add() {
+            $preparedQuery = $this->db->prepare('INSERT INTO product (productName, price, description, categoryID) 
+            VALUES (:productName, :price, :description, :categoryID)'); 
+            $preparedQuery->execute(array(':productName' => 'hallonbot', ':price' => 10, ':description' => 'smakar skit', 'categoryID' => 1));
+            exit;
+        }
+ */
 }
-
-
-
-    
 
 
 

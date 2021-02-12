@@ -3,20 +3,19 @@
     try {
     
         if (isset($_SERVER["REQUEST_METHOD"])) { //IF SERVER
-/*         require("../repositories/productRepo.php");
- */    
-    
-        if (isset($_SERVER["REQUEST_METHOD"]) == "GET") { //IF METHOD = GET
-    
-/*             getAllProducts(); //GET ALL
- */
-            print_r("get");
+            require("../repositories/productRepo.php");
+     
+        
+            if ($_SERVER["REQUEST_METHOD"] == "GET") { //IF METHOD = GET
+        
+                getAllProducts();
+            }
+            else if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                //Parametrar = $name, $price, $description, $unitsInStock, $categoryID
+                addProduct("glada nappar", 10, "Sur som fan", null, 1) ;
+                echo json_encode("true");
+            }
         }
-        else if ($_SERVER["REQUEST_METHOD"] == "POST") {
-/*             addTestProduct();
- */            echo "post";
-        }
-    }
     }
     catch (Exception $e) { // om error har felmeddelande
         http_response_code($e->getCode());
