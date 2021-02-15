@@ -6,7 +6,6 @@ let body = document.getElementById("indexBody")
 
 function initSite() {
 	if (body){
-        getAllProducts()
         renderProducts()
 /*         addProdBtn()
  */ 	}
