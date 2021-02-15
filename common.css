@@ -1,1 +1,107 @@
+*{
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color:#707070
+}
 
+
+body{
+    margin:0;
+    background-color: #E8E0E4;
+    background-image: url(./assets/layout/shape.svg);
+    background-repeat: no-repeat;
+}
+
+header{
+    left: 0;
+    right: 0;
+    top: 0;
+    width: 100vw;
+    height: 7vh;
+    background-image: url(/assets/layout/godisrpsa.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: bottom;
+    border-bottom:solid thin #707070;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.svgTop{
+    position: absolute;
+    background-image: url(./assets/layout/shape.svg);
+    background-repeat: repeat-x, repeat-y;
+    width: 100vw;
+    height: 50vh;
+    object-fit: cover;
+    z-index: -1;
+}
+
+main{
+    display: flex;
+    flex-direction: column;
+    margin-top: 7vh;
+    width: 100vw;
+    height: 100vh;
+}
+
+.popularProductsContainer{
+    display: flex;
+    flex-direction: column;
+    margin-top: 200px;
+    background-color: #BED1D9;
+    width: 100vw;
+    height: 30vh;
+    padding-left: 20px;
+}
+.popularProductsItems{
+    display: flex;
+    overflow-x: auto;
+    width: 100vw;
+}
+
+
+
+.discountContainer{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100vw;
+}
+
+.discountBox{
+    display: flex;
+    flex-direction: column;
+    background-color:#e9d9e0 ;
+    width: 50vw;
+    height: 40vh;
+    padding-left: 10px;
+}
+
+.discountBox:nth-child(2) {
+    background-color:#E2DDDC;
+  }
+
+.discountItems{
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+}
+
+h1{
+    font-family: cheap-pine, sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 40px;
+}
+
+
+
+    /* REMOVE */ /* REMOVE */ /* REMOVE */ /* REMOVE */
+    .fakeProductItem{
+        display: flex;
+        min-height: min-content;
+        margin-right: 10px;
+        width: 250px;
+        height: 250px;
+        background-color: white;
+    }

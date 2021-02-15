@@ -1,4 +1,4 @@
-/* window.addEventListener("load", initSite)
+window.addEventListener("load", initSite)
 let body = document.getElementById("indexBody")
 
 
@@ -8,7 +8,7 @@ function initSite() {
 	}
 }
 
- */
+
 
 export async function makeReq(path, method, body) {
     try {
