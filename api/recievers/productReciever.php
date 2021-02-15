@@ -12,7 +12,7 @@
             }
             else if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 //Parametrar = $name, $price, $description, $unitsInStock, $categoryID
-                addProduct("glada nappar", 10, "Sur som fan", null, 1) ;
+                addProduct("glada nappar", 10, "Sur som fan", 50, 1) ;
                 echo json_encode("true");
             }
         }
