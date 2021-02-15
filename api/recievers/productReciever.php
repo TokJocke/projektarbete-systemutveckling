@@ -4,11 +4,12 @@
     
         if (isset($_SERVER["REQUEST_METHOD"])) { //IF SERVER
             require("../repositories/productRepo.php");
+            require("../repositories/orderRepo.php");
      
         
             if ($_SERVER["REQUEST_METHOD"] == "GET") { //IF METHOD = GET
         
-                 
+                
                 $pr = new ProductRepo; 
                 echo json_encode($pr->getAllProducts()); 
 
