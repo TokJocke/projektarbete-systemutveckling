@@ -8,12 +8,15 @@
         
             if ($_SERVER["REQUEST_METHOD"] == "GET") { //IF METHOD = GET
         
-                getAllProducts();
+                 
+                $pr = new ProductRepo; 
+                echo json_encode($pr->getAllProducts()); 
+
             }
             else if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 //Parametrar = $name, $price, $description, $unitsInStock, $categoryID
-                addProduct("glada nappar", 10, "Sur som fan", null, 1) ;
-                echo json_encode("true");
+         /*        addProduct("glada nappar", 10, "Sur som fan", null, 1) ;
+                echo json_encode("true"); */
             }
         }
     }
