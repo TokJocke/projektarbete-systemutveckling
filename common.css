@@ -56,7 +56,7 @@ header{
         transform: translatey(-5px);
     }
     100%{
-        transform:tran
+        transform:translateY(0px)
     }
    
 
@@ -102,27 +102,31 @@ main{
     flex-direction: column;
     margin-top: 150px;
     background-color: #BED1D9;
-    width: 100vw;
-    height: 30vh;
+    flex-basis: auto;
+    /* height: 30vh; */
     padding-left: 20px;
+    overflow: hidden;
 }
 
 .popularProductsItems{
     display: flex;
-    flex: 1;
+   
+    align-items: center;
+    align-content: center;
+    
+
 }
-
-
 
 .discountContainer{
     display: flex;
     flex-direction: row;
-    width: 100vw;
+    flex-basis: 100vw;
 }
 
 .discountBox{
     display: flex;
     flex-direction: column;
+    align-content: center;
     flex: 1;
     background-color:#e9d9e0 ;
     height: 35vh;
@@ -152,10 +156,9 @@ h1{
                             /* REMOVE */ /* REMOVE */ /* REMOVE */ /* REMOVE */
                             .fakeProductItem{
                                 display: flex;
-                                min-height: min-content;
-                                margin-right: 10px;
-                                width: 250px;
-                                height: 250px;
+                                margin-left: 40px;
+                                width: 200px;
+                                height: 200px;
                                 background-color: white;
                             }
 
@@ -188,6 +191,7 @@ h1{
 
 footer {
     display: flex;
+    flex: 1;
     align-items: center;
     flex-direction: column;
     padding: 30px;
@@ -208,7 +212,6 @@ footer {
     width: 10vw;
     font-size: x-large;
 }
-
 
 .footerLogo{
     fill:#E9DADB;
