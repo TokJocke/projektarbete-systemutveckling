@@ -1,26 +1,24 @@
 *{
     box-sizing: border-box;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    
+    margin: 0;
 }
 
-
-
 body{
-    margin:0;
     background-color: #E8E0E4;
     background-image: url(./assets/layout/shape.svg);
     background-repeat: no-repeat;
 }
 
 header{
+    position: fixed;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
+    padding: 0 50px ;
     left: 0;
     right: 0;
     top: 0;
-    width: 100vw;
     height: 7vh;
     background-image: url(/assets/layout/godisrpsa.jpg);
     background-repeat: no-repeat;
@@ -87,40 +85,32 @@ justify-content: space-around;
     z-index: -1;
 }
 
-
-
 main{
     display: flex;
     flex-direction: column;
-    margin-top: 1vh;
-    width: 100vw;
-    height: 100vh;
+    margin-top: 7vh;
 }
 
 .popularProductsContainer{
     display: flex;
     flex-direction: column;
+    flex-wrap: wrap;
     margin-top: 150px;
     background-color: #BED1D9;
-    flex-basis: auto;
-    /* height: 30vh; */
+  
+    height: 30vh;
     padding-left: 20px;
-    overflow: hidden;
+   
 }
 
 .popularProductsItems{
     display: flex;
-   
-    align-items: center;
     align-content: center;
-    
-
 }
 
 .discountContainer{
     display: flex;
     flex-direction: row;
-    flex-basis: 100vw;
 }
 
 .discountBox{
@@ -154,14 +144,13 @@ h1{
 
 
                             /* REMOVE */ /* REMOVE */ /* REMOVE */ /* REMOVE */
-                            .fakeProductItem{
+                      /*       .fakeProductItem{
                                 display: flex;
-                                margin-left: 40px;
-                                width: 200px;
-                                height: 200px;
+                                
+                                padding: 20px;
                                 background-color: white;
                             }
-
+ */
 .menuBtn {
     display: inline-block;
     cursor: pointer;
@@ -191,14 +180,13 @@ h1{
 
 footer {
     display: flex;
-    flex: 1;
+
     align-items: center;
     flex-direction: column;
     padding: 30px;
     left: 0;
     right: 0;
     bottom: 0;
-    width: 100vw;
     height: 20vh;
     background-color: #313131;
     color: white;
@@ -209,7 +197,7 @@ footer {
     display: flex;
     align-items: center;
     justify-content: space-around;
-    width: 10vw;
+    
     font-size: x-large;
 }
 
