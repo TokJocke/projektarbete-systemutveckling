@@ -6,7 +6,9 @@
 .productBox {
     display: flex;
     flex-direction: column;
-    width: 20vw;
+    width: 40vw;
     border: 1px solid black;
     justify-content: center;
+    margin: 5px;
+    padding: 5px;
 }

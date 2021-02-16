@@ -3,21 +3,20 @@
     try {
     
         if (isset($_SERVER["REQUEST_METHOD"])) { //IF SERVER
-            require("../repositories/productRepo.php");
+            require("../repositories/cartRepo.php");
             
      
         
             if ($_SERVER["REQUEST_METHOD"] == "GET") { //IF METHOD = GET
         
-                // här blir det fel med att hämta getTotalPrice, funkar ej
-                $pr = new ProductRepo; 
-                echo json_encode($pr->getAllProducts()); 
+                
+                $pr = new CartRepo; 
+                echo json_encode($pr->getCart());
+                
 
             }
             else if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                //Parametrar = $name, $price, $description, $unitsInStock, $categoryID
-         /*        addProduct("glada nappar", 10, "Sur som fan", null, 1) ;
-                echo json_encode("true"); */
+           
             }
         }
     }
