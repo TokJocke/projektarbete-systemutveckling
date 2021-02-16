@@ -1,8 +1,9 @@
 *{
     box-sizing: border-box;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color:#707070
+    
 }
+
 
 
 body{
@@ -13,6 +14,9 @@ body{
 }
 
 header{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
     left: 0;
     right: 0;
     top: 0;
@@ -22,24 +26,73 @@ header{
     background-repeat: no-repeat;
     background-size: cover;
     background-position: bottom;
+    opacity:0.8;
     border-bottom:solid thin #707070;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
+.menuBtn{
+    display: flex;
+}
+
+.logoShape{
+   width: auto;
+   height: 100%;
+   overflow: hidden;
+   transform: translatey(0px);
+   animation: bounce 2s ;
+} 
+
+@keyframes bounce {
+	0% {
+		
+		transform: translatey(-1000px);
+	}
+	50% {
+		
+		transform: translatey(0px);
+	}
+    75%{
+        transform: translatey(-5px);
+    }
+    100%{
+        transform:tran
+    }
+   
+
+}
+
+.navRight{
+display: flex;
+justify-content: space-around;
+}
+
+.myPageBtn{
+    margin: 0 1em 0 0;
+    font-size: 2rem;
+}
+
+.cartBtn{
+    font-size: 2rem;
+}
+
 .svgTop{
+    display: flex;
     position: absolute;
     background-image: url(./assets/layout/shape.svg);
-    background-repeat: repeat-x, repeat-y;
-    width: 100vw;
-    height: 50vh;
+    background-size:cover ;
+    background-size: 100%;
+    background-position: bottom;
     object-fit: cover;
     z-index: -1;
 }
 
+
+
 main{
     display: flex;
     flex-direction: column;
-    margin-top: 7vh;
+    margin-top: 1vh;
     width: 100vw;
     height: 100vh;
 }
@@ -47,16 +100,16 @@ main{
 .popularProductsContainer{
     display: flex;
     flex-direction: column;
-    margin-top: 200px;
+    margin-top: 150px;
     background-color: #BED1D9;
     width: 100vw;
     height: 30vh;
     padding-left: 20px;
 }
+
 .popularProductsItems{
     display: flex;
-    overflow-x: auto;
-    width: 100vw;
+    flex: 1;
 }
 
 
@@ -64,16 +117,15 @@ main{
 .discountContainer{
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
     width: 100vw;
 }
 
 .discountBox{
     display: flex;
     flex-direction: column;
+    flex: 1;
     background-color:#e9d9e0 ;
-    width: 50vw;
-    height: 40vh;
+    height: 35vh;
     padding-left: 10px;
 }
 
@@ -88,6 +140,7 @@ main{
 }
 
 h1{
+    color:#707070;
     font-family: cheap-pine, sans-serif;
     font-weight: 400;
     font-style: normal;
@@ -96,12 +149,79 @@ h1{
 
 
 
-    /* REMOVE */ /* REMOVE */ /* REMOVE */ /* REMOVE */
-    .fakeProductItem{
-        display: flex;
-        min-height: min-content;
-        margin-right: 10px;
-        width: 250px;
-        height: 250px;
-        background-color: white;
-    }
+                            /* REMOVE */ /* REMOVE */ /* REMOVE */ /* REMOVE */
+                            .fakeProductItem{
+                                display: flex;
+                                min-height: min-content;
+                                margin-right: 10px;
+                                width: 250px;
+                                height: 250px;
+                                background-color: white;
+                            }
+
+.menuBtn {
+    display: inline-block;
+    cursor: pointer;
+}
+      
+.bar1, .bar2, .bar3 {
+    width: 35px;
+    height: 5px;
+    background-color: #000000;
+    margin: 6px 0;
+    transition: 0.4s;
+}
+      
+.change .bar1 {
+    -webkit-transform: rotate(-45deg) translate(-9px, 6px);
+    transform: rotate(-45deg) translate(-9px, 6px);
+}
+      
+.change .bar2 {
+    opacity: 0;
+}
+      
+.change .bar3 {
+    -webkit-transform: rotate(45deg) translate(-8px, -8px);
+    transform: rotate(45deg) translate(-8px, -8px);
+}
+
+footer {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 30px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 20vh;
+    background-color: #313131;
+    color: white;
+    text-align: center;
+}
+
+.mediaContainer{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 10vw;
+    font-size: x-large;
+}
+
+
+.footerLogo{
+    fill:#E9DADB;
+    width: auto;
+    height: 100%;
+}
+
+
+
+      
+      /* Responsive layout - makes a one column layout instead of a two-column layout */
+      @media (max-width: 800px) {
+        .discountContainer{
+          flex-direction: column;
+        }
+      }

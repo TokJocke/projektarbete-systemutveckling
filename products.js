@@ -1,4 +1,4 @@
-/* import {makeReq} from "./main.js"
+import {makeReq} from "./main.js"
 
 window.addEventListener("load", initSite)
 let body = document.getElementById("indexBody")
@@ -29,4 +29,4 @@ async function addProdBtn() {
     let btn = document.getElementById("addProduct")
 
     btn.addEventListener("click", addProducts)
-} */
+}
