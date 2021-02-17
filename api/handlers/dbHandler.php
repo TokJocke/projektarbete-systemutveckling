@@ -22,7 +22,7 @@
         function fetchQuery($query) {
             $preparedQuery = $this->prepareQuery($query);
             $preparedQuery->execute();
-            echo json_encode($preparedQuery->fetchAll(PDO::FETCH_OBJ));
+            return $preparedQuery->fetchAll(PDO::FETCH_OBJ);
         }
 
 /*         function add() {
