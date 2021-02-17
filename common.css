@@ -10,6 +10,15 @@ body{
     background-repeat: no-repeat;
 }
 
+
+h1{
+    color:#707070;
+    font-family: cheap-pine, sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 40px;
+}
+
 header{
     position: fixed;
     display: flex;
@@ -24,40 +33,14 @@ header{
     background-repeat: no-repeat;
     background-size: cover;
     background-position: bottom;
-    opacity:0.8;
     border-bottom:solid thin #707070;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-.menuBtn{
+.brandLogo{
     display: flex;
-}
-
-.logoShape{
-   width: auto;
-   height: 100%;
-   overflow: hidden;
-   transform: translatey(0px);
-   animation: bounce 2s ;
-} 
-
-@keyframes bounce {
-	0% {
-		
-		transform: translatey(-1000px);
-	}
-	50% {
-		
-		transform: translatey(0px);
-	}
-    75%{
-        transform: translatey(-5px);
-    }
-    100%{
-        transform:translateY(0px)
-    }
-   
-
+    max-width: 170px;
+    height: auto;
 }
 
 .navRight{
@@ -77,18 +60,21 @@ justify-content: space-around;
 .svgTop{
     display: flex;
     position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
     background-image: url(./assets/layout/shape.svg);
-    background-size:cover ;
-    background-size: 100%;
+    background-size: cover;
     background-position: bottom;
     object-fit: cover;
     z-index: -1;
 }
 
-main{
+.mainWrapper{
     display: flex;
     flex-direction: column;
     margin-top: 7vh;
+   /*  height: 93vh; */
 }
 
 .popularProductsContainer{
@@ -97,7 +83,6 @@ main{
     flex-wrap: wrap;
     margin-top: 150px;
     background-color: #BED1D9;
-  
     height: 30vh;
     padding-left: 20px;
    
@@ -133,61 +118,28 @@ main{
       align-items: center;
 }
 
-h1{
-    color:#707070;
-    font-family: cheap-pine, sans-serif;
-    font-weight: 400;
-    font-style: normal;
-    font-size: 40px;
+.bottomSection{
+    display: flex;
+    flex-direction: column;
+    background-image:
+    linear-gradient(to top, rgba(255, 255, 255, 0.52),
+     rgba(232, 224, 228)),
+    url('./assets/layout/godisrpsa.jpg');
+    background-size: cover;
 }
 
-
-
-                            /* REMOVE */ /* REMOVE */ /* REMOVE */ /* REMOVE */
-                      /*       .fakeProductItem{
-                                display: flex;
-                                
-                                padding: 20px;
-                                background-color: white;
-                            }
- */
-.menuBtn {
-    display: inline-block;
-    cursor: pointer;
-}
-      
-.bar1, .bar2, .bar3 {
-    width: 35px;
-    height: 5px;
-    background-color: #000000;
-    margin: 6px 0;
-    transition: 0.4s;
-}
-      
-.change .bar1 {
-    -webkit-transform: rotate(-45deg) translate(-9px, 6px);
-    transform: rotate(-45deg) translate(-9px, 6px);
-}
-      
-.change .bar2 {
-    opacity: 0;
-}
-      
-.change .bar3 {
-    -webkit-transform: rotate(45deg) translate(-8px, -8px);
-    transform: rotate(45deg) translate(-8px, -8px);
+.bottomContent{
+    display: flex;
 }
 
 footer {
     display: flex;
-
+    align-content: center;
     align-items: center;
     flex-direction: column;
-    padding: 30px;
     left: 0;
     right: 0;
     bottom: 0;
-    height: 20vh;
     background-color: #313131;
     color: white;
     text-align: center;
@@ -197,22 +149,28 @@ footer {
     display: flex;
     align-items: center;
     justify-content: space-around;
-    
     font-size: x-large;
 }
 
-.footerLogo{
-    fill:#E9DADB;
-    width: auto;
-    height: 100%;
+.mediaContainer i{
+    margin: 10px;
 }
 
+.footerLogo{
+    display: flex;
+    justify-content: center;
+    fill:#E9DADB;
+    height: auto;
+    width: 250px;
+}
 
-
-      
       /* Responsive layout - makes a one column layout instead of a two-column layout */
       @media (max-width: 800px) {
         .discountContainer{
           flex-direction: column;
+        }
+
+        .popularProductsContainer{
+            margin-top: 50px;
         }
       }
