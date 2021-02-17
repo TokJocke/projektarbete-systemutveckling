@@ -14,7 +14,6 @@ function initSite() {
 async function getCart() {
     const response = await makeReq("./api/recievers/cartReciever.php", "GET")
 
-    console.log("från get",response)
     return response
 }
 
@@ -23,50 +22,48 @@ async function getCart() {
     console.log(response)
 
 } */
+/* let test = [1,2,3,4]
+
+const sum = test.reduce(
+    (accumulator, currentValue)=> accumulator + currentValue);
+    console.log(sum) */
 
 // skapar produktkorten i kundvagnen
 async function renderProducts() {
 
-    let allProducts = await getCart()
+    let cart = await getCart()
+    let allProducts = cart.productList
     let productWrapper = document.getElementById("testDiv")
-    console.log("in render" , allProducts)
-    let test = allProducts
-    
-    let testpris = 0
-    let totalPriceDiv = document.createElement("h2")
-    if (test) {
-        for (let i = 0; i < test.length; i++) {
-            totalPriceDiv.innerHTML = ""
-            testpris += test[i].product.price
+    console.log("response" , cart)
+    console.log("ett steg under" , allProducts)
 
-            console.log(test[i].product)
-            console.log(test[i].product.price)
-            totalPriceDiv.innerHTML += "Totalpris " + " " + testpris + " kr"
-            body.append(totalPriceDiv) 
-        
-        }
-    }
-    
-     
+   // creates div and print totalprice of the cart
+    let totalPriceDiv = document.createElement("h2")
+    totalPriceDiv.innerHTML += "Totaltpris " + " " + cart.totalPrice + " kr"
+    body.append(totalPriceDiv)
 
     allProducts.forEach(product => {
+        console.log(product.product)
+        
+        //create elements
         let productDiv = document.createElement("div")
         let productTitle = document.createElement("h3")
         let productPrice = document.createElement("h4")
         let productQuantity = document.createElement("p")
         let productImg = document.createElement("img")
-
+        //set innertext
         productTitle.innerText = product.product.name
         productPrice.innerText = product.product.price + "kr"
         productQuantity.innerText = product.quantity + "st"
-        /* productImg.src = "./assets/product/" + products.img  */
+        /* productImg.src = "./assets/product/" + product.product.img  */
         productDiv.className = "productBox"
-
+        //append
         productDiv.append(productTitle,productPrice,productQuantity, productImg)
         productWrapper.append(productDiv)
 
     });
-
-
-
+    
+    
 }
+    
+

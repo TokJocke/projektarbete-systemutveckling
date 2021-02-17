@@ -8,12 +8,10 @@
      
         
             if ($_SERVER["REQUEST_METHOD"] == "GET") { //IF METHOD = GET
-        
-                
+
                 $pr = new CartRepo; 
                 echo json_encode($pr->getCart());
-                
-
+            
             }
             else if ($_SERVER["REQUEST_METHOD"] == "POST") {
            
