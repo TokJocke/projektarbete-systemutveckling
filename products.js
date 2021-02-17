@@ -11,7 +11,7 @@ function initSite() {
  */ 	}
 }
 
-async function getAllProducts() {
+export async function getAllProducts() {
     const response = await makeReq("./api/recievers/productReciever.php", "GET")
 
     console.log(response)

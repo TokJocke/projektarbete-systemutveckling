@@ -14,6 +14,19 @@
 
             }
             else if ($_SERVER["REQUEST_METHOD"] == "POST") {
+             
+                if($_POST["endpoint"] == "saveProductImage") {
+
+                    if($_FILES["image"]) {
+                        $pr = new ProductRepo;
+                        echo json_encode($pr->uploadImage($_FILES["image"]));
+                        exit;
+                    }
+                }
+             
+                echo json_encode("u reached post");
+             
+             
                 //Parametrar = $name, $price, $description, $unitsInStock, $categoryID
          /*        addProduct("glada nappar", 10, "Sur som fan", null, 1) ;
                 echo json_encode("true"); */
