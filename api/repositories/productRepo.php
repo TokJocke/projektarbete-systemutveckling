@@ -22,20 +22,20 @@
             return $productArray;
         }
            
-        function addProduct($name, $price, $description, $unitsInStock, $categoryID) {
+        function addProduct($name, $price, $description, $unitsInStock, $categoryID, $img) {
             
-            $query = ('INSERT INTO product (productName, price, description, unitsInStock, categoryID) 
-            VALUES (:productName, :price, :description, :unitsInStock, :categoryID)');
+            $query = ('INSERT INTO product (productName, price, description, unitsInStock, categoryID, img) 
+            VALUES (:productName, :price, :description, :unitsInStock, :categoryID, :img)');
             $entity = array(':productName' => $name, ':price' => $price, ':description' => $description, 
-            ':unitsInStock' => $unitsInStock, 'categoryID' => $categoryID);
+            ':unitsInStock' => $unitsInStock, 'categoryID' => $categoryID, 'img' => $img);
             
             $this->db->runQuery($query, $entity);
-    
+            return $entity;
         } 
         //method for upploading image
         function uploadImage($image) {
             $target_dir = "../../assets/products/";
-            $target_file = $target_dir . time() . basename($image["name"]);
+            $target_file = $target_dir . time() . basename($image["name"]); 
             $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
 
@@ -43,7 +43,7 @@
             if($check == false) {
                 return "file is not an image";
             }
-            if(file_exists($target_file)) {
+            if(file_exists($target_file)) { //Då namnet är randomiserat på datum blir denna useless
                 return "File already exists";
             }
             if($image["size"] > 5000000) {
@@ -54,7 +54,7 @@
             
             }
             if (move_uploaded_file($image["tmp_name"], $target_file)) {
-                    return "The image " . basename($image["name"]) . " has been uploaded";
+                    return $target_file;
                 }else {
                     return "Something went wrong with the upload";
                 }

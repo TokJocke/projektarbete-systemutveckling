@@ -15,22 +15,27 @@
             }
             else if ($_SERVER["REQUEST_METHOD"] == "POST") {
              
-                if($_POST["endpoint"] == "saveProductImage") {
-
+                $productData = json_decode($_POST["productData"]);
+          /*      
+                 echo json_encode($productData); 
+ */
                     if($_FILES["image"]) {
                         $pr = new ProductRepo;
-                        echo json_encode($pr->uploadImage($_FILES["image"]));
+                       /*  echo json_encode($pr->uploadImage($_FILES["image"])); */
+                        
+                       //Parametrar = $name, $price, $description, $unitsInStock, $categoryID
+                       echo json_encode($pr->addProduct($productData->inputName, $productData->inputPrice, $productData->inputDesc, null, $productData->inputCategory, $pr->uploadImage($_FILES["image"])));
+                      
                         exit;
                     }
-                }
-             
-                echo json_encode("u reached post");
+                
+              
              
              
                 //Parametrar = $name, $price, $description, $unitsInStock, $categoryID
          /*        addProduct("glada nappar", 10, "Sur som fan", null, 1) ;
                 echo json_encode("true"); */
-            }
+            } 
         }
     }
     catch (Exception $e) { // om error har felmeddelande

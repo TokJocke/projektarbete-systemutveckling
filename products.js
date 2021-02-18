@@ -40,7 +40,7 @@ async function renderProducts() {
         productTitle.innerText = product.name
         productDesc.innerText = product.description
         productPrice.innerText = product.price + "kr"
-        productImg.src = "./assets/products/" + product.img
+        productImg.src = product.img
         productDiv.className = "productBox"
 
         productDiv.append(productTitle, productDesc, productPrice, productImg)
