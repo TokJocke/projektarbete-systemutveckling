@@ -2,8 +2,7 @@
 /* header logo animation */
 
 .logoAnimation{
-    width: auto;
-    height: 100%;
+
     transform: translatey(0px);
     animation: bounce 2s ;
  } 
@@ -53,3 +52,8 @@
     -webkit-transform: rotate(45deg) translate(-8px, -8px);
     transform: rotate(45deg) translate(-8px, -8px);
 }
+
+@keyframes animatezoom {
+    from {transform: scale(0)} 
+    to {transform: scale(1)}
+  }

@@ -8,9 +8,6 @@ const background = document.getElementById("testBackground")
 
 
 
-
-
-
 window.onclick = function(event) {
     if (event.target == background) {
       background.style.display = "none";
