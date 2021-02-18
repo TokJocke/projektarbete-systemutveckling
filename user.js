@@ -8,20 +8,24 @@ function initSite() {
 	if (body){
         regButton()
         loginBtn()
-        
-        /* getuserDetails() */
  	}
 }
-//Log in inputs
-let signinUsername = document.getElementById("signinUsername").value
-let signinPassword = document.getElementById("signinPassword").value
+
+
 let signinBtn = document.getElementById("loginButton")
-
-
 let registerBtn = document.getElementById("registerButton")
 
-
 async function regUser() {
+    let checkbox = document.getElementById("cb")
+    if(checkbox.checked) { //Kollar om checkbox för newsletter är 
+        checkbox = "Yes"   //checkad och skickar upp Yes/No.
+        console.log("Yes")
+    }
+    else {
+        checkbox = "No"
+        console.log("No")
+    }
+
     let newUser =  {
         Email: document.getElementById("registerEmail").value,
         regName: document.getElementById("registerName").value,
@@ -29,15 +33,17 @@ async function regUser() {
         registerPassword: document.getElementById("registerPassword").value,
         regZip: document.getElementById("registerZip").value,
         regAddress: document.getElementById("registerAddress").value,
-        regPhone: document.getElementById("registerPhone").value
+        regPhone: document.getElementById("registerPhone").value,
+        newsletter: checkbox,
     }
     
-
     let body = new FormData()
     body.set("newUser", JSON.stringify(newUser))
     body.set("action", "register")
- 
+
     const response = await makeReq("./api/recievers/userReciever.php", "POST", body)
+    let div = document.getElementById("errorDiv")
+    div.innerText = response
     console.log(response)
 }
 
@@ -54,9 +60,6 @@ async function checkInputs() {
        let address = document.getElementById("registerAddress").value
        let phoneNr = document.getElementById("registerPhone").value
 
-       /* getuserDetails(email, username) */
-      
-
         // Kollar om inputfält är null eller tomma. 
        if (email == null || email == "" || name == null || name == "" || username == null || username == "" 
        || password == null || password == "" || zipcode == null || zipcode == "" || address == null 
@@ -64,29 +67,13 @@ async function checkInputs() {
         
         alert("Please Fill All Required Fields");
         return false;
-        }  
-    
-        
+        }    
         else {
-
            regUser()
-           alert("You successfully created an account" +  username)
            return
         } 
 }
  
-/* async function getuserDetails(EmailToCheck, NameToCheck) {  
-    const response = await makeReq("./api/recievers/userReciever.php", "GET")
-    for (let i = 0; i < response.length; i++) {
-        const myArray = response[i];
-        console.log(myArray)
-        if(myArray.email === EmailToCheck || myArray.userName === NameToCheck) {
-            console.log("username or email already taken")
-        }  
-        
-    }
-    
-} */
 async function loginBtn() {
     signinBtn.addEventListener("click", login)
 }
@@ -100,8 +87,19 @@ async function login() {
     body.set("logdetails", JSON.stringify(logDetails))
     body.set("action", "login")
     
- 
     const response = await makeReq("./api/recievers/userReciever.php", "POST", body)
+    let div = document.getElementById("error-div")
+    
+    if(response === "Login failed") {
+        div.innerText = response
+        div.style.color = "red"
+    }
+
+    if(response === "Login success") {
+        div.innerText = response
+        div.style.color = "green"
+    }
+    
     console.log(response)
 }
 

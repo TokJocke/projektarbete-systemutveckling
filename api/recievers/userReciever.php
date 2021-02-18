@@ -16,6 +16,7 @@
                 if($_POST["action"] == "register") {
 
                   $myArray = json_decode($_POST["newUser"]);
+              
                 //  $regName, $regUsername, $regPassword, $email, $regAdress, $regZip, $regPhone, $isAdmin
                     $name = $myArray->regName; 
                     $reguserName = $myArray->regUsername;
@@ -25,20 +26,25 @@
                     $regZip = $myArray->regZip; 
                     $regPhone = $myArray->regPhone;
 
+                    $newsletter = $myArray->newsletter;
+
                     regUser($name, $reguserName, $regPassword, $Email, $regAddress, $regZip, $regPhone, 0);
+
+                    if($newsletter == "Yes") {
+                        signUpNewsletter($Email, $name);
+                    }
                     
-                    echo json_encode(true);
+                    echo json_encode("Successfully signed up" . " " . $reguserName);
                 }   
             }      
                     if($_POST["action"] == "login") {
 
-                        $myArray = json_decode($_POST["logdetails"]);
+                       $myArray = json_decode($_POST["logdetails"]);
 
                         $un = $myArray->username;
                         $pw = $myArray->pw;
 
-                        login($un, $pw); 
-                       
+                        login($un, $pw);            
                         
             } 
         }

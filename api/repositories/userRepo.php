@@ -1,52 +1,96 @@
 <?php 
     require "../handlers/dbHandler.php";
+    
 
-/*     class userRepo {
+    class userRepo {
       function __construct()
       {
         $this->db = new Database();
       }
-    } */
+    }
 
        function regUser($regName, $regUsername, $regPassword, $email, $regAdress, $regZip, $regPhone, $isAdmin) {
- 
-            $query = ('INSERT INTO user (name, userName, password, email, address, zipCode, phoneNr, isAdmin) 
-            VALUES (:name, :userName, :password, :email, :address, :zipCode, :phoneNr, :isAdmin)');
 
-            $hashedPwd = password_hash($regPassword, PASSWORD_DEFAULT);
-          
-            $entity = array(':name' => $regName, ':userName' => $regUsername, ':password' => $hashedPwd, 
-            ':email' => $email, ':address' => $regAdress, ':zipCode' => $regZip, 'phoneNr' => $regPhone, ':isAdmin' => $isAdmin);
+          $db = new Database();
+          $qry = "SELECT userName FROM user WHERE userName='$regUsername'";
+          $result = $db->fetchQuery($qry);
+          $db = new Database();
+          $qery = "SELECT email FROM user WHERE email='$email'";
+          $newResult = $db->fetchQuery($qery);
+            
+            if($result == true) { //kollar om username / email redan finns vid reg
+              echo json_encode("Username taken");
+              exit;
+            }
+
+            if($newResult == true) {
+              echo json_encode("Email taken");
+              exit;
+            }
+
+              else if($result == false && $newResult == false) { //om inte finns så regga användare.
+  
+                $query = ('INSERT INTO user (name, userName, password, email, address, zipCode, phoneNr, isAdmin) 
+                VALUES (:name, :userName, :password, :email, :address, :zipCode, :phoneNr, :isAdmin)');
+
+                $hashedPwd = password_hash($regPassword, PASSWORD_DEFAULT);
+            
+                $entity = array(':name' => $regName, ':userName' => $regUsername, ':password' => $hashedPwd, 
+                ':email' => $email, ':address' => $regAdress, ':zipCode' => $regZip, 'phoneNr' => $regPhone, ':isAdmin' => $isAdmin);
               
-            $db = new Database();
-            $db->runQuery($query, $entity);
-                
-    } 
+                $db = new Database();
+                $db->runQuery($query, $entity);
 
-        function login($un, $pw) {
+              }
+                
+        } 
+
+      function login($un, $pw) {
        
         $query = "SELECT userName, password FROM user WHERE userName='".$un."' and password='".$pw."'";
-     
+   
         $db = new Database();
-        $result = $db->fetchQuery($query);
+        $db->fetchQuery($query);
 
-          if($result == true) {
+        $hashedPw = fetchUserInfo($un);
+          // om $pw = hashat pw och matchar med username == success login.  
+          if(password_verify($pw, $hashedPw) == true) {
           echo json_encode("Login success");
           exit;
         }
-          else {
-          echo json_encode("login failed");
-          exit;
-        } 
+            else {
+            echo json_encode("Login failed");
+            exit;
+          } 
 
-    }   
+      }   
+        //Funktion för att hämta lösenord och matcha med användare.
+        function fetchUserInfo($username) {
+        $query = "SELECT password FROM user WHERE userName='$username'";
+        $db = new Database();
+        $myResult = $db->fetchQuery($query);
+        return $myResult[0]->password;
+    }
 
-   /*  function getPass() {
-      $query = "SELECT password FROM user";
+    function signUpNewsletter($email, $name) { //Skicka in userid vid reg, email och namn kan vara null
+      //Om ej inloggad, newsletter reg = namn/email.  
+
+          $query = ('INSERT INTO newsletter (userID, email, name) 
+                VALUES (:userID, :email, :name)');
+                 
+          $entity = array(':userID' => fetchuId($email), ':email' => $email, ':name' => $name);
+              
+          $db = new Database();
+          $db->runQuery($query, $entity);
+
+    }
+
+    function fetchuId($email) {
       $db = new Database();
-      $result = $db->fetchQuery($query);
-      return $result;
-    } */
+      $qery = "SELECT userID FROM user WHERE email='$email'";
+      $result = $db->fetchQuery($qery);
+      return $result[0]->userID;
+    }
 
   
 
