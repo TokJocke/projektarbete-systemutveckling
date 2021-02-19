@@ -1,0 +1,76 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+    
+}
+
+#adminProductBox {
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 70vw;
+    padding: 10px;
+    border: 1px solid black;
+}
+
+#adminProductWrapp {
+    margin-top: 40px;
+}
+
+.adminProductBoxBtn {
+    border: none;
+    background-color: aquamarine;
+    padding: 15px;
+    border-radius: 15%;
+    margin-bottom: 10px;
+} 
+
+
+textarea {
+    resize: none;
+    background-color: red;
+}
+
+
+
+.UpdatePanelProdRow > td {
+    padding: 10px;
+    text-align:center;
+
+}
+
+.updatePanalTitleRow > td {
+    padding: 10px;
+    text-align:center;
+
+}
+.updatePanalTitleRow {
+/*     display: flex;
+    flex-direction: row;
+    justify-content: space-between; */
+    background-color: lightblue;
+    border: 1px solid black;
+    
+}
+
+.UpdatePanelProdRow {
+/*     display: flex;
+    flex-direction: row;
+    justify-content: space-between; */
+    background-color: lightcoral;
+    border: 1px solid black;
+
+}
+
+table {
+    border: hidden;
+}
+

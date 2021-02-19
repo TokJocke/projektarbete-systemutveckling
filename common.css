@@ -1,1 +1,12 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+}
 
+.productBox {
+    display: flex;
+    flex-direction: column;
+    width: 20vw;
+    border: 1px solid black;
+    justify-content: center;
+}
