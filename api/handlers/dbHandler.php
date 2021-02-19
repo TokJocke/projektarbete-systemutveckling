@@ -23,8 +23,9 @@
             $preparedQuery = $this->prepareQuery($query);
             $preparedQuery->execute();
             return $preparedQuery->fetchAll(PDO::FETCH_OBJ);
-        }
 
+        }
+        
 /*         function add() {
             $preparedQuery = $this->db->prepare('INSERT INTO product (productName, price, description, categoryID) 
             VALUES (:productName, :price, :description, :categoryID)'); 
