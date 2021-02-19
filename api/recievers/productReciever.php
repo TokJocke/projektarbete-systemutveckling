@@ -4,11 +4,12 @@
     
         if (isset($_SERVER["REQUEST_METHOD"])) { //IF SERVER
             require("../repositories/productRepo.php");
+            
      
         
             if ($_SERVER["REQUEST_METHOD"] == "GET") { //IF METHOD = GET
         
-                 
+                // här blir det fel med att hämta getTotalPrice, funkar ej
                 $pr = new ProductRepo; 
                 echo json_encode($pr->getAllProducts()); 
 
