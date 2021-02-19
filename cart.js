@@ -27,12 +27,12 @@ async function renderProducts() {
     let productWrapper = document.getElementById("testDiv")
     productWrapper.innerHTML = ""
     console.log("response" , cart)
-    console.log("ett steg under" , allProducts)
+    
 
    
 
     allProducts.forEach(product => {
-        console.log(product)
+        
         
         //create elements
         let productDiv = document.createElement("div")
@@ -75,15 +75,6 @@ async function renderProducts() {
     
     
 }
-
-
-/* async function deleteProducts(){
-    let thisProductID = this.productId
-    let body = new FormData()
-    body.append("action", "remove")
-    const response = await makeReq("./api/recievers/cartReciever.php", "POST", body)
-    
-} */
 
 //funktionen updaterar quantitet samt kan ta bort
 async function updateQuantity (change){
