@@ -23,6 +23,7 @@
             $preparedQuery = $this->prepareQuery($query);
             $preparedQuery->execute();
             return $preparedQuery->fetchAll(PDO::FETCH_OBJ);
+
         }
 }
 

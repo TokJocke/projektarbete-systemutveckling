@@ -4,13 +4,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Index</title>
 
 
 
-    <link rel="stylesheet" href="./common.css" />
+    <link rel="stylesheet" href="./common.css"/>
+    <link rel="stylesheet" href="./reglogin.css"/>
     <script type="module" src="./products.js"></script>
     <script type="module" src="./main.js"></script>
+    <script type="module" src="./user.js"></script>
 
 </head>
 <body id="indexBody">
@@ -18,8 +20,34 @@
 <button id="addProduct">lägg till</button>
 
 
+<div>
+    <div class="log-menu">
+        <h1 class="menu-header">LOG-IN</h1>
+        <input id="signinUsername" placeholder="username"> 
+        <input id="signinPassword" type="password" placeholder="password">
+        <div id="error-div"></div> 
+        <button id="loginButton" type="submit">Sign in</button>
+    </div>
+
+
 
 <div id="testDiv"></div>
+
     
+    <div class="reg-menu">
+        <h1 class="menu-header">CREATE ACCOUNT</h1>
+        <input id="registerEmail" placeholder="Enter your email">
+        <input id="registerName" placeholder="Whats your name?"> 
+        <input id="registerUsername" placeholder="Choose a username">
+        <input id="registerPassword" type="password" placeholder="Choose your password">
+        <input id="registerZip" placeholder="Enter your zip code">
+        <input id="registerAddress" placeholder="Enter your address">
+        <input id="registerPhone" placeholder="Enter your phone number">
+        <div id="newsletter"><h4>Newsletter</h4><input id="cb" type="checkbox"></div>
+        <div id="errorDiv"></div>  
+        <button id="registerButton" type="submit">Register</button>  
+    </div>
+</div>
+
 </body>
 </html>
