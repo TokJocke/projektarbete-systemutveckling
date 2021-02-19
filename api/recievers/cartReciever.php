@@ -17,30 +17,30 @@
                 
                  if($_POST["action"] == "remove"){ // action = remove
                         
-                        $productID = $_POST["productID"];
+                        $productId = $_POST["productId"];
                       
                         $pr = new CartRepo; 
-                        echo json_encode($pr->deleteProducts( $productID));
+                        echo json_encode($pr->deleteProducts( $productId));
 
                     }else if($_POST["action"] == "increase"){ // action = increase
                        
                        
                         $quantity = $_POST["quantity"];
-                        $productID = $_POST["productID"];
+                        $productId = $_POST["productId"];
                       
                        $pr = new CartRepo; 
-                        echo json_encode($pr->update( ++$quantity, $productID));
+                        echo json_encode($pr->update( ++$quantity, $productId));
                         
                         }
                             else if($_POST["action"] == "decrease"){ // action = decrease
                                 
                                 
                                 $quantity = $_POST["quantity"];
-                                $productID = $_POST["productID"];
+                                $productId = $_POST["productId"];
                                 
                                 
                                 $pr = new CartRepo; 
-                                echo json_encode($pr->update( --$quantity, $productID));
+                                echo json_encode($pr->update( --$quantity, $productId));
                                 
                                 }
                  

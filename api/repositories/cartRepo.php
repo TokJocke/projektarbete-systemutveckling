@@ -9,7 +9,7 @@ class CartRepo {
 
     function getCart() {
         $cartList = $this->db->fetchQuery(
-        "SELECT * FROM product INNER JOIN cart ON  product.productID = cart.productID");
+        "SELECT * FROM product INNER JOIN cart ON  product.productId = cart.productId");
         $productArray = $this->createProductList($cartList);
         return $productArray;
     }
@@ -33,7 +33,7 @@ class CartRepo {
     }
     //funktion deleteProducts som tar in ett value i parametern som avgör vilken produkt som ska tas bort i cart
     function deleteProducts($productId){
-        $query = ("DELETE FROM cart WHERE productID = $productId");
+        $query = ("DELETE FROM cart WHERE productId = $productId");
         $entity = array($productId);
         $db = new Database();
         $db->runQuery($query,$entity);
@@ -44,7 +44,7 @@ class CartRepo {
 
     //funktion update som tar in value i parametern som avgör vilken produkt vars kvantitet ska updateras
     function update($quantity, $productId){ 
-        $query = ("UPDATE cart SET quantity = $quantity WHERE productID = $productId");
+        $query = ("UPDATE cart SET quantity = $quantity WHERE productId = $productId");
         $entity = array($quantity,$productId);
         $db = new Database();
         $db->runQuery($query, $entity);
