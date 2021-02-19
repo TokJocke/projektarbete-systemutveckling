@@ -31,7 +31,7 @@
                     regUser($name, $reguserName, $regPassword, $Email, $regAddress, $regZip, $regPhone, 0);
 
                     if($newsletter == "Yes") {
-                        signUpNewsletter($Email, $name);
+                        signUpNewsletter($reguserName);
                     }
                     
                     echo json_encode("Successfully signed up" . " " . $reguserName);
@@ -44,7 +44,13 @@
                         $un = $myArray->username;
                         $pw = $myArray->pw;
 
-                        login($un, $pw);            
+                        login($un, $pw);  
+                      /*   
+                         if (isset($_SESSION['user'])) {
+                            // logged in
+                          } else {
+                            // not logged in
+                          }  */
                         
             } 
         }
