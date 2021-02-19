@@ -14,7 +14,38 @@
             
             }
             else if ($_SERVER["REQUEST_METHOD"] == "POST") {
-           
+                
+                 if($_POST["action"] == "remove"){ // action = remove
+                        
+                        $productID = $_POST["productID"];
+                      
+                        $pr = new CartRepo; 
+                        echo json_encode($pr->deleteProducts( $productID));
+
+                    }else if($_POST["action"] == "increase"){ // action = increase
+                       
+                       
+                        $quantity = $_POST["quantity"];
+                        $productID = $_POST["productID"];
+                      
+                       $pr = new CartRepo; 
+                        echo json_encode($pr->update( ++$quantity, $productID));
+                        
+                        }
+                            else if($_POST["action"] == "decrease"){ // action = decrease
+                                
+                                
+                                $quantity = $_POST["quantity"];
+                                $productID = $_POST["productID"];
+                                
+                                
+                                $pr = new CartRepo; 
+                                echo json_encode($pr->update( --$quantity, $productID));
+                                
+                                }
+                 
+                
+                ////update($userId,$productId,$quantity) tar in 3 para
             }
         }
     }

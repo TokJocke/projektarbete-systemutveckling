@@ -9,10 +9,12 @@ class Cart {
         }
 }
 class CartItem {
-    function __construct($product, $quantity, $totalPrice) {
+    function __construct($product, $quantity, $totalPrice, $productId,$userId) {
         $this->product = $product;
         $this->quantity = $quantity;
         $this->totalPrice = $totalPrice;
+        $this->productId = $productId;
+        $this->userId = $userId;
 
         
         }

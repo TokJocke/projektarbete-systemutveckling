@@ -12,3 +12,7 @@
     margin: 5px;
     padding: 5px;
 }
+.productBox > button{
+    width: 10vw;
+    margin: 2px;
+}
