@@ -23,11 +23,7 @@
             $preparedQuery = $this->prepareQuery($query);
             $preparedQuery->execute();
             return $preparedQuery->fetchAll(PDO::FETCH_OBJ);
-            
-            
-            
-/*             echo json_encode($preparedQuery->fetchAll(PDO::FETCH_OBJ));
- */
+
         }
         
 /*         function add() {
