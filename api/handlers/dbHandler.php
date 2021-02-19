@@ -22,16 +22,9 @@
         function fetchQuery($query) {
             $preparedQuery = $this->prepareQuery($query);
             $preparedQuery->execute();
-            echo json_encode($preparedQuery->fetchAll(PDO::FETCH_OBJ));
-        }
+            return $preparedQuery->fetchAll(PDO::FETCH_OBJ);
 
-/*         function add() {
-            $preparedQuery = $this->db->prepare('INSERT INTO product (productName, price, description, categoryID) 
-            VALUES (:productName, :price, :description, :categoryID)'); 
-            $preparedQuery->execute(array(':productName' => 'hallonbot', ':price' => 10, ':description' => 'smakar skit', 'categoryID' => 1));
-            exit;
         }
- */
 }
 
 

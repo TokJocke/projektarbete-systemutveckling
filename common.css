@@ -1,3 +1,4 @@
+
 *{
     box-sizing: border-box;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -286,3 +287,17 @@ footer {
 
       }
 
+
+.productBox {
+    display: flex;
+    flex-direction: column;
+    width: 40vw;
+    border: 1px solid black;
+    justify-content: center;
+    margin: 5px;
+    padding: 5px;
+}
+.productBox > button{
+    width: 10vw;
+    margin: 2px;
+}
