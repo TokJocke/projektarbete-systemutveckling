@@ -21,6 +21,7 @@ h1{
 
 header{
     position: fixed;
+    overflow: hidden;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -28,7 +29,8 @@ header{
     left: 0;
     right: 0;
     top: 0;
-    height: 7vh;
+    height: 8vh;
+    background-color: #e9d9e0;
     background-image: url(/assets/layout/godisrpsa.jpg);
     background-repeat: no-repeat;
     background-size: cover;
@@ -36,23 +38,37 @@ header{
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-.brandLogo {
+.menu {
     display: flex;
+    flex:1 1 auto;
+}
+
+.brandLogo {
+    display: flex;  
     justify-content: center;
+    align-items: center;
+    flex: 0.1 1 100px;
 
 }
 
-
-
+.brandLogo  img{
+    display: flex;
+    object-fit: cover;
+    max-width:100%;
+    max-height:auto;
+}
 
 .navRight{
-    flex: 0;
     display: flex;
-    justify-content: space-around;
+    flex-direction: row-reverse;
+    flex: 1 1 auto;
+}
+
+.navRight i{
+    padding: 0 10px;
 }
 
 .myPageBtn{
-    margin: 0 1em 0 0;
     font-size: 2rem;
 }
 
@@ -69,10 +85,10 @@ header{
     background-image: url(./assets/layout/shape.svg);
     background-size: cover;
     background-position: bottom;
-    object-fit: cover;
     z-index: -1;
 }
-#testBackground{
+
+#popupBackground{
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
@@ -82,7 +98,7 @@ header{
     height: 100%; 
     overflow: auto; 
     backdrop-filter:blur(3px);
-    background-color:rgba(0, 0, 0, 0.19) ;
+    background-color:rgba(0, 0, 0, 0.19);
 }
 
 input{
@@ -197,6 +213,13 @@ input:focus{
     background-size: cover;
 }
 
+.cancelBox{
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+   
+}
+
 .bottomContent{
     display: flex;
     align-items: center;
@@ -251,6 +274,15 @@ footer {
 
         .popularProductsContainer{
             margin-top: 50px;
+
+        }#logInForm{
+            width: 100%; 
         }
+
+        header{
+            padding: 0 25px ;
+        }
+  
+
       }
 
