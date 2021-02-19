@@ -1,7 +1,292 @@
-* {
+
+*{
     box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
 }
+
+body{
+    background-color: #E8E0E4;
+    background-image: url(./assets/layout/shape.svg);
+    background-repeat: no-repeat;
+}
+
+
+h1{
+    color:#707070;
+    font-family: cheap-pine, sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 40px;
+}
+
+header{
+    position: fixed;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 50px ;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 8vh;
+    background-color: #e9d9e0;
+    background-image: url(/assets/layout/godisrpsa.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: bottom;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.menu {
+    display: flex;
+    flex:1 1 auto;
+}
+
+.brandLogo {
+    display: flex;  
+    justify-content: center;
+    align-items: center;
+    flex: 0.1 1 100px;
+
+}
+
+.brandLogo  img{
+    display: flex;
+    object-fit: cover;
+    max-width:100%;
+    max-height:auto;
+}
+
+.navRight{
+    display: flex;
+    flex-direction: row-reverse;
+    flex: 1 1 auto;
+}
+
+.navRight i{
+    padding: 0 10px;
+}
+
+.myPageBtn{
+    font-size: 2rem;
+}
+
+.cartBtn{
+    font-size: 2rem;
+}
+
+.svgTop{
+    display: flex;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-image: url(./assets/layout/shape.svg);
+    background-size: cover;
+    background-position: bottom;
+    z-index: -1;
+}
+
+#popupBackground{
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    backdrop-filter:blur(3px);
+    background-color:rgba(0, 0, 0, 0.19);
+}
+
+input{
+    text-align: center;
+    border: solid 2px white;
+    background-color: transparent;
+    width: 80%;
+    height: 50px;
+    margin: 10px;
+    transition: background-color .3s
+}
+input:focus{
+    background-color: rgba(255, 255, 255, 0.616);
+}
+
+#logInForm{
+    display: none;
+    left: 0;
+    right: 0;
+    align-items: center;
+    flex-direction: column;
+    position: absolute;
+    background-color:#C8D7E0 ;
+    z-index: 2;
+    margin: 5% auto 15% auto; 
+    border: 1px solid #888;
+    width: 60%; 
+    padding: 30px;
+    animation: animatezoom 0.6s
+}
+
+.defaultBtn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #B5CDCC;
+    border-radius: 20px;
+    width: 150px;
+    height: 45px;
+    margin: 5px;
+    color:#707070;
+    font-family: cheap-pine, sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 30px;
+    cursor:pointer;
+}
+.defaultBtn:hover{
+    transition:ease-in .2s;
+    background-color: #b5cdccad;
+}
+
+
+
+.mainWrapper{
+    display: flex;
+    flex-direction: column;
+    margin-top: 7vh;
+   /*  height: 93vh; */
+}
+
+.popularProductsContainer{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    margin-top: 150px;
+    background-color: #BED1D9;
+    height: 30vh;
+    padding-left: 20px;
+   
+}
+
+.popularProductsItems{
+    display: flex;
+    align-content: center;
+}
+
+.discountContainer{
+    display: flex;
+    flex-direction: row;
+}
+
+.discountBox{
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    flex: 1;
+    background-color:#e9d9e0 ;
+    height: 35vh;
+    padding-left: 10px;
+}
+
+.discountBox:nth-child(2) {
+    background-color:#E2DDDC;
+  }
+
+.discountItems{
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+}
+
+.bottomSection{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-image:
+    linear-gradient(to top, rgba(255, 255, 255, 0.52),
+     rgba(232, 224, 228)),
+    url('./assets/layout/godisrpsa.jpg');
+    background-size: cover;
+}
+
+.cancelBox{
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+   
+}
+
+.bottomContent{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin: 20px;
+}
+
+footer {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    flex-direction: column;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #313131;
+    color: white;
+    text-align: center;
+}
+
+.mediaContainer{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    font-size: x-large;
+}
+
+.mediaContainer i{
+    margin: 10px;
+}
+
+.footerLogo{
+    display: flex;
+    justify-content: center;
+    fill:#E9DADB;
+    height: auto;
+    width: 250px;
+}
+
+
+.flexRow{
+    display: flex;
+    flex-direction: row;
+
+}
+
+      /* Responsive layout - makes a one column layout instead of a two-column layout */
+      @media (max-width: 800px) {
+        .discountContainer{
+          flex-direction: column;
+        }
+
+        .popularProductsContainer{
+            margin-top: 50px;
+
+        }#logInForm{
+            width: 100%; 
+        }
+
+        header{
+            padding: 0 25px ;
+        }
+  
+
+      }
+
 
 .productBox {
     display: flex;
