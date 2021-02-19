@@ -27,7 +27,7 @@
               echo json_encode("Email taken");
               exit;
             }
-
+         
               else if($result == false && $newResult == false) { //om inte finns så regga användare.
   
                 $query = ('INSERT INTO user (name, userName, password, email, address, zipCode, phoneNr, isAdmin) 
@@ -53,10 +53,12 @@
         $db->fetchQuery($query);
 
         $hashedPw = fetchUserInfo($un);
-          // om $pw = hashat pw och matchar med username == success login.  
+          // om $pw == hashat pw och matchar med username == success login.  
           if(password_verify($pw, $hashedPw) == true) {
-          echo json_encode("Login success");
-          exit;
+            session_start();
+            $_SESSION["user"] = $un;
+            echo json_encode("Login success"); //startar session här..
+            exit;
         }
             else {
             echo json_encode("Login failed");
@@ -72,22 +74,19 @@
         return $myResult[0]->password;
     }
 
-    function signUpNewsletter($email, $name) { //Skicka in userid vid reg, email och namn kan vara null
+    function signUpNewsletter($username) { //Skicka in userid vid reg, email och namn kan vara null
       //Om ej inloggad, newsletter reg = namn/email.  
+          $query = ('INSERT INTO newsletter (userID) VALUES (:userID)'); //Glöm ej ändra email/name till NULL i databas.
 
-          $query = ('INSERT INTO newsletter (userID, email, name) 
-                VALUES (:userID, :email, :name)');
-                 
-          $entity = array(':userID' => fetchuId($email), ':email' => $email, ':name' => $name);
+          $entity = array(':userID' => fetchuId($username));
               
           $db = new Database();
           $db->runQuery($query, $entity);
-
     }
 
-    function fetchuId($email) {
+    function fetchuId($username) {
       $db = new Database();
-      $qery = "SELECT userID FROM user WHERE email='$email'";
+      $qery = "SELECT userID FROM user WHERE userName='$username'";
       $result = $db->fetchQuery($qery);
       return $result[0]->userID;
     }

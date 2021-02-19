@@ -11,7 +11,6 @@ function initSite() {
  	}
 }
 
-
 let signinBtn = document.getElementById("loginButton")
 let registerBtn = document.getElementById("registerButton")
 
