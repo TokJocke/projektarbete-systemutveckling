@@ -20,19 +20,6 @@ async function getAllCategorys() {
     return response
 }
 
-//Function to createTr for adminAddProductPanel
-function createTr(name, myInput, myInputType, myEle, myTable) {
-    let tr = document.createElement("tr")
-    let td = document.createElement("td")
-    let tdInput = document.createElement("td")
-    let input = document.createElement(myInput)
-    input.type = myInputType
-    td.innerText = name    
-    tdInput.append(input)
-    tr.append(td, tdInput)
-    myTable.append(tr)
-    myEle.append(myTable)
-}
 //admin panel for adding products
 async function adminAddProductPanel() {
     let adminProductBox = document.getElementById("adminProductBox")
@@ -92,10 +79,10 @@ async function adminAddProductPanel() {
 }
 //admin panel for update / delete producs
 async function adminUpdateProductPanel() {
-    let allProducts = await getAllProducts()
-    
+    let allProducts = await getAllProducts() 
     let adminBox = document.getElementById("adminProductBox")
-    
+    adminBox.innerHTML = ""
+  
     let myTable = document.createElement("table")
     let titleTr = document.createElement("tr")
     let productIdTitleTd = document.createElement("td")
@@ -153,13 +140,26 @@ async function adminUpdateProductPanel() {
 
     
 }
-function deleteProduct() {
-    console.log("delete = ", this.productId)
+async function deleteProduct() {
+    if (confirm("are you sure you want to delete " + this.name + " from products?")) {        
+        let data = new FormData()
+        data.append("action", "removeProduct")
+        data.append("product", JSON.stringify(this))
+    
+        const response = await makeReq("./api/recievers/productReciever.php", "POST", data)
+        adminUpdateProductPanel()
+        console.log(response)
+    } 
+    
 }
 
 function editProduct() {
     console.log("edit = ", this.productId)
 }
+
+
+
+
 
 //function for uploading image and sending product data
 async function sendProductData() {   
@@ -169,21 +169,21 @@ async function sendProductData() {
     let inputCategory = document.getElementById("categoryInput").value
     let image = document.getElementById("uploadImgInput")
     let productData = { inputName, inputPrice, inputDesc, inputCategory }
-    productData = JSON.stringify(productData)
-    
+/*     productData = JSON.stringify(productData)
+ */    
     let data = new FormData() 
     data.append("image", image.files[0])
-    data.append("productData", productData)
+    data.append("productData", JSON.stringify(productData))
 
     const response = await makeReq("./api/recievers/productReciever.php", "POST", data)
     console.log(response) 
 }
 //Dashboard for adding / updateing products
 function myAdminBox() {
-    let adminAddBoxBtn = document.getElementsByClassName("adminProductBoxBtn")[0]
-    let adminUppdateBoxBtn = document.getElementsByClassName("adminProductBoxBtn")[1]
+    let adminUppdateBoxBtn = document.getElementsByClassName("adminProductBoxBtn")[0]
+    let adminAddBoxBtn = document.getElementsByClassName("adminProductBoxBtn")[1]
     let adminBox = document.getElementById("adminProductBox")
-    adminAddProductPanel()
+    adminUpdateProductPanel()
 
     adminAddBoxBtn.addEventListener("click", () => {
         console.log("add")
@@ -193,7 +193,6 @@ function myAdminBox() {
 
     adminUppdateBoxBtn.addEventListener("click", () => {
         console.log("uppdate")
-        adminBox.innerHTML = ""
         adminUpdateProductPanel()
     })
 

@@ -15,26 +15,27 @@
             }
             else if ($_SERVER["REQUEST_METHOD"] == "POST") {
              
-                $productData = json_decode($_POST["productData"]);
-          /*      
-                 echo json_encode($productData); 
- */
-                    if($_FILES["image"]) {
-                        $pr = new ProductRepo;
-                       /*  echo json_encode($pr->uploadImage($_FILES["image"])); */
+                
+                if($_FILES["image"]) {
+                   
+                    $productData = json_decode($_POST["productData"]);
+                    $pr = new ProductRepo;
                         
-                       //Parametrar = $name, $price, $description, $unitsInStock, $categoryID
+                       //Parametrar = $name, $price, $description, $unitsInStock, $categoryID, $img
                        echo json_encode($pr->addProduct($productData->inputName, $productData->inputPrice, $productData->inputDesc, null, $productData->inputCategory, $pr->uploadImage($_FILES["image"])));
                       
                         exit;
                     }
                 
-              
+                else if($_POST["action"] == "removeProduct"){
+
+                    $products = json_decode($_POST["product"]);
+                 
+                    $pr = new ProductRepo;
+                    echo json_encode($pr->removeProduct($products->productId, $products->img));  
+                }
              
-             
-                //Parametrar = $name, $price, $description, $unitsInStock, $categoryID
-         /*        addProduct("glada nappar", 10, "Sur som fan", null, 1) ;
-                echo json_encode("true"); */
+   
             } 
         }
     }

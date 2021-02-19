@@ -30,8 +30,28 @@
             ':unitsInStock' => $unitsInStock, 'categoryID' => $categoryID, 'img' => $img);
             
             $this->db->runQuery($query, $entity);
-            return $entity;
+            return $name . " added to products";
         } 
+
+        function removeProduct($id, $img) {
+            
+            $query = "DELETE FROM product WHERE productId='$id'";
+
+
+            $this->db->fetchQuery($query);
+            $this->removeImage($img);
+            return "remove success";
+        }
+
+        function removeImage($img) {
+            $check = getimagesize($img);
+            //check if $img = image file
+            if($check == true) {
+                unlink($img);
+            }
+         
+
+        }
         //method for upploading image
         function uploadImage($image) {
             $target_dir = "../../assets/products/";
