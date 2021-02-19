@@ -6,12 +6,18 @@ const userLogin = document.getElementById("userLogin")
 const loginForm = document.getElementById("logInForm")
 const background = document.getElementById("popupBackground")
 const registerBtn = document.getElementById("registerBtn")
+document.getElementById("menuBtn").onclick = function() {menuToggle(this)};
+const cartBtn = document.getElementById("cartBtn")
 
 registerBtn.addEventListener("click", () => {
   loginForm.innerHTML = ""
   loadRegForm()
 })
 
+/** menyknapp toggle */
+function menuToggle(x) {
+  x.classList.toggle("change");
+} 
 
 function loadRegForm(){
   const inputOne = document.createElement("input")
