@@ -27,7 +27,7 @@
                        echo json_encode($pr->addProduct($productData->inputName, $productData->inputPrice, $productData->inputDesc, null, $productData->inputCategory, $pr->uploadImage($_FILES["image"])));
                       
                         exit;
-                    }
+                }
                 
                 else if($_POST["action"] == "removeProduct"){
 
@@ -41,9 +41,10 @@
             } 
 
 
+        
         }
-    }
-} catch (Exception $e) { // om error har felmeddelande
+    } 
+    catch (Exception $e) { // om error har felmeddelande
     http_response_code($e->getCode());
     echo json_encode(array("status" => $e->getCode(), "Message" => $e->getMessage()));
 }
