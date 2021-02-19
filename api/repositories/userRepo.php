@@ -76,9 +76,9 @@
 
     function signUpNewsletter($username) { //Skicka in userid vid reg, email och namn kan vara null
       //Om ej inloggad, newsletter reg = namn/email.  
-          $query = ('INSERT INTO newsletter (userID) VALUES (:userID)'); //Glöm ej ändra email/name till NULL i databas.
+          $query = ('INSERT INTO newsletter (userId) VALUES (:userId)'); //Glöm ej ändra email/name till NULL i databas.
 
-          $entity = array(':userID' => fetchuId($username));
+          $entity = array(':userId' => fetchuId($username));
               
           $db = new Database();
           $db->runQuery($query, $entity);
@@ -86,9 +86,9 @@
 
     function fetchuId($username) {
       $db = new Database();
-      $qery = "SELECT userID FROM user WHERE userName='$username'";
+      $qery = "SELECT userId FROM user WHERE userName='$username'";
       $result = $db->fetchQuery($qery);
-      return $result[0]->userID;
+      return $result[0]->userId;
     }
 
   

@@ -22,12 +22,12 @@
             return $productArray;
         }
            
-        function addProduct($name, $price, $description, $unitsInStock, $categoryID, $img) {
+        function addProduct($name, $price, $description, $unitsInStock, $categoryId, $img) {
             
-            $query = ('INSERT INTO product (productName, price, description, unitsInStock, categoryID, img) 
-            VALUES (:productName, :price, :description, :unitsInStock, :categoryID, :img)');
+            $query = ('INSERT INTO product (productName, price, description, unitsInStock, categoryId, img) 
+            VALUES (:productName, :price, :description, :unitsInStock, :categoryId, :img)');
             $entity = array(':productName' => $name, ':price' => $price, ':description' => $description, 
-            ':unitsInStock' => $unitsInStock, 'categoryID' => $categoryID, 'img' => $img);
+            ':unitsInStock' => $unitsInStock, 'categoryId' => $categoryId, 'img' => $img);
             
             $this->db->runQuery($query, $entity);
             return $name . " added to products";
