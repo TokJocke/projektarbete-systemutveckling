@@ -32,7 +32,7 @@ header{
     top: 0;
     height: 8vh;
     background-color: #e9d9e0;
-    background-image: url(/assets/layout/godisrpsa.jpg);
+    background-image: url(./assets/layout/godisrpsa.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: bottom;
@@ -115,6 +115,12 @@ input:focus{
     background-color: rgba(255, 255, 255, 0.616);
 }
 
+input[type="checkbox"]{
+    width: 25px;
+    height: 25px;
+    border-radius: 3px;
+}
+
 #logInForm{
     display: none;
     left: 0;
@@ -122,6 +128,7 @@ input:focus{
     align-items: center;
     flex-direction: column;
     position: absolute;
+ 
     background-color:#C8D7E0 ;
     z-index: 2;
     margin: 5% auto 15% auto; 
@@ -130,6 +137,13 @@ input:focus{
     padding: 30px;
     animation: animatezoom 0.6s
 }
+    #formUser{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
 
 .defaultBtn{
     display: flex;
