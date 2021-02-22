@@ -1,18 +1,15 @@
 import {makeReq} from "./main.js"
 
+
 window.addEventListener("load", initSite)
 let body = document.getElementById("indexBody")
 
 
 function initSite() {
 	if (body){
-        regButton()
-        loginBtn()
+       
  	}
 }
-
-let signinBtn = document.getElementById("loginButton")
-let registerBtn = document.getElementById("registerButton")
 
 async function regUser() {
     let checkbox = document.getElementById("cb")
@@ -43,14 +40,17 @@ async function regUser() {
     const response = await makeReq("./api/recievers/userReciever.php", "POST", body)
     let div = document.getElementById("errorDiv")
     div.innerText = response
+    
+    if(response === "Successfully signed up") {
+        formUser.innerHTML = ""
+        const text = document.createElement("p")
+        text.innerText = "Tack för din registrering"
+        formUser.append(text) 
+    }
     console.log(response)
 }
 
-async function regButton() { 
-    registerBtn.addEventListener("click", checkInputs)    
-}
-
-async function checkInputs() {
+export async function checkInputs() {
        let email =  document.getElementById("registerEmail").value
        let name = document.getElementById("registerName").value
        let username = document.getElementById("registerUsername").value
@@ -63,8 +63,12 @@ async function checkInputs() {
        if (email == null || email == "" || name == null || name == "" || username == null || username == "" 
        || password == null || password == "" || zipcode == null || zipcode == "" || address == null 
        || address == "" || phoneNr == null || phoneNr == "") {
+
+        let div = document.getElementById("errorDiv")
+        div.innerText = "Please Fill All Required Fields*"
+        div.style.color = "red"
         
-        alert("Please Fill All Required Fields");
+    
         return false;
         }    
         else {
@@ -73,11 +77,7 @@ async function checkInputs() {
         } 
 }
  
-async function loginBtn() {
-    signinBtn.addEventListener("click", login)
-}
-
-async function login() {
+export async function login() {
     let logDetails = {
         username: document.getElementById("signinUsername").value,
         pw: document.getElementById("signinPassword").value
@@ -97,6 +97,7 @@ async function login() {
     if(response === "Login success") {
         div.innerText = response
         div.style.color = "green"
+        window.location.href = "/myPage.html"; 
     }
     
     console.log(response)

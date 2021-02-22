@@ -35,7 +35,7 @@ try {
                     signUpNewsletter($reguserName);
                 }
 
-                echo json_encode("Successfully signed up" . " " . $reguserName);
+                echo json_encode("Successfully signed up");
             }
         }
         if ($_POST["action"] == "login") {

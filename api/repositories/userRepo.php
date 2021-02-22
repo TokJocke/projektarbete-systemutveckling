@@ -20,15 +20,15 @@ function regUser($regName, $regUsername, $regPassword, $email, $regAdress, $regZ
   $qery = "SELECT email FROM user WHERE email='$email'";
   $newResult = $db->fetchQuery($qery);
 
-  if ($result == true) { //kollar om username / email redan finns vid reg
-    echo json_encode("Username taken");
+  if ($newResult == true) { //kollar om username / email redan finns vid reg
+    echo json_encode("Email taken");
     exit;
   }
 
-  if ($newResult == true) {
-    echo json_encode("Email taken");
+  if ($result == true) {
+    echo json_encode("Username taken");
     exit;
-  } else if ($result == false && $newResult == false) { //om inte finns så regga användare.
+  } else if ($newResult == false && $result == false) { //om inte finns så regga användare.
 
     $query = ('INSERT INTO user (name, userName, password, email, address, zipCode, phoneNr, isAdmin) 
                 VALUES (:name, :userName, :password, :email, :address, :zipCode, :phoneNr, :isAdmin)');
@@ -56,8 +56,8 @@ function login($un, $pw)
   $hashedPw = fetchUserInfo($un);
   // om $pw == hashat pw och matchar med username == success login.  
   if (password_verify($pw, $hashedPw) == true) {
-    session_start();
-    $_SESSION["user"] = $un;
+    /* session_start();
+    $_SESSION["user"] = $un; */
     echo json_encode("Login success"); //startar session här..
     exit;
   } else {
