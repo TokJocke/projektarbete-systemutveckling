@@ -1,4 +1,4 @@
-import {makeReq} from "./main.js"
+import {makeReq, getAllCategorys } from "./main.js"
 import {getAllProducts} from "./products.js"
 
 window.addEventListener("load", initSite)
@@ -13,12 +13,7 @@ function initSite() {
     }
 }
 
-async function getAllCategorys() {
-    const response = await makeReq("./api/recievers/categoryReciever.php", "GET")
 
-    console.log(response)
-    return response
-}
 
 //admin panel for adding products
 async function adminAddProductPanel() {
@@ -154,10 +149,52 @@ async function deleteProduct() {
 }
 
 function editProduct() {
-    console.log("edit = ", this.productId)
+    let main = document.getElementsByTagName("main")[0]
+
+    console.log(main)
+    let title = document.createElement("h2")
+    title.innerText = this.name
+    let popUpDiv = document.createElement("div")
+    popUpDiv.id = "editPopUpDiv"
+
+    let nameInput = document.createElement("input")
+    nameInput.placeholder = this.name
+    nameInput.className = "editPopUpInput"
+    let priceInput = document.createElement("input")
+    priceInput.placeholder = this.price
+    priceInput.className = "editPopUpInput"
+    let descInput = document.createElement("input")
+    descInput.placeholder = this.description
+    descInput.className = "editPopUpInput"
+    let inStockInput = document.createElement("input")
+    inStockInput.placeholder = this.unitsInStock
+    inStockInput.className = "editPopUpInput"
+    let categoryInput = document.createElement("input")
+    categoryInput.placeholder = this.categoryId
+    categoryInput.className = "editPopUpInput"
+
+    let buttonContainer = document.createElement("div")
+
+    let updateBtn = document.createElement("button")
+    updateBtn.innerText="update"
+    updateBtn.addEventListener("click", update)
+    let cancelBtn = document.createElement("button")
+    cancelBtn.innerText = "cancel"
+
+    buttonContainer.append(updateBtn, cancelBtn)
+    popUpDiv.append(title, nameInput, priceInput, descInput, inStockInput, categoryInput, buttonContainer)
+    main.append(popUpDiv)
 }
 
 
+function update(name, price, desc, inStock, category) {
+   let input = document.getElementsByTagName("input")
+
+   console.log(input[0].placeholder)
+/*     input.forEach(item => {
+       console.log(item.placeholder)
+   });  */
+}
 
 
 

@@ -161,20 +161,45 @@ input:focus{
    /*  height: 93vh; */
 }
 
-.popularProductsContainer{
+.productsWrapper{
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
     margin-top: 150px;
     background-color: #BED1D9;
-    height: 30vh;
-    padding-left: 20px;
+/*     height: 30vh;
+ */    padding-left: 20px;
    
 }
 
-.popularProductsItems{
+.productContainer{
     display: flex;
+    flex-direction: row;
     align-content: center;
+    flex-wrap: wrap;
+}
+
+.productBox {
+    display: flex;
+    flex-direction: column;
+    width: 25vw;
+/*     height: 40vh;
+ */    background-color: white;
+    border-radius: 25px;
+    align-items: center;
+    padding: 5px;
+    margin: 5vh 0 5vh 5vh;
+    
+}
+
+.productBox > img {
+    object-fit: contain;
+    max-width: 50%;
+    max-height: 50%;
+}
+.productBox > button{
+    width: 10vw;
+    margin: 2px;
 }
 
 .discountContainer{
@@ -267,6 +292,8 @@ footer {
 
 }
 
+
+
       /* Responsive layout - makes a one column layout instead of a two-column layout */
       @media (max-width: 800px) {
         .discountContainer{
@@ -288,16 +315,3 @@ footer {
       }
 
 
-.productBox {
-    display: flex;
-    flex-direction: column;
-    width: 40vw;
-    border: 1px solid black;
-    justify-content: center;
-    margin: 5px;
-    padding: 5px;
-}
-.productBox > button{
-    width: 10vw;
-    margin: 2px;
-}
