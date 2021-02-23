@@ -57,14 +57,14 @@ async function renderProducts() {
         productRemove.innerText = "Delete"
         //eventlisteners
                          // här ändrar jag para "change" till action -> increase/decrease 
-        productPlus.addEventListener("click", updateQuantity.bind(product, "increase"))
-        productMinus.addEventListener("click", updateQuantity.bind(product, "decrease"))
-        productRemove.addEventListener("click", updateQuantity.bind(product, "remove"))
+        productPlus.addEventListener("click", update.bind(product, "increase"))
+        productMinus.addEventListener("click", update.bind(product, "decrease"))
+        productRemove.addEventListener("click", update.bind(product, "remove"))
         
-        /* productImg.src = "./assets/product/" + product.product.img  */
+        productImg.src = "./assets/product/" + product.product.img 
         productDiv.className = "productBox"
         //append
-        productDiv.append(productTitle,productPrice,productTotalPrice,productQuantity, productImg,productPlus, productMinus, productRemove)
+        productDiv.append(productImg, productTitle,productPrice,productMinus,productQuantity,productPlus, productTotalPrice, productRemove)
         productWrapper.append(productDiv)
 
     });
@@ -77,18 +77,16 @@ async function renderProducts() {
 }
 
 //funktionen updaterar quantitet samt kan ta bort
-async function updateQuantity (change){
+async function update (change){
     //svaret från this sparas i variable
-    let thisProductID = this.productId
-    let thisQuantity = this.quantity
-    
+    let thisProductId = this.productId
+    console.log(thisProductId)
     //skapar en body
     let body = new FormData()
     
     //appendar body med para "change"
     body.append("action", change)
-    body.append("quantity", JSON.stringify(thisQuantity))
-    body.append("productID", JSON.stringify(thisProductID))
+    body.append("productId", JSON.stringify(thisProductId))
     
     const response = await makeReq("./api/recievers/cartReciever.php", "POST", body)
     console.log(response)
