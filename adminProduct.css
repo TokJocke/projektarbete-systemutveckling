@@ -86,7 +86,6 @@ table {
     background-color: lightblue;
 }
 
-.editPopUpInput {
+.editPopUpInput, #editPopUpCategory {
     min-height: 5vh;
 }
-

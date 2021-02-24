@@ -16,9 +16,7 @@ export async function makeReq(path, method, body) {
             method,
             body
         })
-
-        return response.json()
-        
+        return response.json()     
     }
      catch(err) {
           console.error("Failed fetch", err)
@@ -27,7 +25,24 @@ export async function makeReq(path, method, body) {
 
 export async function getAllCategorys() {
     const response = await makeReq("./api/recievers/categoryReciever.php", "GET")
-
     console.log(response)
     return response
 }
+
+export async function createCategoryDropDown() {
+    let allCategorys = await getAllCategorys()
+    let mySelect = document.createElement("select")
+    allCategorys.forEach(category => {
+        let myOption = document.createElement("option")
+        myOption.innerText = category.categoryId + " - " + category.name 
+        myOption.value = category.categoryId
+        mySelect.append(myOption) 
+    })    
+    /* appendTo.append(mySelect) */
+    return mySelect
+}
+
+export function removeElementById(myId){	
+	var elem = document.getElementById(myId)
+	elem.parentNode.removeChild(elem);	
+} 

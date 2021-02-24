@@ -1,3 +1,54 @@
+/* header grow/shrink */
+
+header {
+    transition: height 0.5s;
+}
+
+#headerTop {
+    transition: height 0.5s;
+}
+
+.headerBox {
+    transition: height 0.5s;
+}
+
+
+.slideRight {
+    animation-name: slideRight;
+    -webkit-animation-name: slideRight;
+    animation-duration: 1s;
+    -webkit-animation-duration: 1s;
+    visibility: visible;
+  }
+  
+  @keyframes slideRight {
+    0% {
+      opacity: 0;
+      -webkit-transform: translateX(-70%);
+    } 
+    100% {
+      opacity: 1;
+      -webkit-transform: translateX(0%);
+    }
+  }
+  
+  @-webkit-keyframes slideRight {
+    0% {
+      opacity: 0;
+      -webkit-transform: translateX(70%);
+    } 
+    100% {
+      opacity: 1;
+      -webkit-transform: translateX(0%);
+    }
+  }
+
+
+  
+
+
+
+
 
 /* header logo animation */
 
