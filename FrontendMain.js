@@ -4,7 +4,8 @@ window.addEventListener("load", initSite)
 
 function initSite() {
 	if (body){
-       
+    growHeader()
+
  	}
 }
 
@@ -126,7 +127,7 @@ window.onclick = function(event) {
       formUser.innerHTML = ""
     }
 
-  }
+  
 }
 
 userLogin.addEventListener("click", () =>{
@@ -227,5 +228,4 @@ headerLinks()
 
 
 
-  growHeader()
 
