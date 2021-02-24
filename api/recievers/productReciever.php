@@ -17,7 +17,7 @@
             else if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
              
-                
+                //Add product
                 if($_FILES["image"]) {
                    
                     $productData = json_decode($_POST["productData"]);
@@ -28,13 +28,22 @@
                       
                         exit;
                 }
-                
+                //Remove product
                 else if($_POST["action"] == "removeProduct"){
 
                     $products = json_decode($_POST["product"]);
                  
                     $pr = new ProductRepo;
                     echo json_encode($pr->removeProduct($products->productId, $products->img));  
+                }
+                //Update product
+                else if($_POST["action"] == "updateProduct"){ 
+
+                    $product = json_decode($_POST["product"]);
+                    $pr = new ProductRepo;
+                    echo json_encode($pr->updateProduct($product[0], $product[1], $product[2], $product[3], $product[4], $product[5]));
+                    
+
                 }
              
    
