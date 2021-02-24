@@ -35,43 +35,65 @@ class CartRepo {
         return $finalPrice ;
     }
      // funktion som lägger till en produkt i cart
-    function addProductToCart($userId, $productId){
-        
+    function addProductToCart($userId,$productId ){
+        $cartList = $this->db->fetchQuery(
+            "SELECT * FROM cart 
+            WHERE userId = $userId
+            AND productId = $productId");
+            $result = $cartList[0]->quantity;
+            if($result > 0){
+                $this->update ($productId,$userId);
+            }
+
         $query = (
             "INSERT INTO cart (userId, productId, quantity) 
             VALUES ($userId, $productId, quantity +1)");
 
         $entity = array($userId,$productId);
         $this->db->runQuery($query, $entity);
-        return "added $productId to $userId";
-    }
+        return "added $productId to $userId"; 
+        }
+    
 
     //funktion update som tar in value i parametern som avgör vilken produkt vars kvantitet ska updateras
-    function update ($productId){
+    function update ($productId,$userId){
         $query = (
             "UPDATE cart SET quantity = quantity + 1 
-            WHERE productId = $productId");
+            WHERE productId = $productId
+            AND userId = $userId");
         $entity = array($productId);
         $this->db->runQuery($query, $entity);
         return "added 1";
     }
     //funktion update som tar in value i parametern som avgör vilken produkt vars kvantitet ska updateras
-    function decrease ($productId){
+    function decrease ($productId,$userId){
+        //gör en fetch på productid
         $query = (
             "UPDATE cart SET quantity = quantity - 1 
-            WHERE productId = $productId");
+            WHERE productId = $productId
+            AND userId = $userId");
         $entity = array($productId);
         $this->db->runQuery($query, $entity);
         return "removed 1";
     }
         //funktion deleteProducts som tar in ett value i parametern som avgör vilken produkt som ska tas bort i cart
-    function deleteProducts($productId){
+    function deleteProducts($productId,$userId){
         $query = (
             "DELETE FROM cart 
-            WHERE productId = $productId");
+            WHERE productId = $productId
+            AND userId = $userId");
         $entity = array($productId);
-        $this->db->runQuery($query,$entity);
+        $this->db->runQuery($query, $entity);
         return "remove sucessfull";
     }
 
+    // function hämtar och summerar antalet i quantity i cart
+    function countAmount($userId){
+        $query = $this->db->fetchquery(
+            "SELECT sum(quantity) as antal  FROM cart
+            WHERE userId = $userId");
+            return $query;
+    }
+    
 }
+?>

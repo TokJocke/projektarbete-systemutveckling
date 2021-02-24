@@ -8,8 +8,8 @@ let body = document.getElementById("indexBody")
 function initSite() {
 	if (body){
         renderProducts()
-/*         addProdBtn()
- */ 	}
+        amountInCart()
+	}
 }
 
 export async function getAllProducts() {
@@ -59,7 +59,7 @@ async function renderProducts() {
 async function update (change){
     //svaret från this sparas i variable
     let thisProductId = this.productId
-
+    
     console.log(thisProductId)
     //skapar en body
     let body = new FormData()
@@ -70,8 +70,20 @@ async function update (change){
     
     const response = await makeReq("./api/recievers/cartReciever.php", "POST", body)
     console.log(response)
+    amountInCart ()
     
 
+}
+// funktion som hämtar antalet produkter i cart och skriver ut på sidan vid cart ikonen
+  async function amountInCart (){
+    let cartdiv = document.getElementById("valueInCart")
+    
+    
+    let response = await makeReq("./api/recievers/cartReciever.php?count", "GET",)
+    console.log("detta är response från get för ",response)
+    console.log(response[0].antal)
+
+    cartdiv.innerHTML = response[0].antal
 }
 
 

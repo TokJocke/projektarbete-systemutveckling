@@ -74,8 +74,10 @@ header{
 }
 
 .cartBtn{
+    display: flex;
     font-size: 2rem;
 }
+
 
 .svgTop{
     display: flex;

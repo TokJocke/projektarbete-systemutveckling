@@ -4,48 +4,46 @@
     
         if (isset($_SERVER["REQUEST_METHOD"])) { //IF SERVER
             require("../repositories/cartRepo.php");
-            $userId = 1;
+            $userId = 2;
+            $cr = new CartRepo;
      
         
             if ($_SERVER["REQUEST_METHOD"] == "GET") { //IF METHOD = GET
+
+                 
+                if(isset($_GET["count"])){
+                    echo json_encode($cr->countAmount($userId));
+                }else{
+                    echo json_encode($cr->getCart($userId));    
+
+                }
                 
-                $cr = new CartRepo; 
-                echo json_encode($cr->getCart($userId));    
+                   
                 
             }
             else if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $productId = $_POST["productId"];
-                    $cr = new CartRepo; 
-                    
-                 if($_POST["action"] == "remove"){ // action = remove
-                        echo json_encode($cr->deleteProducts( $productId));
+                    /* $cr = new CartRepo;  */
 
-                    }else if($_POST["action"] == "increase"){ // action = increase
-                        echo json_encode($cr->update( $productId));
-                        
-                        }else if($_POST["action"] == "decrease"){ // action = decrease                          
-                            echo json_encode($cr->decrease($productId));
-                                
-                            }else if($_POST["action"] == "add"){ // action = add'
+                    // action = remove
+                    //! parametern $userId måste vara samma som session userid
+                if($_POST["action"] == "remove"){ 
+                    echo json_encode($cr->deleteProducts($productId,$userId));
+
+                // action = increase
+                }else if($_POST["action"] == "increase"){ 
+                    echo json_encode($cr->update( $productId,$userId));
+
+                // action = decrease
+                }else if($_POST["action"] == "decrease"){  
+                    echo json_encode($cr->decrease($productId,$userId));
+
+                // action = add
+                }else if($_POST["action"] == "add"){
+                    echo json_encode($cr->addProductToCart($userId ,$productId));
+                }
                                     
-                                    if(isset($productId))
-                                    
-                                    echo json_encode($cr->addProductToCart($userId ,$productId));
-                                    }
-                                    else{
-                                        echo json_encode("hej");
-                                    }  
-                                
-                                /* if(array_key_exists($productId, $productId)){
-                                    echo json_encode("hej");
-                                } */
-                                   /*  echo json_encode($productId); */
-                                /* $pr = new CartRepo; 
-                                echo json_encode($pr->decrease($productId)); */
-                            
-                 
                 
-                ////update($userId,$productId,$quantity) tar in 3 para
             }
         }
     }

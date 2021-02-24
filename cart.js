@@ -1,5 +1,6 @@
 import {makeReq} from "./main.js"
 
+
 window.addEventListener("load", initSite)
 let body = document.getElementById("indexBody")
 
@@ -15,6 +16,7 @@ function initSite() {
 async function getCart() {
     const response = await makeReq("./api/recievers/cartReciever.php", "GET")
 
+    console.log("i get", response)
     return response
 }
 
@@ -36,9 +38,9 @@ async function renderProducts() {
         
         //create elements
         let productDiv = document.createElement("div")
-        let productTitle = document.createElement("h3")
-        let productPrice = document.createElement("h4")
-        let productQuantity = document.createElement("h4")
+        let productTitle = document.createElement("p")
+        let productPrice = document.createElement("p")
+        let productQuantity = document.createElement("p")
         let productTotalPrice = document.createElement("p")
         let productImg = document.createElement("img")
         let productPlus = document.createElement("button")
@@ -79,6 +81,9 @@ async function renderProducts() {
 //funktionen updaterar quantitet samt kan ta bort
 async function update (change){
     //svaret från this sparas i variable
+    if(change == "decrease" && this.quantity == 1){
+        change = "remove"
+    }
     let thisProductId = this.productId
     console.log(thisProductId)
     //skapar en body
@@ -90,6 +95,7 @@ async function update (change){
     
     const response = await makeReq("./api/recievers/cartReciever.php", "POST", body)
     console.log(response)
+    
     renderProducts()
 
 }
