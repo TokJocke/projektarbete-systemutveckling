@@ -10,6 +10,7 @@ function initSite() {
         myAdminBox()
         getAllProducts()
         getAllCategorys()
+        getOrders()
     }
 }
 
@@ -239,6 +240,7 @@ async function sendProductData() {
 function myAdminBox() {
     let adminUppdateBoxBtn = document.getElementsByClassName("adminProductBoxBtn")[0]
     let adminAddBoxBtn = document.getElementsByClassName("adminProductBoxBtn")[1]
+    let adminOrderBtn = document.getElementsByClassName("adminProductBoxBtn")[2]
     let adminBox = document.getElementById("adminProductBox")
     adminUpdateProductPanel()
 
@@ -253,6 +255,95 @@ function myAdminBox() {
         adminUpdateProductPanel()
     })
 
-    
+    adminOrderBtn.addEventListener("click", () => {
+        console.log("orderPanel")
+        loadOrders()
+        
+    }) 
 }
 
+async function getOrders() {
+    const response = await makeReq("./api/recievers/orderReciever.php", "GET")
+    console.log(response)
+    return response
+}
+
+/* let btn = document.createElement("button")
+let searchInput = document.createElement("input") */
+
+/* async function showbyOrderId() {
+    let getAllOrders = await getOrders()
+    getAllOrders.forEach(order => {
+        if(searchInput.value == order.orderId) {
+            
+        }    
+    })    
+
+} */
+
+async function loadOrders() {
+    let adminBox = document.getElementById("adminProductBox")
+    adminBox.innerHTML = ""
+    let header = document.createElement("h1")
+    header.align = "center"
+    header.innerText = "Mark orders as shipped"
+    let searchInput = document.createElement("input")
+    searchInput.placeholder = "Search for orders by orderId"
+    searchInput.style.marginBottom = "5px"
+    let btn = document.createElement("button")
+    btn.style.height = "3vh"
+    btn.innerText = "Search"   
+    adminProductBox.append(header, searchInput, btn)
+  
+    //hämtar ordrar
+    let getAllOrders = await getOrders() 
+
+    //skapar table med titlar.
+    let myTable = document.createElement("table")
+    let titleTr = document.createElement("tr")
+    titleTr.align = "center"
+    let orderIdTitle = document.createElement("td")
+    let userIdTitle = document.createElement("td")
+    let orderDateTitle = document.createElement("td")
+    let shippedTitle = document.createElement("td")
+    // confirm knapp
+    let confirmBtn = document.createElement("button")
+    confirmBtn.style.height = "5vh"
+    confirmBtn.innerText = "Apply changes, mark order(s) as shipped"  
+
+    orderIdTitle.innerHTML = "<h3>OrderId</h3>"
+    userIdTitle.innerHTML = "<h3>UserId</h3>"
+    orderDateTitle.innerHTML = "<h3>Order Date</h3>"
+    shippedTitle.innerHTML = "<h3>Shipped</h3>"
+    
+    titleTr.append(orderIdTitle, userIdTitle, orderDateTitle, shippedTitle)
+    myTable.append(titleTr)
+    adminBox.append(myTable, confirmBtn)
+
+    getAllOrders.forEach(order => {
+        
+        if(order.shipped == null) {
+
+        let newRow = document.createElement("tr")
+        newRow.align = "center"
+        let orderId = document.createElement("td")
+        let userId = document.createElement("td")
+        let orderDate = document.createElement("td")
+        let shipped = document.createElement("td")
+        let checkbox = document.createElement("input")
+        checkbox.type = "checkbox"
+        checkbox.style.width = "5vw"
+        checkbox.style.height = "5vh"
+        
+
+        orderId.innerText = order.orderId
+        userId.innerText = order.userId
+        orderDate.innerText = order.orderDate
+    
+        shipped.append(checkbox)
+        newRow.append(orderId, userId, orderDate, shipped)
+        myTable.append(newRow)
+        }
+        
+    })  
+}
