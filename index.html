@@ -12,6 +12,7 @@
     <script type="module" src="./products.js"></script>
     <script type="module" src="./main.js"></script>
     <script type="module" src="./FrontendMain.js"></script>
+    <!-- <script type="module" src="./user.js"></script> -->
 
 </head>
 <body id="indexBody">
@@ -58,15 +59,11 @@
         <div>
             <img class="footerLogo" src="./assets/layout/backlogo_sottoGott.png" alt="">
         </div>
-        <input placeholder="Användarnamn" type="text">
-        <input placeholder="Lösenord" type="password">
-        <div class="flexRow">
-            <div id="login" class="defaultBtn">Logga in</div>
+        <div id="formUser">
+
+
+
         </div>
-        <div>
-            <p>ny kund?</p> <span id="registerBtn">Registrera</span> <p>etc</p>
-        </div>
-    </div>
 </div>
     
     <main class="mainWrapper">
@@ -122,9 +119,9 @@
             <div class="bottomContent">
                 <!-- Rendera ut content här! -->
                 <p>Ta del av erbjudanden och annan skit. Registrera dig på vårat Nyhetsbrev:</p>
-                <input placeholder="Namn" type="text">
-                <input placeholder="Email" type="text">
-                <div class="defaultBtn">JA TACK</div>
+                <input id="newsName" placeholder="Namn" type="text">
+                <input id="newsEmail" placeholder="Email" type="text">
+                <div id="newsBtn" class="defaultBtn">JA TACK</div>
             </div>
         </section>
 
@@ -144,37 +141,11 @@
     </footer>
 
 
-
+    <div id="testDiv"></div>
 <!-- Jocke & sebbes divar. Ska flyttas till Robins layout
-
-<div>
-    <div class="log-menu">
-        <h1 class="menu-header">LOG-IN</h1>
-        <input id="signinUsername" placeholder="username"> 
-        <input id="signinPassword" type="password" placeholder="password">
-        <div id="error-div"></div> 
-        <button id="loginButton" type="submit">Sign in</button>
-    </div>
-
-
 
 <div id="testDiv"></div>
 
-    
-    <div class="reg-menu">
-        <h1 class="menu-header">CREATE ACCOUNT</h1>
-        <input id="registerEmail" placeholder="Enter your email">
-        <input id="registerName" placeholder="Whats your name?"> 
-        <input id="registerUsername" placeholder="Choose a username">
-        <input id="registerPassword" type="password" placeholder="Choose your password">
-        <input id="registerZip" placeholder="Enter your zip code">
-        <input id="registerAddress" placeholder="Enter your address">
-        <input id="registerPhone" placeholder="Enter your phone number">
-        <div id="newsletter"><h4>Newsletter</h4><input id="cb" type="checkbox"></div>
-        <div id="errorDiv"></div>  
-        <button id="registerButton" type="submit">Register</button>  
-    </div>
-</div>
 
  -->
 </body>
