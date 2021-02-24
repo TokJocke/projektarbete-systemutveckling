@@ -56,8 +56,6 @@ function login($un, $pw)
   $hashedPw = fetchUserInfo($un);
   // om $pw == hashat pw och matchar med username == success login.  
   if (password_verify($pw, $hashedPw) == true) {
-    /* session_start();
-    $_SESSION["user"] = $un; */
     echo json_encode("Login success"); //startar session här..
     exit;
   } else {
@@ -101,3 +99,14 @@ function fetchUsers()
   $result = $db->fetchQuery($query);
   return json_encode($result);
 }
+
+function newsNoSignUp($email, $name) { //skicka med userid och göra en check om inloggad, skicka då userid istället.
+  $query = ('INSERT INTO newsletter (email, name) VALUES (:email, :name)'); 
+
+  $entity = array(':email' => $email, ':name' => $name);
+
+  $db = new Database();
+  $db->runQuery($query, $entity);
+}
+
+

@@ -12,11 +12,9 @@ let body = document.getElementById("indexBody")
 const formUser = document.getElementById("formUser")
 const cancel = document.getElementById("cancel")
 const userLogin = document.getElementById("userLogin")
-const loginForm = document.getElementById("logInForm")
 const background = document.getElementById("popupBackground")
 document.getElementById("menuBtn").onclick = function() {menuToggle(this)};
 const cartBtn = document.getElementById("cartBtn")
-
 
 /** menyknapp toggle */
 function menuToggle(x) {
