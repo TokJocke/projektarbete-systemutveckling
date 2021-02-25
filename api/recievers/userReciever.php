@@ -28,11 +28,13 @@ try {
                 $regPhone = $myArray->regPhone;
 
                 $newsletter = $myArray->newsletter;
-
-                regUser($name, $reguserName, $regPassword, $Email, $regAddress, $regZip, $regPhone, 0);
+                
+                $ur = new UserRepo();
+                $ur->regUser($name, $reguserName, $regPassword, $Email, $regAddress, $regZip, $regPhone, 0);
+               /*  regUser($name, $reguserName, $regPassword, $Email, $regAddress, $regZip, $regPhone, 0); */
 
                 if ($newsletter == "Yes") {
-                    signUpNewsletter($reguserName);
+                    $ur->signUpNewsletter($reguserName);
                 }
 
                 echo json_encode("Successfully signed up");
@@ -44,8 +46,8 @@ try {
 
             $un = $myArray->username;
             $pw = $myArray->pw;
-
-            login($un, $pw);
+            $ur = new UserRepo();
+            $ur->login($un, $pw);
         }
 
         if ($_POST["action"] == "newsletter") {
@@ -53,7 +55,8 @@ try {
             $myArray = json_decode($_POST["newsL"]);
             $name = $myArray->name;
             $email = $myArray->email;
-            newsNoSignUp($email, $name);
+            $ur = new UserRepo();
+            $ur->newsNoSignUp($email, $name);
             echo json_encode("Signed up for newsletter");
         }
     }
