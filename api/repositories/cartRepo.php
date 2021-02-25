@@ -2,10 +2,13 @@
 require "../handlers/dbHandler.php";
 require "../classes/productClass.php";
 require "../classes/cartClass.php";
-class CartRepo {
-        function __construct()  {
-            $this->db = new Database();
-           }
+class CartRepo
+{
+    function __construct()
+    {
+        $this->db = new Database();
+    }
+
 
     function getCart($userId) {
         $cartList = $this->db->fetchQuery(
@@ -13,27 +16,33 @@ class CartRepo {
         INNER JOIN cart 
         ON  product.productId = cart.productId
         WHERE userId = $userId");
+
         $productArray = $this->createProductList($cartList);
         return $productArray;
     }
-    
-    function createProductList($productList) {
+
+    function createProductList($productList)
+    {
         $cartItems = array();
         $totalPrice = 0;
+
         foreach ($productList as $item) { 
             $product = new Product($item->productId, $item->productName,(int) $item->price, $item->description, $item->unitsInStock,(int) $item->categoryId, $item->img);
             $cartItem = new CartItem($product, (int) $item->quantity, $this->calculatePrice($item->quantity, $item->price), (int)$item->productId, (int)$item->userId);
+
             $totalPrice += $cartItem->totalPrice;
-            array_push($cartItems, $cartItem); 
+            array_push($cartItems, $cartItem);
         }
         return new Cart($cartItems, $totalPrice);
     }
-    
+
     //funktion som räknar kvantitet * styck pris
-    function calculatePrice($quantity, $price){
+    function calculatePrice($quantity, $price)
+    {
         $finalPrice = $price * $quantity;
-        return $finalPrice ;
+        return $finalPrice;
     }
+
      // funktion som lägger till en produkt i cart
     function addProductToCart($userId,$productId ){
         $cartList = $this->db->fetchQuery(
@@ -64,8 +73,10 @@ class CartRepo {
         $entity = array($productId);
         $this->db->runQuery($query, $entity);
         return "added 1";
+
     }
     //funktion update som tar in value i parametern som avgör vilken produkt vars kvantitet ska updateras
+
     function decrease ($productId,$userId){
         //gör en fetch på productid
         $query = (
@@ -97,3 +108,4 @@ class CartRepo {
     
 }
 ?>
+

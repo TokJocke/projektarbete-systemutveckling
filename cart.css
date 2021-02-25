@@ -10,18 +10,53 @@ body{
     background-repeat: no-repeat;
 }
 
+
 .productBox{
     display: flex;
     flex-flow: row wrap;
     justify-content: space-evenly;
     width: 60vw;
+
     height: 15vh;
     padding: 20px;
     
 }
 .productBox > button{
-    width: 5vh;
+
+    width: 5vw;
 }
+
+#shippingDiv{
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #ffff;
+}
+
+.shipperContainer{
+    display: flex;
+    justify-content: space-between;
+    width: 500px;
+    border: 1px solid #70707074;
+    padding: 23px 20px;
+    margin: 6px 0;
+}
+
+.shipperContainer:hover{
+    transition: ease-in 1000;
+    border: 1px solid #707070;
+}
+
+
+.shipperContainer:active{
+    transition: ease-in 2000;
+    border: 1px solid #B5CDCC
+}
+
+
+
 /* Responsive layout - makes a one column layout instead of a two-column layout */
 @media screen and (max-width: 900px) {
     .productBox{
@@ -34,4 +69,5 @@ body{
 
 
   }
+
 

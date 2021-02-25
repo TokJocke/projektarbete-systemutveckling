@@ -52,10 +52,14 @@ function login($un, $pw)
 
   $db = new Database();
   $db->fetchQuery($query);
-
+  $userID = fetchuId($un);
   $hashedPw = fetchUserInfo($un);
   // om $pw == hashat pw och matchar med username == success login.  
   if (password_verify($pw, $hashedPw) == true) {
+
+    session_start();
+    $_SESSION["user"] = $userID;
+
     echo json_encode("Login success"); //startar session här..
     exit;
   } else {

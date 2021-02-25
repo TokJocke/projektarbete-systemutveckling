@@ -1,10 +1,11 @@
 <?php
+
  
     try {
     
         if (isset($_SERVER["REQUEST_METHOD"])) { //IF SERVER
             require("../repositories/cartRepo.php");
-            $userId = 2;
+            $userId = $_SESSION["user"];
             $cr = new CartRepo;
      
         
@@ -44,10 +45,14 @@
                 }
                                     
                 
+
             }
+
+
+            ////update($userId,$productId,$quantity) tar in 3 para
         }
     }
-    catch (Exception $e) { // om error har felmeddelande
-        http_response_code($e->getCode());
-        echo json_encode(array("status" => $e->getCode(), "Message" => $e->getMessage()));
-    }
+} catch (Exception $e) { // om error har felmeddelande
+    http_response_code($e->getCode());
+    echo json_encode(array("status" => $e->getCode(), "Message" => $e->getMessage()));
+}
