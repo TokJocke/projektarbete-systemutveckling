@@ -46,8 +46,8 @@ return $myArray;
 
 function getAllOrders() {
     $allOrders = $this->db->fetchQuery("SELECT * FROM orders");  
-    /* $orderArray = $this->createOrderList($allOrders);  */
-    return $allOrders;
+    $orderArray = $this->createOrderList($allOrders); 
+    return $orderArray;
 }
  
 function createOrderList($array) {
@@ -59,4 +59,25 @@ function createOrderList($array) {
     return $orderArray;
 }
  
+function updateShipped($orderId) { 
+    
+    foreach ($orderId as $id) {       
+    
+    $query = "UPDATE orders SET shipped=:shipOut WHERE orderId =:id";
+
+    $entity = array(
+        'id' => $id, 
+        'shipOut' => 1); 
+
+        $this->db->runQuery($query, $entity);
+            
+    } 
+    return "Order(s) was set as shipped";
+}
+
+
+
+
+
+
 }

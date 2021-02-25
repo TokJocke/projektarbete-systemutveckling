@@ -241,6 +241,7 @@ function myAdminBox() {
     let adminUppdateBoxBtn = document.getElementsByClassName("adminProductBoxBtn")[0]
     let adminAddBoxBtn = document.getElementsByClassName("adminProductBoxBtn")[1]
     let adminOrderBtn = document.getElementsByClassName("adminProductBoxBtn")[2]
+    let adminUserBtn = document.getElementsByClassName("adminProductBoxBtn")[3]
     let adminBox = document.getElementById("adminProductBox")
     adminUpdateProductPanel()
 
@@ -257,8 +258,12 @@ function myAdminBox() {
 
     adminOrderBtn.addEventListener("click", () => {
         console.log("orderPanel")
-        loadOrders()
-        
+        loadOrders() 
+    })
+    
+    adminUserBtn.addEventListener("click", () => {
+        console.log("userPanel")
+    
     }) 
 }
 
@@ -268,19 +273,7 @@ async function getOrders() {
     return response
 }
 
-/* let btn = document.createElement("button")
-let searchInput = document.createElement("input") */
-
-/* async function showbyOrderId() {
-    let getAllOrders = await getOrders()
-    getAllOrders.forEach(order => {
-        if(searchInput.value == order.orderId) {
-            
-        }    
-    })    
-
-} */
-
+// Hämtar å visar ordrarna i adminpanel.
 async function loadOrders() {
     let adminBox = document.getElementById("adminProductBox")
     adminBox.innerHTML = ""
@@ -308,6 +301,7 @@ async function loadOrders() {
     let shippedTitle = document.createElement("td")
     // confirm knapp
     let confirmBtn = document.createElement("button")
+    confirmBtn.addEventListener("click", updateShippingStatus)
     confirmBtn.style.height = "5vh"
     confirmBtn.innerText = "Apply changes, mark order(s) as shipped"  
 
@@ -331,9 +325,11 @@ async function loadOrders() {
         let orderDate = document.createElement("td")
         let shipped = document.createElement("td")
         let checkbox = document.createElement("input")
+        checkbox.className = "myCheckbox"
         checkbox.type = "checkbox"
         checkbox.style.width = "5vw"
         checkbox.style.height = "5vh"
+        checkbox.value = order.orderId
         
 
         orderId.innerText = order.orderId
@@ -346,4 +342,22 @@ async function loadOrders() {
         }
         
     })  
+}
+//Funktion som skickar upp array med checkbox value
+async function updateShippingStatus() {
+    let cb = document.getElementsByClassName("myCheckbox")
+    let myArray = []
+    for (let i = 0; i < cb.length; i++) {
+        if(cb[i].checked) { 
+            myArray.push(cb[i].value)           
+         }
+    }       
+            console.log(myArray)
+
+    body = new FormData()
+    body.set("cbArray", JSON.stringify(myArray))        
+    
+    const response = await makeReq("./api/recievers/orderReciever.php", "POST", body)
+    console.log(response)
+    return response 
 }

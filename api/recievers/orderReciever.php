@@ -12,7 +12,16 @@ try {
                 echo json_encode($or->getAllOrders()); 
  
         }
-       
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {  
+
+            $cbArray = json_decode($_POST["cbArray"]);
+            
+            $or = new OrderRepo();
+            $or->updateShipped($cbArray); 
+
+             echo json_encode($cbArray);
+        
+        }
     }
 } catch (Exception $e) { // om error har felmeddelande
     http_response_code($e->getCode());
