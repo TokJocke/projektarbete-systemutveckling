@@ -11,6 +11,7 @@ function initSite() {
         getAllProducts()
         getAllCategorys()
         getOrders()
+        getUsers()
     }
 }
 
@@ -263,7 +264,7 @@ function myAdminBox() {
     
     adminUserBtn.addEventListener("click", () => {
         console.log("userPanel")
-    
+        loadUsers()
     }) 
 }
 
@@ -359,5 +360,107 @@ async function updateShippingStatus() {
     
     const response = await makeReq("./api/recievers/orderReciever.php", "POST", body)
     console.log(response)
+    loadOrders()
+    return response 
+}
+//Hämta användare
+async function getUsers() {
+    const response = await makeReq("./api/recievers/userReciever.php", "GET")
+    console.log(response)
+    return response
+}
+//laddar panel med alla användare
+async function loadUsers() {
+    let adminBox = document.getElementById("adminProductBox")
+    adminBox.innerHTML = ""
+    let header = document.createElement("h1")
+    header.align = "center"
+    header.innerText = "Update admin permissions"
+    let searchInput = document.createElement("input")
+    searchInput.placeholder = "Search for user by username"
+    searchInput.style.marginBottom = "5px"
+    let btn = document.createElement("button")
+    btn.style.height = "3vh"
+    btn.innerText = "Search"   
+    adminProductBox.append(header, searchInput, btn)
+  
+    //hämtar ordrar
+    let getAllUsers = await getUsers() 
+
+    //skapar table med titlar.
+    let myTable = document.createElement("table")
+    let titleTr = document.createElement("tr")
+    titleTr.align = "center"
+    let userIdTitle = document.createElement("td")
+    let usernameTitle = document.createElement("td")
+    let isAdminTitle = document.createElement("td")
+    let changeTitle = document.createElement("td")
+
+    // confirm knapp
+    let confirmBtn = document.createElement("button")
+    confirmBtn.addEventListener("click", updateUserStatus)
+    confirmBtn.style.height = "5vh"
+    confirmBtn.innerText = "Apply changes"  
+
+    userIdTitle.innerHTML = "<h3>userId</h3>"
+    usernameTitle.innerHTML = "<h3>Username</h3>"
+    isAdminTitle.innerHTML = "<h3>is Admin</h3>"
+    changeTitle.innerHTML = "<h3>Permission</h3>"
+    
+    titleTr.append(userIdTitle, usernameTitle, isAdminTitle, changeTitle)
+    myTable.append(titleTr)
+    adminBox.append(myTable, confirmBtn)
+
+    getAllUsers.forEach(user => {
+        
+        let newRow = document.createElement("tr")
+        newRow.align = "center"
+        let userId = document.createElement("td")
+        let username = document.createElement("td")
+        let isAdmin = document.createElement("td")
+        let cb = document.createElement("td")
+    
+        let checkbox = document.createElement("input")
+        checkbox.className = "myCheckbox2"
+        checkbox.type = "checkbox"
+        checkbox.style.width = "5vw"
+        checkbox.style.height = "5vh"
+        checkbox.value = user.userName
+        if(user.isAdmin == "1") { //Checkbox är checkad om användare är admin. 
+            checkbox.checked = true
+        }
+        
+
+        userId.innerText = user.userId
+        username.innerText = user.userName
+        isAdmin.innerText = user.isAdmin
+    
+        cb.append(checkbox)
+        newRow.append(userId, username, isAdmin, cb)
+        myTable.append(newRow)
+        
+    })  
+}
+//Skickar upp isAdmin värden från checkbox.
+async function updateUserStatus() {
+    let cb = document.getElementsByClassName("myCheckbox2")
+    let myArray = []
+    for (let i = 0; i < cb.length; i++) {
+        if(cb[i].checked) { 
+            myArray.push(cb[i].value)           
+         }
+       /*   if(cb[i]) { 
+            myArray.push(cb[i].value)           
+         } */
+    }       
+            console.log(myArray)
+
+    body = new FormData()
+    body.set("cbArray", JSON.stringify(myArray))
+    body.set("action", "updateUser")        
+    
+    const response = await makeReq("./api/recievers/userReciever.php", "POST", body)
+    console.log(response)
+    loadUsers()
     return response 
 }

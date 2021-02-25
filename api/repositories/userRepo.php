@@ -101,6 +101,42 @@ function newsNoSignUp($email, $name) { //skicka med userid och göra en check om
   $this->db->runQuery($query, $entity);
 }
 
+
+function getAllUsers() {
+  $allUsers = $this->db->fetchQuery("SELECT * FROM user");  
+  $userArray = $this->createUserList($allUsers); 
+  return $userArray;
+}
+
+function createUserList($array) {
+  $userArray = array();
+  foreach ($array as $item) { 
+      array_push($userArray, $item);
+  }
+  return $userArray;
+}
+
+function updateUser($isAdmin) { 
+    
+  foreach ($isAdmin as $usn) {       
+  
+  $query = "UPDATE user SET isAdmin=:isAdmin WHERE userName =:un";
+
+  $entity = array(
+      'un' => $usn, 
+      'isAdmin' => 1); 
+
+      $this->db->runQuery($query, $entity);
+            
+  } 
+  return "Admin permission was given";
+}
+
+
+
+
+
+
 }
 
 

@@ -8,7 +8,8 @@ try {
 
 
         if ($_SERVER["REQUEST_METHOD"] == "GET") { //IF METHOD = GET
-
+            $ur = new UserRepo(); 
+            echo json_encode($ur->getAllUsers());
 
         }
 
@@ -31,7 +32,6 @@ try {
                 
                 $ur = new UserRepo();
                 $ur->regUser($name, $reguserName, $regPassword, $Email, $regAddress, $regZip, $regPhone, 0);
-               /*  regUser($name, $reguserName, $regPassword, $Email, $regAddress, $regZip, $regPhone, 0); */
 
                 if ($newsletter == "Yes") {
                     $ur->signUpNewsletter($reguserName);
@@ -58,6 +58,16 @@ try {
             $ur = new UserRepo();
             $ur->newsNoSignUp($email, $name);
             echo json_encode("Signed up for newsletter");
+        }
+        
+        if ($_POST["action"] == "updateUser") {
+
+            $cbArray = json_decode($_POST["cbArray"]);
+            $ur = new UserRepo(); 
+            $ur->updateUser($cbArray);   
+
+            echo json_encode($cbArray);
+
         }
     }
 } catch (Exception $e) { // om error har felmeddelande
