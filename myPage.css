@@ -17,19 +17,21 @@
     display: flex;
     justify-content: center;
     flex-direction: row-reverse;
-    justify-content: space-around;
+    justify-content: space-between;
     flex-wrap: wrap;
 
 
 }
 
 .myPagecontent{
-display: flex;
-flex-direction: column;
+    display: flex;
+    flex-direction: column;
+    min-width: 70%;
 }
 
 .myPageMenu{
     display: flex;
+    width: 30%;
     max-height: 318px;
     border: solid thin  rgba(0, 0, 0, 0.233);
     flex-direction: column;
@@ -44,6 +46,8 @@ flex-direction: column;
     min-height: 106px;
     background-color:#C8D7E0;
     border-left:10px solid transparent;
+    cursor: pointer;
+
 }
 .myPageMenuBtn i {
     font-size: 2rem;
@@ -53,7 +57,7 @@ flex-direction: column;
 .myPageMenuBtn:hover {
     border-left: 10px solid #B4CDCC;
     transition: all .2s;
-    cursor: pointer;
+    
 }
 
 .myPageMenuBtn:active {

@@ -47,6 +47,15 @@ try {
 
             login($un, $pw);
         }
+
+        if ($_POST["action"] == "newsletter") {
+
+            $myArray = json_decode($_POST["newsL"]);
+            $name = $myArray->name;
+            $email = $myArray->email;
+            newsNoSignUp($email, $name);
+            echo json_encode("Signed up for newsletter");
+        }
     }
 } catch (Exception $e) { // om error har felmeddelande
     http_response_code($e->getCode());

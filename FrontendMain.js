@@ -4,7 +4,8 @@ window.addEventListener("load", initSite)
 
 function initSite() {
 	if (body){
-       
+    growHeader()
+
  	}
 }
 
@@ -12,17 +13,14 @@ let body = document.getElementById("indexBody")
 const formUser = document.getElementById("formUser")
 const cancel = document.getElementById("cancel")
 const userLogin = document.getElementById("userLogin")
-const loginForm = document.getElementById("logInForm")
 const background = document.getElementById("popupBackground")
-document.getElementById("menuBtn").onclick = function() {menuToggle(this)};
+
+
 const cartBtn = document.getElementById("cartBtn")
 
 
-/** menyknapp toggle */
-function menuToggle(x) {
-  x.classList.toggle("change");
-} 
  
+
 function loadRegForm(){
   const checkboxDiv = document.createElement("div")
   const inputMail = document.createElement("input")
@@ -38,6 +36,7 @@ function loadRegForm(){
   const text = document.createElement("p")
   const btn = document.createElement("div")
   head.innerText = "Registrera ny kund"
+
   inputMail.placeholder = "Mail"
   inputUsername.placeholder = "Användarnamn"
   inputPassword.placeholder = "Lösenord"
@@ -127,9 +126,12 @@ window.onclick = function(event) {
       logInForm.style.display = "none";
       formUser.innerHTML = ""
     }
-  }
+
+  
+}
 
 userLogin.addEventListener("click", () =>{
+
     logInForm.style.display = "flex"
     background.style.display = "flex"
     loadSignIn()
@@ -143,10 +145,87 @@ cancel.addEventListener("click", () => {
 } )
 
 
-/* <!-- Jocke & sebbes divar. Ska flyttas till Robins layout
 
 
-<div id="testDiv"></div>
+
+
+
+
+
+
+
+
+  function headerLinks() {
+    let headerLink = document.querySelectorAll("#headerTop a")
+    let header = document.getElementsByTagName("header")[0]
+    let headerTop = document.getElementById("headerTop")
+    let headerBox = document.getElementsByClassName("headerBox")
+    let menuBtn = document.getElementById("menuBtn")
+
+
+
+    for(let i = 0; i < headerLink.length; i++) {
+      console.log(headerLink[i])
+      
+      headerLink[i].addEventListener("click", () => {
+        menuBtn.classList.toggle("change");
+        console.log("clicked", headerLink[i])
+        header.style.height = "8vh"
+        headerTop.style.height = "0vh"
+        window.setTimeout(() => {
+          headerTop.style.display = "none"
+          for(let i = 0; i < headerBox.length; i++) {
+            headerBox[i].style.display = "none"
+          }
+        }, 500);
+      }) 
+    }
+  }    
+  
+    
+
 
   
- --> */
+  
+
+headerLinks()
+
+
+
+ function growHeader() {
+    let header = document.getElementsByTagName("header")[0]
+    let headerTop = document.getElementById("headerTop")
+    let menuBtn = document.getElementById("menuBtn")
+    let headerBox = document.getElementsByClassName("headerBox")
+    header.style.height = "8vh"
+    headerTop.style.height = "0vh"
+
+    menuBtn.addEventListener("click", () => {
+      menuBtn.classList.toggle("change");
+      if(header.style.height == "8vh") {
+        header.style.height = "24vh"
+        headerTop.style.height = "16vh"
+        headerTop.style.display = "flex"
+        window.setTimeout(() => {
+          for(let i = 0; i < headerBox.length; i++) {
+            headerBox[i].style.display = "flex"
+            headerBox[i].classList="headerBox slideRight"
+          }
+        }, 500);
+      }
+      else {   
+        header.style.height = "8vh"
+        headerTop.style.height = "0vh"
+        window.setTimeout(() => {
+          headerTop.style.display = "none"
+          for(let i = 0; i < headerBox.length; i++) {
+            headerBox[i].style.display = "none"
+          }
+        }, 500);
+        } 
+    })
+  } 
+
+
+
+

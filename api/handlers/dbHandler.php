@@ -17,6 +17,11 @@
         function runQuery($query, $entity) {
             $preparedQuery = $this->prepareQuery($query);
             $status = $preparedQuery->execute($entity);
+            
+            
+/*             error_log(json_encode($preparedQuery->errorInfo()));
+ */           
+           
             return $status;
         }
         function fetchQuery($query) {

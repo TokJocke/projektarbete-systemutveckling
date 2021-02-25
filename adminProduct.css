@@ -74,3 +74,18 @@ table {
     border: hidden;
 }
 
+#editPopUpDiv {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    z-index: 99;
+    margin-top: 30vh;
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 15px;
+    background-color: lightblue;
+}
+
+.editPopUpInput, #editPopUpCategory {
+    min-height: 5vh;
+}

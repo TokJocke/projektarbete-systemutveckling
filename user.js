@@ -7,7 +7,7 @@ let body = document.getElementById("indexBody")
 
 function initSite() {
 	if (body){
-       
+       signNews()
  	}
 }
 
@@ -102,5 +102,21 @@ export async function login() {
     
     console.log(response)
 }
+let newsBtn = document.getElementById("newsBtn")
 
+async function Newsletter() { //Signa newsletter ej inloggad.
+    let newsL = {
+        name: document.getElementById("newsName").value,
+        email: document.getElementById("newsEmail").value
+    }
+
+    let body = new FormData()
+    body.set("newsL", JSON.stringify(newsL))
+    body.set("action", "newsletter")
+    const response = await makeReq("./api/recievers/userReciever.php", "POST", body)
+    console.log(response)
+}
+async function signNews() {
+    newsBtn.addEventListener("click", Newsletter)
+}
 
