@@ -70,15 +70,18 @@ async function productPopUpDiv (moreInfoBtn){
     let thisImg = this.img
     let thisPrice = this.price
     let thisDesc = this.description
+    let thisUnitsInStock = this.unitsInStock
 
     let divName = document.createElement("h3")
     let divImg = document.createElement("img")
     let divPrice = document.createElement("h5")
+    let divStock = document.createElement("h6")
     let divDesc = document.createElement("p")
 
     divName.innerHTML = thisName
     divImg.src = thisImg
     divPrice.innerHTML = "Pris" + " "+ thisPrice + ":-"
+    divStock.innerHTML = "Lagerstatus"+ " " + thisUnitsInStock
     divDesc.innerHTML = thisDesc
 
     const product = document.getElementById("allProductBox")
@@ -91,7 +94,7 @@ async function productPopUpDiv (moreInfoBtn){
     span.className = "close"
     span.innerHTML = "&times;"
     
-    content.append(span,divName,divImg,divPrice ,divDesc)
+    content.append(span,divName,divImg,divPrice, divStock,divDesc)
     modal.append( content)
     product.append(modal)
 
