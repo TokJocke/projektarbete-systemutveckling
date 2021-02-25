@@ -1,0 +1,37 @@
+*{
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+}
+
+body{
+    background-color: #E8E0E4;
+    background-image: url(./assets/layout/shape.svg);
+    background-repeat: no-repeat;
+}
+
+.productBox{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    width: 60vw;
+    height: 15vh;
+    padding: 20px;
+    
+}
+.productBox > button{
+    width: 5vh;
+}
+/* Responsive layout - makes a one column layout instead of a two-column layout */
+@media screen and (max-width: 900px) {
+    .productBox{
+        flex: 1 2 auto;
+    }
+    .productBox > p{
+        font-size: x-small;
+    }
+    
+
+
+  }
+
