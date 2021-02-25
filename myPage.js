@@ -1,4 +1,5 @@
 import {makeReq} from "./main.js"
+import { headerLinks, growHeader } from "./FrontendMain.js"
 window.addEventListener("load", initSite)
 let body = document.getElementById("myPageBody")
 const myPageDiv = document.getElementById("myPageContent")
@@ -9,7 +10,8 @@ const letterBtn = document.getElementById("letterBtn")
 function initSite() {
 	if (body){
 		userInfo()
-    
+		headerLinks()
+		growHeader()
  	}
 }
 

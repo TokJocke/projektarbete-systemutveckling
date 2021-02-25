@@ -23,6 +23,15 @@ export async function makeReq(path, method, body) {
       } 
 }
 
+//Ska nog tas bort
+/* export function urlAndParam(myUrl, paramKey, paramvalue) {
+
+    let url = myUrl
+    let params = "?" + paramKey + "=" + paramvalue;
+    console.log(url + params.toString())
+    return url + params.toString()    
+} */
+
 export async function getAllCategorys() {
     const response = await makeReq("./api/recievers/categoryReciever.php", "GET")
     console.log(response)

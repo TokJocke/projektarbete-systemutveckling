@@ -13,58 +13,53 @@ function initSite() {
     }
 }
 
-
-
 //admin panel for adding products
 async function adminAddProductPanel() {
+    //*****Creating all content
     let adminProductBox = document.getElementById("adminProductBox")
     let myTable = document.createElement("table")
-    //Name row with inputs
     let nameTr = document.createElement("tr")
     let nameTd = document.createElement("td")
     let nameInput = document.createElement("td")
-    nameTd.innerText = "Name"
-    nameInput.innerHTML = "<input type='text' id='nameInput'>" 
-    //Price row with inputs
     let priceTr = document.createElement("tr")
     let priceTd = document.createElement("td")
     let priceInput = document.createElement("td")
-    priceTd.innerText = "Price"
-    priceInput.innerHTML = "<input type='number' id='priceInput'>" 
-    //Description row with inputs
     let descTr = document.createElement("tr")
     let descTd = document.createElement("td")
     let descInput = document.createElement("td")
-    descTd.innerText = "Description"
-    descInput.innerHTML = "<textarea type='text' id='descInput'>" 
-    //Category row with category select
     let categoryTr = document.createElement("tr")
     let categoryTd = document.createElement("td")
     let categoryInput = document.createElement("td")
-    categoryTd.innerText = "Category"   
-    //create dropdown "select" with options
     let categoryDropDown = await createCategoryDropDown()
-    categoryDropDown.id = "categoryInput"
-    //create upload input for img
-    let uploadImgTr = document.createElement("tr")
-    let uploadImgTd = document.createElement("td")
-    let uploadImgInput = document.createElement("td")
-    uploadImgTd.innerText ="Upload Image"
-    uploadImgInput.innerHTML = "<input type='file' name='image' id='uploadImgInput'>"    
-    //create confirm button
+    let buttonDiv = document.createElement("div")
+    let uploadImg = document.createElement("input")
     let confirmBtn = document.createElement("button")
+    //*****All properties
+    myTable.id = "addProductTabel"
+    nameTd.innerText = "Name"
+    nameInput.innerHTML = "<input type='text' id='nameInput'>" 
+    priceTd.innerText = "Price"
+    priceInput.innerHTML = "<input type='number' id='priceInput'>" 
+    descTd.innerText = "Description"
+    descInput.innerHTML = "<textarea type='text' id='descInput'>" 
+    categoryTd.innerText = "Category"   
+    categoryDropDown.id = "categoryInput"
+    uploadImg.type = "file"
+    uploadImg.name = "image"
+    uploadImg.id="uploadImgInput"
     confirmBtn.innerText = "Confirm"
     confirmBtn.addEventListener("click", sendProductData)
-    //All appends
+    //*****All appends
+    buttonDiv.append(uploadImg, confirmBtn)
     categoryInput.append(categoryDropDown)
-    uploadImgTr.append(uploadImgTd, uploadImgInput)
     categoryTr.append(categoryTd, categoryInput)
     descTr.append(descTd, descInput)
     nameTr.append(nameTd, nameInput)
     priceTr.append(priceTd, priceInput)
-    myTable.append(nameTr, priceTr, descTr, categoryTr, uploadImgTr, confirmBtn)
-    adminProductBox.append(myTable)
+    myTable.append(nameTr, priceTr, descTr, categoryTr)
+    adminProductBox.append(myTable, buttonDiv)  
 }
+
 //admin panel for update / delete producs
 async function adminUpdateProductPanel() {
     let allProducts = await getAllProducts() 

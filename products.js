@@ -1,22 +1,28 @@
 import {makeReq} from "./main.js"
 
-window.addEventListener("load", initSite)
+ window.addEventListener("load", initSite)
 let body = document.getElementById("indexBody")
 
 
 function initSite() {
 	if (body){
-        renderProducts()
-/*         addProdBtn()
- */ 	}
-}
+        getAllProdsInCategory()
+        getAllProducts()
+	}
+} 
 
 export async function getAllProducts() {
     const response = await makeReq("./api/recievers/productReciever.php", "GET")
-
-    console.log(response)
     return response
 }
+
+export async function getAllProdsInCategory(id) {
+
+    const response = await makeReq("./api/recievers/productReciever.php?id=" + id,  "GET")
+    return response
+}
+
+
 
 async function addProducts() {
     const response = await makeReq("./api/recievers/productReciever.php", "POST")
@@ -24,15 +30,15 @@ async function addProducts() {
 
 }
 
-async function renderProducts() {
+export async function renderProducts(fromWhere) {
 
-    let allProducts = await getAllProducts()
+    let allProducts = await fromWhere
     let productWrapper = document.getElementById("allProductBox")
     console.log("in render" , allProducts)
 
     allProducts.forEach(product => {
         let productDiv = document.createElement("div")
-        let productTitle = document.createElement("h2")
+        let productTitle = document.createElement("h3")
 /*         let productDesc = document.createElement("p")
  */        let productPrice = document.createElement("h3")
         let productImg = document.createElement("img")

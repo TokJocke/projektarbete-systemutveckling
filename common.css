@@ -12,7 +12,7 @@ body{
 }
 
 
-h1{
+h1, h2{
     color:#707070;
     font-family: cheap-pine, sans-serif;
     font-weight: 400;
@@ -20,81 +20,27 @@ h1{
     font-size: 40px;
 }
 
-header{
-    position: fixed;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    padding: 0 50px ;
-    left: 0;
-    right: 0;
-    top: 0;
-    background-image: url(/assets/layout/godisrpsa.jpg);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: bottom;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    z-index: 97;
-}
-#headerBottom {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    align-self: flex-end;
-    height: 8vh;
-    width: 100%;
-    position: relative;
-    bottom: 0px;
-}
 
-#headerTop {
-    display: none;
-    background-color:chartreuse;
-    justify-content: space-evenly;
-}
 
-.headerBox {
-    display: none;
-    background-color: green;
-    overflow: hidden;
-}
 
-.menu {
-    display: flex;
-    flex:1 1 auto;
-}
 
-/* .brandLogo {
-    display: flex;  
-    width: 8vh;
-    height: 8vh;
 
-} */
 
- .brandLogo > a {
-    text-decoration: none;
 
-}
 
 
  
 .navRight{
     display: flex;
     flex-direction: row-reverse;
-    flex: 1 1 auto;
-}
+/*     flex: 1 1 auto;
+ */}
 
 .navRight i{
     padding: 0 10px;
 }
 
-.myPageBtn{
-    font-size: 2rem;
-}
 
-.cartBtn{
-    font-size: 2rem;
-}
 
 .svgTop{
     display: flex;
@@ -328,16 +274,19 @@ footer {
 
 }
 
+
+
 /* Crate a hidden non clickable div to push anchorlinks to correct position */
-.anchorPoint::before {
+/*   .anchorPoint::before {
     content: '';
     display: block;
-    height: 60px;
-    margin: -50px 0 0;
-    z-index: -99;
-}
-
-
+    height: 20px;
+    margin: -60px 0 0;
+    z-index: 0;
+    background-color: red;
+} 
+ 
+ */
 
 
 
