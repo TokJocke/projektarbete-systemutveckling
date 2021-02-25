@@ -24,10 +24,16 @@
            
         function addProduct($name, $price, $description, $unitsInStock, $categoryId, $img) {
             
-            $query = ('INSERT INTO product (productName, price, description, unitsInStock, categoryId, img) 
-            VALUES (:productName, :price, :description, :unitsInStock, :categoryId, :img)');
-            $entity = array(':productName' => $name, ':price' => $price, ':description' => $description, 
-            ':unitsInStock' => $unitsInStock, 'categoryId' => $categoryId, 'img' => $img);
+            $query = ('
+                INSERT INTO product (productName, price, description, unitsInStock, categoryId, img) 
+                VALUES (:productName, :price, :description, :unitsInStock, :categoryId, :img)');
+            $entity = array(
+                ':productName' => $name, 
+                ':price' => $price, 
+                ':description' => $description, 
+                ':unitsInStock' => $unitsInStock, 
+                'categoryId' => $categoryId, 
+                'img' => $img);
             
             $this->db->runQuery($query, $entity);
             return $name . " added to products";
@@ -42,6 +48,32 @@
             $this->removeImage($img);
             return "remove success";
         }
+
+        function updateProduct($name, $price, $desc, $inStock, $category, $id) {
+            $query = "
+                UPDATE product 
+                SET productName=:name, price=:price, description=:desc, unitsInStock=:inStock, categoryId=:category 
+                WHERE productId =:id";
+            
+/*                 UPDATE product SET productName = "sdasd" WHERE productId = 26
+ */
+            
+            $entity = array(
+                'name' => $name, 
+                'price' => $price, 
+                'desc' => $desc, 
+                'inStock' => $inStock, 
+                'category' => $category, 
+                'id' => $id);
+
+                error_log(json_encode($entity));
+                
+            $this->db->runQuery($query, $entity);
+            return "product with id = " . $id . " updated";
+        }
+
+
+
 
         function removeImage($img) {
             $check = getimagesize($img);

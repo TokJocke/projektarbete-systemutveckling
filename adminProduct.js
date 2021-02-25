@@ -1,4 +1,4 @@
-import {makeReq, getAllCategorys } from "./main.js"
+import {makeReq, getAllCategorys, createCategoryDropDown, removeElementById} from "./main.js"
 import {getAllProducts} from "./products.js"
 
 window.addEventListener("load", initSite)
@@ -43,15 +43,8 @@ async function adminAddProductPanel() {
     let categoryInput = document.createElement("td")
     categoryTd.innerText = "Category"   
     //create dropdown "select" with options
-    let allCategorys = await getAllCategorys()
-    let mySelect = document.createElement("select")
-    mySelect.id="categoryInput"
-    allCategorys.forEach(category => {
-        let myOption = document.createElement("option")
-        myOption.innerText = category.categoryId + " - " + category.name 
-        myOption.value = category.categoryId
-        mySelect.append(myOption) 
-    })    
+    let categoryDropDown = await createCategoryDropDown()
+    categoryDropDown.id = "categoryInput"
     //create upload input for img
     let uploadImgTr = document.createElement("tr")
     let uploadImgTd = document.createElement("td")
@@ -63,8 +56,8 @@ async function adminAddProductPanel() {
     confirmBtn.innerText = "Confirm"
     confirmBtn.addEventListener("click", sendProductData)
     //All appends
+    categoryInput.append(categoryDropDown)
     uploadImgTr.append(uploadImgTd, uploadImgInput)
-    categoryInput.append(mySelect)
     categoryTr.append(categoryTd, categoryInput)
     descTr.append(descTd, descInput)
     nameTr.append(nameTd, nameInput)
@@ -99,7 +92,7 @@ async function adminUpdateProductPanel() {
     myTable.append(titleTr)
     adminBox.append(myTable)
 
-    allProducts.forEach(product => {
+    allProducts.forEach(product => { 
         //every Td
         let newRow = document.createElement("tr")
         newRow.className="UpdatePanelProdRow"
@@ -148,38 +141,40 @@ async function deleteProduct() {
     
 }
 
-function editProduct() {
+async function editProduct() {
+    
     let main = document.getElementsByTagName("main")[0]
-
-    console.log(main)
     let title = document.createElement("h2")
-    title.innerText = this.name
     let popUpDiv = document.createElement("div")
-    popUpDiv.id = "editPopUpDiv"
-
     let nameInput = document.createElement("input")
-    nameInput.placeholder = this.name
-    nameInput.className = "editPopUpInput"
     let priceInput = document.createElement("input")
-    priceInput.placeholder = this.price
-    priceInput.className = "editPopUpInput"
     let descInput = document.createElement("input")
-    descInput.placeholder = this.description
-    descInput.className = "editPopUpInput"
     let inStockInput = document.createElement("input")
-    inStockInput.placeholder = this.unitsInStock
-    inStockInput.className = "editPopUpInput"
-    let categoryInput = document.createElement("input")
-    categoryInput.placeholder = this.categoryId
-    categoryInput.className = "editPopUpInput"
-
+    let categoryInput = await createCategoryDropDown()
     let buttonContainer = document.createElement("div")
-
     let updateBtn = document.createElement("button")
-    updateBtn.innerText="update"
-    updateBtn.addEventListener("click", update)
     let cancelBtn = document.createElement("button")
+
+    popUpDiv.id = "editPopUpDiv"
+    nameInput.className = "editPopUpInput"
+    priceInput.className = "editPopUpInput"
+    descInput.className = "editPopUpInput"
+    inStockInput.className = "editPopUpInput"
+    categoryInput.id = "editPopUpCategory"
+    
+    title.innerText = this.name
+    nameInput.placeholder = this.name
+    priceInput.placeholder = this.price
+    descInput.placeholder = this.description
+    inStockInput.placeholder = this.unitsInStock
+    updateBtn.innerText="update"
     cancelBtn.innerText = "cancel"
+    
+    priceInput.type = "number"
+    inStockInput.type = "number"
+
+    updateBtn.addEventListener("click", update.bind(this))//Alternativ lösning för att gå runt att funktionen kallas vid init    
+    cancelBtn.addEventListener("click", cancel)           //==.onclick = () => { update(this.productId); }; okej eller dödssynd?
 
     buttonContainer.append(updateBtn, cancelBtn)
     popUpDiv.append(title, nameInput, priceInput, descInput, inStockInput, categoryInput, buttonContainer)
@@ -187,18 +182,43 @@ function editProduct() {
 }
 
 
-function update(name, price, desc, inStock, category) {
-   let input = document.getElementsByTagName("input")
+async function update() {
+    console.log(this.productId)//Med .bind lösning blir denna "this.productId"
+    let input = document.getElementsByTagName("input")
+    let myInputValueArray = []
+    let inputCategory = document.getElementById("editPopUpCategory")
+    for(let i = 0; i < input.length; i++) {
+        if(input[i].value != "") {
+            myInputValueArray.push(input[i].value)
+        }
+        else {
+            myInputValueArray.push(input[i].placeholder)
+        }  
+    }
+    myInputValueArray.push(inputCategory.value)    
+    myInputValueArray.push(this.productId)//Med .bind lösning blir denna "this.productId"
 
-   console.log(input[0].placeholder)
-/*     input.forEach(item => {
-       console.log(item.placeholder)
-   });  */
+    console.log("new array = ", myInputValueArray)
+   
+    let data = new FormData()
+    data.append("action", "updateProduct")
+    data.append("product", JSON.stringify(myInputValueArray))
+
+    const response = await makeReq("./api/recievers/productReciever.php", "POST", data)
+    console.log("response = ", response)
+  
+    removeElementById("editPopUpDiv")
+    adminUpdateProductPanel()
+
+}
+
+function cancel() {
+    removeElementById("editPopUpDiv")
 }
 
 
 
-//function for uploading image and sending product data
+//function for sending product data and uploading image 
 async function sendProductData() {   
     let inputName = document.getElementById("nameInput").value
     let inputPrice = document.getElementById("priceInput").value
