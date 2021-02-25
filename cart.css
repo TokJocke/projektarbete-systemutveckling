@@ -9,20 +9,29 @@ body{
     background-image: url(./assets/layout/shape.svg);
     background-repeat: no-repeat;
 }
+
 .productBox{
     display: flex;
-    flex-direction: row;
+    flex-flow: row wrap;
     justify-content: space-evenly;
-    width: 40vw;
+    width: 60vw;
     height: 15vh;
     padding: 20px;
     
 }
 .productBox > button{
-    width: 3vw;
+    width: 5vh;
 }
-/* .productBox  p{
-    font-size: smaller;
+/* Responsive layout - makes a one column layout instead of a two-column layout */
+@media screen and (max-width: 900px) {
+    .productBox{
+        flex: 1 2 auto;
+    }
+    .productBox > p{
+        font-size: x-small;
+    }
     
-} */
+
+
+  }
 

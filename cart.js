@@ -56,7 +56,7 @@ async function renderProducts() {
         productQuantity.innerText = product.quantity + "st"
         productPlus.innerText = "+"
         productMinus.innerText = "-"
-        productRemove.innerText = "Delete"
+        
         //eventlisteners
                          // här ändrar jag para "change" till action -> increase/decrease 
         productPlus.addEventListener("click", update.bind(product, "increase"))
@@ -65,6 +65,7 @@ async function renderProducts() {
         
         productImg.src = "./assets/product/" + product.product.img 
         productDiv.className = "productBox"
+        productRemove.className = "fa fa-trash"
         //append
         productDiv.append(productImg, productTitle,productPrice,productMinus,productQuantity,productPlus, productTotalPrice, productRemove)
         productWrapper.append(productDiv)
