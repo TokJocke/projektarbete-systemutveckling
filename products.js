@@ -154,10 +154,14 @@ async function update (change){
     
     
     let response = await makeReq("./api/recievers/cartReciever.php?count", "GET",)
-    console.log("amountInCart",response)
+    console.log("amountInCart", response)
     
-
-    cartdiv.innerHTML = response[0].antal
+    if (response[0].antal == null) {
+        cartdiv.innerHTML = ""
+    }
+    else {
+        cartdiv.innerHTML = response[0].antal
+    }
 }
 
 
