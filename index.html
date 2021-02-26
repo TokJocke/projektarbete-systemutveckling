@@ -9,8 +9,9 @@
     <link rel="stylesheet" href="https://use.typekit.net/ydb2bnu.css">
     <link rel="stylesheet" href="animations.css">
     <link rel="stylesheet" href="./common.css" />
-    <script type="module" src="./products.js"></script>
-    <script type="module" src="./main.js"></script>
+    <link rel="stylesheet" href="./header.css" />
+<!--     <script type="module" src="./products.js"></script>
+ -->    <script type="module" src="./main.js"></script>
     <script type="module" src="./FrontendMain.js"></script>
     <!-- <script type="module" src="./user.js"></script> -->
 
@@ -18,11 +19,12 @@
 <body id="indexBody">
     <header>
         <div id="headerTop">
-            <a class="headerBox" href="#anchorProduct">
-                <div class="headerBox">asdasdasd</div>
-            </a>
-            <div class="headerBox">asdasdasd</div>
-            <div class="headerBox">asdasdasd</div> 
+            <!-- Om nedanstående A bråkar testsa = "<a class="headerBox" href="#anchorProduct">" -->
+ <!--            <a href="#anchorProduct">
+                <div class="headerBox">
+                    <h2>Alla Produkter</h2>
+                </div>
+            </a> -->
         </div>
         <div id="headerBottom">
             <div class="menu">
@@ -33,16 +35,23 @@
                 </div>
             </div>
             <div class="brandLogo logoAnimation">
-                <a href="./index.html">
+                <a href="#indexBody">
                     <h1>S&Ocirc;tt & G&Ocirc;tt</h1>
                 </a>
             </div>
-            <div class="navRight">
-                <div class="cartBtn">
-                <i id="cartBtn" class="fas fa-shopping-basket"></i>
-            </div>
-            <div class="myPageBtn">
+       
+        <div class="navRight">
+            <div class="cartBtn">
+
+                <div id="valueInCart"></div>
+            <a href="./cartPage.html"><i id="cartBtn" class="fas fa-shopping-basket"></i></a>
+
+        </div>
+        
+                <div class="myPageBtn">
+
                 <i id="userLogin" class="far fa-user"></i>
+
             </div>
         </div>
     </header>
@@ -100,8 +109,8 @@
         </section>
         <section id="productWrapper">
             <div class="headlineContainer">
-                <h1 class="anchorPoint" id="anchorProduct">Produkter</h1>
             </div>
+            <h1 id="anchorProduct">Produkter</h1>
            
             <div class="productContainer" id="allProductBox">
 

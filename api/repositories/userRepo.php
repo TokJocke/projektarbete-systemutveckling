@@ -47,11 +47,16 @@ function login($un, $pw)
 
   $query = "SELECT userName, password FROM user WHERE userName='" . $un . "' and password='" . $pw . "'";
 
-  $this->db->fetchQuery($query);
 
+  $this->db->fetchQuery($query);
+  $userID = $this->fetchuId($un);
   $hashedPw = $this->fetchUserInfo($un);
   // om $pw == hashat pw och matchar med username == success login.  
   if (password_verify($pw, $hashedPw) == true) {
+
+    session_start();
+    $_SESSION["user"] = $userID;
+
     echo json_encode("Login success"); //startar session här..
     exit;
   } else {

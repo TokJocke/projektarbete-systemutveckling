@@ -11,9 +11,15 @@
         
                 // här blir det fel med att hämta getTotalPrice, funkar ej
                 $pr = new ProductRepo; 
-                echo json_encode($pr->getAllProducts()); 
-
+                if(isset($_GET["id"])) {
+                    echo json_encode($pr->getAllProductsInCategory($_GET["id"]));
+                }
+                else {
+                 echo json_encode($pr->getAllProducts()); 
+                }
             }
+
+
             else if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
              

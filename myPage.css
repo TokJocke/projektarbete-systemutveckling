@@ -23,7 +23,7 @@
 
 }
 
-.myPagecontent{
+.myPagecontent {
     display: flex;
     flex-direction: column;
     min-width: 70%;

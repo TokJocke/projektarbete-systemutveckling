@@ -12,6 +12,13 @@
             $productArray = $this->createProductList($allProducts);
             return $productArray;
         }
+
+        function getAllProductsInCategory($id) {
+            $allInCategory = $this->db->fetchQuery("SELECT * FROM Product WHERE categoryId='$id'");
+            $productArray = $this->createProductList($allInCategory);
+            return $productArray;
+        }
+
         //Skapa lista med produktinstanser
         function createProductList($array) {
             $productArray = array();
@@ -72,9 +79,6 @@
             return "product with id = " . $id . " updated";
         }
 
-
-
-
         function removeImage($img) {
             $check = getimagesize($img);
             //check if $img = image file
@@ -82,7 +86,6 @@
                 unlink($img);
             }
          
-
         }
         //method for upploading image
         function uploadImage($image) {

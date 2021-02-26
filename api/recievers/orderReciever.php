@@ -1,5 +1,7 @@
 <?php
+
  
+  /*  
 try {
  
     if (isset($_SERVER["REQUEST_METHOD"])) { //IF SERVER
@@ -22,8 +24,33 @@ try {
              echo json_encode($cbArray);
         
         }
+        
+        */
+
+
+
+try {
+
+    if (isset($_SERVER["REQUEST_METHOD"])) { //IF SERVER
+        require "../repositories/orderRepo.php";
+        /* require "../handlers/dbHandler.php"; */
+
+
+
+        if ($_SERVER["REQUEST_METHOD"] == "GET") { //IF METHOD = GET
+
+        }
+
+        if ($_SERVER["REQUEST_METHOD"] == "POST") { //IF METHOD = POST
+
+            $or = new OrderRepo();
+            echo json_encode($or->placeOrder($_POST["shipper"]));
+        }
+
+
     }
 } catch (Exception $e) { // om error har felmeddelande
     http_response_code($e->getCode());
     echo json_encode(array("status" => $e->getCode(), "Message" => $e->getMessage()));
 }
+
