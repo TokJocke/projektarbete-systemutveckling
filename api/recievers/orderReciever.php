@@ -1,5 +1,6 @@
 <?php
 
+
 try {
 
     if (isset($_SERVER["REQUEST_METHOD"])) { //IF SERVER
@@ -17,8 +18,10 @@ try {
             $or = new OrderRepo();
             echo json_encode($or->placeOrder($_POST["shipper"]));
         }
+
     }
 } catch (Exception $e) { // om error har felmeddelande
     http_response_code($e->getCode());
     echo json_encode(array("status" => $e->getCode(), "Message" => $e->getMessage()));
+
 }
