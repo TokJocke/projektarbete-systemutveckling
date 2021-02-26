@@ -152,44 +152,44 @@ function updateUser($isAdmin, $isAdm) {
 
 
   
-  $this->db->runQuery($query, $entity);
-}
-// fetch userInfo except username & password
-function userInfo($userId){
 
-  $query = 
-  "SELECT userId, name, email,address,zipCode,phoneNr,isAdmin 
-  FROM user
-  WHERE userId = $userId";
-  $result = $this->db->fetchQuery($query);
-  return $result;
+  // fetch userInfo except username & password
+  function userInfo($userId){
 
-}
-
-//fetch admin info on logged in 
-function isAdminInfo($userId){
-
-  $query = 
-  "SELECT isAdmin 
-  FROM user
-  WHERE userId = $userId";
-  $result = $this->db->fetchQuery($query);
-  if($result[0]->isAdmin == 0){
-    $result = "Nej";
-  }else {
-    $result = "Ja";
-  }
-  return $result;
-  
-}
-//fetch current name on logged in
-function currentUserName($userId){
-  $query = 
-    "SELECT name 
+    $query = 
+    "SELECT userId, name, email,address,zipCode,phoneNr,isAdmin 
     FROM user
     WHERE userId = $userId";
     $result = $this->db->fetchQuery($query);
     return $result;
 
-}
+  }
+
+//fetch admin info on logged in 
+  function isAdminInfo($userId){
+
+    $query = 
+    "SELECT isAdmin 
+    FROM user
+    WHERE userId = $userId";
+    $result = $this->db->fetchQuery($query);
+    if($result[0]->isAdmin == 0){
+      $result = "Nej";
+    }else {
+      $result = "Ja";
+    }
+    return $result;
+  
+  }
+//fetch current name on logged in
+  function currentUserName($userId){
+    $query = 
+      "SELECT name 
+      FROM user
+      WHERE userId = $userId";
+      $result = $this->db->fetchQuery($query);
+      return $result;
+  }
+
+
 }

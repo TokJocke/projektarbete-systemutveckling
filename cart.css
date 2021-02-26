@@ -1,8 +1,8 @@
-*{
+/* * {
     box-sizing: border-box;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
-}
+} */
 
 body{
     background-color: #E8E0E4;
@@ -10,20 +10,42 @@ body{
     background-repeat: no-repeat;
 }
 
+main {
+    display: flex;
+    justify-content: center;
+    margin-top: 20vh;
+}
 
-.productBox{
+.cartProductBox{
     display: flex;
     flex-flow: row wrap;
     justify-content: space-evenly;
     width: 60vw;
-
     height: 15vh;
     padding: 20px;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 2rem;
+    align-items: center;
+    padding: 1.5rem;
+    margin:2rem 0;
+    /* font */
+    color: #707070;
+    font-family: cheap-pine, sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 1rem;
     
 }
-.productBox > button{
-
+.cartProductBox > button{
+    
     width: 5vw;
+}
+
+.cartProductBox > img {
+    object-fit: contain;
+    max-width: 50%;
+    max-height: 50%;
 }
 
 #shippingDiv{

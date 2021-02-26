@@ -1,6 +1,7 @@
 import {makeReq} from "./main.js"
 import {amountInCart} from "./products.js"
-import { headerLinks, growHeader } from "./FrontendMain.js"
+import { growHeader, filterProducts, headerNavBtn } from "./FrontendMain.js"
+
 window.addEventListener("load", initSite)
 let body = document.getElementById("myPageBody")
 const myPageDiv = document.getElementById("myPageContent")
@@ -10,15 +11,15 @@ const letterBtn = document.getElementById("letterBtn")
 
 function initSite() {
 	if (body){
-		userBtnClick()
+	/* 	userBtnClick()
 		ordersBtnClick()
 		letterBtnClick()
-		renderUserInfo()
+		renderUserInfo() */
 		amountInCart()
-		currentUser()
-		userInfo()
-		headerLinks()
+	//	currentUser()
+	//	userInfo()
 		growHeader()
+		headerNavBtn("./index.html#anchorProduct")
  	}
 }
 

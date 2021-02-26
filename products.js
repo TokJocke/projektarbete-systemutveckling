@@ -1,7 +1,7 @@
 import {makeReq} from "./main.js"
 import {currentUser} from "./myPage.js"
 
- window.addEventListener("load", initSite)
+/*  window.addEventListener("load", initSite)
 let body = document.getElementById("indexBody")
 
 
@@ -15,10 +15,10 @@ function initSite() {
 	      amountInCart()
         
         
-        /* productPopUp()
-        clickOutSideToClose() */
+         productPopUp()
+        clickOutSideToClose() 
 	}
-}
+} */
 
 
 
@@ -48,6 +48,7 @@ export async function renderProducts(fromWhere) {
     console.log("in render" , allProducts)
 
     allProducts.forEach(product => {
+        let productDivWrapper = document.createElement("div")
         let productDiv = document.createElement("div")
         let productTitle = document.createElement("h3")
 /*         let productDesc = document.createElement("p")
@@ -68,10 +69,11 @@ export async function renderProducts(fromWhere) {
         addToCartBtn.className = "addToCartBtn"
         
         productDiv.className = "productBox"
+        productDivWrapper.className = "productBoxWrapper"
         
-
-        productDiv.append(productTitle, productImg, productPrice,addToCartBtn)
-        productWrapper.append(productDiv)
+        productDiv.append(productTitle, productImg, productPrice)
+        productDivWrapper.append(productDiv, addToCartBtn)
+        productWrapper.append(productDivWrapper)
 
     });
 }
@@ -153,7 +155,7 @@ async function update (change){
 
 }
 // funktion som hämtar antalet produkter i cart och skriver ut på sidan vid cart ikonen
-  export async function amountInCart (){
+  export async function amountInCart(){
     let cartdiv = document.getElementById("valueInCart")
     
     

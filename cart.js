@@ -1,5 +1,6 @@
 import {makeReq} from "./main.js"
-
+import { headerLinks, growHeader, filterProducts, headerNavBtn } from "./FrontendMain.js"
+import { amountInCart } from "./products.js"
 
 window.addEventListener("load", initSite)
 let body = document.getElementById("cartPageBody")
@@ -9,10 +10,14 @@ function initSite() {
         renderProducts()
         getShippers()
         renderShippers()
-        testing()
-	}
-}
+        growHeader()
+        headerNavBtn("#")    
+        amountInCart()     
+        //filterProducts()
+	
+    }
 
+}
 
 
 async function getCart() {
@@ -70,7 +75,7 @@ async function renderProducts() {
 
         
         productImg.src = "./assets/product/" + product.product.img 
-        productDiv.className = "productBox"
+        productDiv.className = "cartProductBox"
         productRemove.className = "fa fa-trash"
         //append
         productDiv.append(productImg, productTitle,productPrice,productMinus,productQuantity,productPlus, productTotalPrice, productRemove)
@@ -156,5 +161,4 @@ async function myTest(){
     const response = await makeReq("./api/recievers/orderReciever.php", "POST", body)
     console.log(response)
 }
-
 

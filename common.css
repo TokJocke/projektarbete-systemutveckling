@@ -1,5 +1,5 @@
 
-*{
+* {
     box-sizing: border-box;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
@@ -20,16 +20,6 @@ h1, h2{
     font-size: 2rem;
 }
 
-
-
-
-
-
-
-
-
-
- 
 .navRight{
     display: flex;
     flex-direction: row-reverse;
@@ -160,7 +150,7 @@ input[type="checkbox"]{
     
 }
 
-.productBox {
+.productBoxWrapper {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -178,8 +168,27 @@ input[type="checkbox"]{
     font-size: 1rem;
     
 }
+/* 
+.productBox {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 25vw;
+    background-color: white;
+    border-radius: 2rem;
+    align-items: center;
+    padding: 1.5rem;
+    margin:2rem 0;
+     font 
+    color: #707070;
+    font-family: cheap-pine, sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 1rem;
+    
+} */
 
-.productBox > img {
+.productBoxWrapper > .productBox > img {
     object-fit: contain;
     max-width: 50%;
     max-height: 50%;
@@ -187,6 +196,7 @@ input[type="checkbox"]{
 
 .addToCartBtn{
     font-size: 1.2rem;
+  
 }
 
 

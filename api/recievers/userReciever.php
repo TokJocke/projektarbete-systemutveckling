@@ -97,3 +97,6 @@ try {
     http_response_code($e->getCode());
     echo json_encode(array("status" => $e->getCode(), "Message" => $e->getMessage()));
 }
+
+
+?>

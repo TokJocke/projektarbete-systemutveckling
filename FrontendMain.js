@@ -1,5 +1,5 @@
 import {login, checkInputs} from "./user.js"
-import { getAllProducts, renderProducts, getAllProdsInCategory } from "./products.js"
+import { getAllProducts, renderProducts, getAllProdsInCategory, amountInCart } from "./products.js"
 import {makeReq, getAllCategorys } from "./main.js"
 
 window.addEventListener("load", initSite)
@@ -11,10 +11,11 @@ function initSite() {
 
     renderProducts(getAllProducts())
     growHeader()
-    headerNavBtn() 
+    headerNavBtn("#anchorProduct") 
     loginPopUp()
     clickOutSideToClose()
     closePopUp()
+    amountInCart()
  	}
 }
  
@@ -160,7 +161,7 @@ function closePopUp() {
 
 
  
-async function headerNavBtn() {
+export async function headerNavBtn(link) {
   //Get alla elements needed
   let allCategorys = await getAllCategorys()
   let headerTop = document.getElementById("headerTop")
@@ -168,7 +169,7 @@ async function headerNavBtn() {
   let a = document.createElement("a")
   let div = document.createElement("div") 
   let h2 = document.createElement("h2")
-  a.href = "#anchorProduct"
+  a.href = link
   a.id = "showAllProducts"
   div.className = "headerBox"
   h2.innerText = "Alla produkter"
@@ -183,7 +184,7 @@ async function headerNavBtn() {
     let div = document.createElement("div") 
     let h2 = document.createElement("h2")
     //properties
-    a.href = "#anchorProduct"
+    a.href = link
     div.className = "headerBox"
     h2.innerText = category.name
     //Appends
@@ -196,11 +197,11 @@ async function headerNavBtn() {
   });
 } 
 
- function filterProducts() {
+ export function filterProducts() {
   let productContainer = document.getElementById("allProductBox")
   let headline = document.getElementById("anchorProduct")
   
-  headline.innerText="Produkter > " + this.name
+  headline.innerText= "Produkter > " + this.name
   productContainer.innerHTML  = ""
   renderProducts(getAllProdsInCategory(this.categoryId)) 
   headerLinks()

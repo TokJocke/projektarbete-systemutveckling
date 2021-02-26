@@ -115,6 +115,7 @@ header{
 }
 
 .cartBtn{
+    display: flex;
     font-size: 2rem;
     cursor: pointer;
     padding: 5px;
