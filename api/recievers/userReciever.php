@@ -62,11 +62,14 @@ try {
         
         if ($_POST["action"] == "updateUser") {
 
-            $cbArray = json_decode($_POST["cbArray"]);
-            $ur = new UserRepo(); 
-            $ur->updateUser($cbArray);   
+            $checkedArr = json_decode($_POST["checkedArr"]);
+            $notCheckedArr = json_decode($_POST["notCheckedArr"]);
 
-            echo json_encode($cbArray);
+            $ur = new UserRepo(); 
+            $ur->updateUser($checkedArr, 1); 
+            $ur->updateUser($notCheckedArr, 0); 
+            
+            echo json_encode(true);
 
         }
     }

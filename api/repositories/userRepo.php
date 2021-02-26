@@ -116,7 +116,7 @@ function createUserList($array) {
   return $userArray;
 }
 
-function updateUser($isAdmin) { 
+function updateUser($isAdmin, $isAdm) { 
     
   foreach ($isAdmin as $usn) {       
   
@@ -124,7 +124,7 @@ function updateUser($isAdmin) {
 
   $entity = array(
       'un' => $usn, 
-      'isAdmin' => 1); 
+      'isAdmin' => $isAdm); 
 
       $this->db->runQuery($query, $entity);
             

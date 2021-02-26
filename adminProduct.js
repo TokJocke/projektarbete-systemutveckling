@@ -426,17 +426,17 @@ async function loadUsers() {
         checkbox.style.width = "5vw"
         checkbox.style.height = "5vh"
         checkbox.value = user.userName
-        if(user.isAdmin == "1") { //Checkbox är checkad om användare är admin. 
-            checkbox.checked = true
-        }
-        
-
+    
         userId.innerText = user.userId
         username.innerText = user.userName
         isAdmin.innerText = user.isAdmin
-    
-        cb.append(checkbox)
+
+        if(user.isAdmin == "1") { //Checkbox är checkad om användare är admin. 
+            checkbox.checked = true
+        }
+     
         newRow.append(userId, username, isAdmin, cb)
+        cb.append(checkbox)
         myTable.append(newRow)
         
     })  
@@ -444,19 +444,22 @@ async function loadUsers() {
 //Skickar upp isAdmin värden från checkbox.
 async function updateUserStatus() {
     let cb = document.getElementsByClassName("myCheckbox2")
-    let myArray = []
+    let checkedArr = []
+    let notCheckedArr = []
     for (let i = 0; i < cb.length; i++) {
         if(cb[i].checked) { 
-            myArray.push(cb[i].value)           
+            checkedArr.push(cb[i].value)           
+        }
+         else if(!cb[i].checked) {
+            notCheckedArr.push(cb[i].value)
          }
-       /*   if(cb[i]) { 
-            myArray.push(cb[i].value)           
-         } */
     }       
-            console.log(myArray)
+            console.log("hej", checkedArr, "då", notCheckedArr)
+
 
     body = new FormData()
-    body.set("cbArray", JSON.stringify(myArray))
+    body.set("checkedArr", JSON.stringify(checkedArr))
+    body.set("notCheckedArr", JSON.stringify(notCheckedArr))
     body.set("action", "updateUser")        
     
     const response = await makeReq("./api/recievers/userReciever.php", "POST", body)
@@ -464,3 +467,4 @@ async function updateUserStatus() {
     loadUsers()
     return response 
 }
+
