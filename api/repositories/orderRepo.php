@@ -6,8 +6,7 @@ require "../classes/orderClass.php";
 
 session_start();
 
-class OrderRepo
-{
+class OrderRepo {
 
     function __construct()
     {
@@ -104,7 +103,7 @@ class OrderRepo
         $this->db->runQuery($query, $entity);
         return "cartEmpy";
     }
-}
+
 
 
 
@@ -139,4 +138,5 @@ function updateShipped($orderId) {
     return "Order(s) was set as shipped";
 }
 
-
+}
+?>

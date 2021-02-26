@@ -417,7 +417,8 @@ async function updateShippingStatus() {
             console.log(myArray)
 
     body = new FormData()
-    body.set("cbArray", JSON.stringify(myArray))        
+    body.set("cbArray", JSON.stringify(myArray))     
+    body.set("action", "loadAdminOrder")     
     
     const response = await makeReq("./api/recievers/orderReciever.php", "POST", body)
     console.log(response)
