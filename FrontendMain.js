@@ -1,24 +1,22 @@
 import {login, checkInputs} from "./user.js"
+import { getAllProducts, renderProducts, getAllProdsInCategory } from "./products.js"
+import {makeReq, getAllCategorys } from "./main.js"
 
 window.addEventListener("load", initSite)
-
-function initSite() {
-	if (body){
-    growHeader()
-
- 	}
-}
-
 let body = document.getElementById("indexBody")
 const formUser = document.getElementById("formUser")
-const cancel = document.getElementById("cancel")
-const userLogin = document.getElementById("userLogin")
-const background = document.getElementById("popupBackground")
 
+function initSite() {
+  if (body){
 
-const cartBtn = document.getElementById("cartBtn")
-
-
+    renderProducts(getAllProducts())
+    growHeader()
+    headerNavBtn() 
+    loginPopUp()
+    clickOutSideToClose()
+    closePopUp()
+ 	}
+}
  
 
 function loadRegForm(){
@@ -120,112 +118,156 @@ function loadSignIn(){
 
 }
 
-window.onclick = function(event) {
-    if (event.target == background) {
-      background.style.display = "none";
-      logInForm.style.display = "none";
-      formUser.innerHTML = ""
-    }
-
+function clickOutSideToClose() {
   
+  const background = document.getElementById("popupBackground")
+  window.onclick = function(event) {
+     if (event.target == background) {
+       background.style.display = "none";
+       logInForm.style.display = "none";
+       formUser.innerHTML = ""
+     }  
+ }
+
 }
 
-userLogin.addEventListener("click", () =>{
+function loginPopUp() {
+  const userLogin = document.getElementById("userLogin")
+  const background = document.getElementById("popupBackground")
+
+  userLogin.addEventListener("click", () =>{
 
     logInForm.style.display = "flex"
     background.style.display = "flex"
     loadSignIn()
   })
+ 
+}
 
+function closePopUp() {
+  const cancel = document.getElementById("cancel")
+  const background = document.getElementById("popupBackground")
 
-cancel.addEventListener("click", () => {
-    logInForm.style.display = "none"
-    background.style.display = "none"
-    formUser.innerHTML = ""
-} )
-
-
-
-
-
-
-
-
-
+  cancel.addEventListener("click", () => {
+      logInForm.style.display = "none"
+      background.style.display = "none"
+      formUser.innerHTML = ""
+  } )
+}
 
 
 
-  function headerLinks() {
-    let headerLink = document.querySelectorAll("#headerTop a")
-    let header = document.getElementsByTagName("header")[0]
-    let headerTop = document.getElementById("headerTop")
-    let headerBox = document.getElementsByClassName("headerBox")
-    let menuBtn = document.getElementById("menuBtn")
 
 
-
-    for(let i = 0; i < headerLink.length; i++) {
-      console.log(headerLink[i])
-      
-      headerLink[i].addEventListener("click", () => {
-        menuBtn.classList.toggle("change");
-        console.log("clicked", headerLink[i])
-        header.style.height = "8vh"
-        headerTop.style.height = "0vh"
-        window.setTimeout(() => {
-          headerTop.style.display = "none"
-          for(let i = 0; i < headerBox.length; i++) {
-            headerBox[i].style.display = "none"
-          }
-        }, 500);
-      }) 
-    }
-  }    
-  
+ 
+async function headerNavBtn() {
+  //Get alla elements needed
+  let allCategorys = await getAllCategorys()
+  let headerTop = document.getElementById("headerTop")
+  //Create a button for all categorys
+  let a = document.createElement("a")
+  let div = document.createElement("div") 
+  let h2 = document.createElement("h2")
+  a.href = "#anchorProduct"
+  a.id = "showAllProducts"
+  div.className = "headerBox"
+  h2.innerText = "Alla produkter"
+  a.addEventListener("click", showAllProducts)
+  div.append(h2)
+  a.append(div)
+  headerTop.append(a)
+  //Create a button for each category
+  allCategorys.forEach(category => {
+    //create elements
+    let a = document.createElement("a")
+    let div = document.createElement("div") 
+    let h2 = document.createElement("h2")
+    //properties
+    a.href = "#anchorProduct"
+    div.className = "headerBox"
+    h2.innerText = category.name
+    //Appends
+    div.append(h2)
+    a.append(div)
+    headerTop.append(a)
     
+     a.addEventListener("click", filterProducts.bind(category)) 
+
+  });
+} 
+
+ function filterProducts() {
+  let productContainer = document.getElementById("allProductBox")
+  let headline = document.getElementById("anchorProduct")
+  
+  headline.innerText="Produkter > " + this.name
+  productContainer.innerHTML  = ""
+  renderProducts(getAllProdsInCategory(this.categoryId)) 
+  headerLinks()
+}
+ 
+function showAllProducts() {
+  let productContainer = document.getElementById("allProductBox")
+  let headline = document.getElementById("anchorProduct")
+
+  headline.innerText="Produkter"
+  productContainer.innerHTML  = ""
+  renderProducts(getAllProducts())
+  headerLinks()
+}
+
 
 
   
+
+export function headerLinks() {
+  let menuBtn = document.getElementById("menuBtn")
+  let header = document.getElementsByTagName("header")[0]
+  let headerBox = document.getElementsByClassName("headerBox")
+
+  menuBtn.classList.toggle("change");
+  header.className = ""
+  window.setTimeout(() => {
+    for(let i = 0; i < headerBox.length; i++) {      
+      headerBox[i].className = "headerBox"
+    }
+  }, 500);
+  }      
   
 
-headerLinks()
+export function growHeader() {
+  
+  let header = document.getElementsByTagName("header")[0] 
+  let headerTop = document.getElementById("headerTop")
+  let menuBtn = document.getElementById("menuBtn")
+  let menu = document.getElementsByClassName("menu")[0]//Change name this and the button above
+  let headerBox = document.getElementsByClassName("headerBox")
 
+  console.log(headerTop)
+  
+  menu.addEventListener("click", () => {
+    header.classList.toggle("growHeader")
+    menuBtn.classList.toggle("change");
+    headerTop.className = "showHeaderContent"
+    if(header.classList == "growHeader") { 
+      for(let i = 0; i < headerBox.length; i++) {
+        
+          headerBox[i].className = "showHeaderContent headerBox slideRight"
+          console.log("if")
+        }
 
-
- function growHeader() {
-    let header = document.getElementsByTagName("header")[0]
-    let headerTop = document.getElementById("headerTop")
-    let menuBtn = document.getElementById("menuBtn")
-    let headerBox = document.getElementsByClassName("headerBox")
-    header.style.height = "8vh"
-    headerTop.style.height = "0vh"
-
-    menuBtn.addEventListener("click", () => {
-      menuBtn.classList.toggle("change");
-      if(header.style.height == "8vh") {
-        header.style.height = "24vh"
-        headerTop.style.height = "16vh"
-        headerTop.style.display = "flex"
-        window.setTimeout(() => {
-          for(let i = 0; i < headerBox.length; i++) {
-            headerBox[i].style.display = "flex"
-            headerBox[i].classList="headerBox slideRight"
-          }
-        }, 500);
       }
-      else {   
-        header.style.height = "8vh"
-        headerTop.style.height = "0vh"
-        window.setTimeout(() => {
-          headerTop.style.display = "none"
-          for(let i = 0; i < headerBox.length; i++) {
-            headerBox[i].style.display = "none"
-          }
-        }, 500);
-        } 
-    })
-  } 
+      else {
+        console.log("else")
 
+          window.setTimeout(() => {
 
-
+            for(let i = 0; i < headerBox.length; i++) {
+        
+              headerBox[i].className = "headerBox"
+            }
+          }, 500);
+      }
+  }) 
+}
 

@@ -2,7 +2,7 @@ import {makeReq} from "./main.js"
 
 
 window.addEventListener("load", initSite)
-let body = document.getElementById("indexBody")
+let body = document.getElementById("cartPageBody")
 
 function initSite() {
     if (body){

@@ -1,5 +1,6 @@
 import {makeReq} from "./main.js"
 import {amountInCart} from "./products.js"
+import { headerLinks, growHeader } from "./FrontendMain.js"
 window.addEventListener("load", initSite)
 let body = document.getElementById("myPageBody")
 const myPageDiv = document.getElementById("myPageContent")
@@ -15,7 +16,9 @@ function initSite() {
 		renderUserInfo()
 		amountInCart()
 		currentUser()
-    
+		userInfo()
+		headerLinks()
+		growHeader()
  	}
 }
 

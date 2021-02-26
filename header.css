@@ -1,0 +1,122 @@
+header{
+    position: fixed;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding: 0 20px ;
+    left: 0;
+    right: 0;
+    top: 0;
+    background-image: url(/assets/layout/godisrpsa.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: bottom;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    z-index: 97;
+    height: 8vh;
+}
+#headerBottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    min-height: 8vh;
+    position: relative;
+    bottom: 0px;
+/*     z-index: 99;
+ */}
+
+#headerTop {
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    height: 12vh;
+    display: none;
+}
+
+#headerTop > a {
+    text-decoration: none;
+}
+
+.headerBox {
+    display: none;
+    overflow: hidden;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 1em;
+    background-color:rgba(255, 255, 255, 0.7);
+    font-size: 0.5em;
+    margin: 0 1em;
+    height: 8vh;
+    align-items: center;
+}
+.headerBox:hover {
+    background-color:rgba(255, 255, 255, 1);
+    box-shadow: 1px 1px 15px black;
+}
+
+.headerBox:active {
+    box-shadow: none;
+    font-size: 0.3em;
+}
+
+.growHeader {
+    height: 20vh;
+    
+}
+
+.showHeaderContent {
+   display: flex !important; 
+}
+
+
+
+.menu {    
+    display: flex;
+    cursor: pointer;
+    padding: 6px 16px;
+    border-radius: 5px;
+ }
+
+.menu:hover, .myPageBtn:hover, .cartBtn:hover {
+    box-shadow: 0px 0px 20px 0px black;
+}
+
+.menu:hover > #menuBtn > .bar1 {
+    background-color: hotpink;
+}
+
+.menu:hover > #menuBtn > .bar2 {
+    background-color:lightskyblue;
+}
+
+.menu:active, .myPageBtn:active, .cartBtn:active  {
+    box-shadow: inset 0px 0px 10px 0px black;
+
+}
+
+.brandLogo > a {
+    text-decoration: none;  
+
+}
+
+.brandLogo {
+    cursor: pointer;
+} 
+
+.navRight {
+}
+
+.myPageBtn{
+    font-size: 2rem;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.cartBtn{
+    font-size: 2rem;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 5px;
+}
