@@ -70,32 +70,27 @@ header{
 }
 
 
-/* menuBtn.addEventListener("click", () => {
-    menuBtn.classList.toggle("change");
-    if(header.style.height == "8vh") {
-      header.style.height = "16vh"
-      headerTop.style.height = "8vh"  
-      headerTop.style.display = "flex"
-      window.setTimeout(() => {
-        for(let i = 0; i < headerBox.length; i++) {
-          headerBox[i].style.display = "flex"
-          headerBox[i].classList="headerBox slideRight"
-        }
-      }, 500);
-    } */
 
-.menu {
+.menu {    
     display: flex;
     cursor: pointer;
-    padding: 5px;
+    padding: 6px 16px;
     border-radius: 5px;
  }
 
-.menu:hover {
+.menu:hover, .myPageBtn:hover, .cartBtn:hover {
     box-shadow: 0px 0px 20px 0px black;
 }
 
-.menu:active {
+.menu:hover > #menuBtn > .bar1 {
+    background-color: hotpink;
+}
+
+.menu:hover > #menuBtn > .bar2 {
+    background-color:lightskyblue;
+}
+
+.menu:active, .myPageBtn:active, .cartBtn:active  {
     box-shadow: inset 0px 0px 10px 0px black;
 
 }
@@ -115,9 +110,13 @@ header{
 .myPageBtn{
     font-size: 2rem;
     cursor: pointer;
+    padding: 5px;
+    border-radius: 5px;
 }
 
 .cartBtn{
     font-size: 2rem;
     cursor: pointer;
+    padding: 5px;
+    border-radius: 5px;
 }

@@ -119,10 +119,70 @@ async function adminUpdateProductPanel() {
         deleteBtnTd.append(deleteBtn)
         newRow.append(productId, productName, productPrice, productDesc, productInStock, productCategory, editBtnTd, deleteBtnTd)
         myTable.appendChild(newRow)
+    })    
+}
+//Panel for Createing/appending offers
+async function adminOfferPanel() {
+    let allProducts = await getAllProducts() 
+    let adminBox = document.getElementById("adminProductBox")
+    adminBox.innerHTML = ""
+  
+    let myTable = document.createElement("table")
+    let titleTr = document.createElement("tr")
+    let productIdTitleTd = document.createElement("td")
+    let productNameTitleTd = document.createElement("td")
+    let productPriceTitleTd = document.createElement("td")
+    let productInStockTitleTd = document.createElement("td")
+    let addToOfferTitleTd = document.createElement("td")
+    
+    titleTr.className="updatePanalTitleRow"
+    productIdTitleTd.innerHTML = "<h3>Id</h3>"
+    productNameTitleTd.innerHTML = "<h3>Name</h3>"
+    productPriceTitleTd.innerHTML = "<h3>Price</h3>"
+    productInStockTitleTd.innerHTML = "<h3>In Stock</h3>"
+    addToOfferTitleTd.innerHTML = "<h3>add to offer</h3>"
+    
+    titleTr.append(productIdTitleTd, productNameTitleTd, productPriceTitleTd, productInStockTitleTd, addToOfferTitleTd)
+    myTable.append(titleTr)
+    adminBox.append(myTable)
+
+    allProducts.forEach(product => { 
+        //every Td
+        let newRow = document.createElement("tr")
+        newRow.className="UpdatePanelProdRow"
+        let productId = document.createElement("td")
+        let productName = document.createElement("td")
+        let productPrice = document.createElement("td")
+        let productInStock = document.createElement("td")
+        let addToOffer = document.createElement("td")
+                
+        let checkBox = document.createElement("input")
+        checkBox.className = "offerCheck"
+        checkBox.type = "checkbox"
+        checkBox.style.width = "5vw"
+        checkBox.style.height = "5vh" 
+        checkBox.value = product
+    
+
+
+
+
+
+        //Innertext
+        addToOffer.append(checkBox)
+        productId.innerText = product.productId
+        productName.innerText = product.name
+        productPrice.innerText = product.price
+        productInStock.innerText = product.unitsInStock
+        //Apends
+        newRow.append(productId, productName, productPrice, productInStock, addToOffer)
+        myTable.appendChild(newRow)
     })
 
     
 }
+
+//Function for deleting products from DB
 async function deleteProduct() {
     if (confirm("are you sure you want to delete " + this.name + " from products?")) {        
         let data = new FormData()
@@ -136,6 +196,8 @@ async function deleteProduct() {
     
 }
 
+
+//Creating popUp for editing products
 async function editProduct() {
     
     let main = document.getElementsByTagName("main")[0]
@@ -176,7 +238,7 @@ async function editProduct() {
     main.append(popUpDiv)
 }
 
-
+//Function for updateing products in DB
 async function update() {
     console.log(this.productId)//Med .bind lösning blir denna "this.productId"
     let input = document.getElementsByTagName("input")
@@ -191,10 +253,7 @@ async function update() {
         }  
     }
     myInputValueArray.push(inputCategory.value)    
-    myInputValueArray.push(this.productId)//Med .bind lösning blir denna "this.productId"
-
-    console.log("new array = ", myInputValueArray)
-   
+    myInputValueArray.push(this.productId)//Med .bind lösning blir denna "this.productId"   
     let data = new FormData()
     data.append("action", "updateProduct")
     data.append("product", JSON.stringify(myInputValueArray))
@@ -206,12 +265,10 @@ async function update() {
     adminUpdateProductPanel()
 
 }
-
+//Close popup window
 function cancel() {
     removeElementById("editPopUpDiv")
 }
-
-
 
 //function for sending product data and uploading image 
 async function sendProductData() {   
@@ -234,6 +291,7 @@ async function sendProductData() {
 function myAdminBox() {
     let adminUppdateBoxBtn = document.getElementsByClassName("adminProductBoxBtn")[0]
     let adminAddBoxBtn = document.getElementsByClassName("adminProductBoxBtn")[1]
+    let adminOfferBoxBtn = document.getElementsByClassName("adminProductBoxBtn")[2]
     let adminBox = document.getElementById("adminProductBox")
     adminUpdateProductPanel()
 
@@ -246,6 +304,11 @@ function myAdminBox() {
     adminUppdateBoxBtn.addEventListener("click", () => {
         console.log("uppdate")
         adminUpdateProductPanel()
+    })
+
+    adminOfferBoxBtn.addEventListener("click", () => {
+        console.log("Offers")
+        adminOfferPanel()
     })
 
     
