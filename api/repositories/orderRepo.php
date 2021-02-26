@@ -59,7 +59,7 @@ class OrderRepo
         }
 
         $this->emptyCart($userId);
-        return "Order confirmed";
+        return "ORDER SKICKAD";
     }
 
 
