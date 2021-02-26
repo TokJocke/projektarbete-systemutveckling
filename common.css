@@ -17,7 +17,7 @@ h1{
     font-family: cheap-pine, sans-serif;
     font-weight: 400;
     font-style: normal;
-    font-size: 40px;
+    font-size: 2rem;
 }
 
 header{
@@ -89,6 +89,7 @@ header{
 }
 
 .myPageBtn{
+    display: flex;
     font-size: 2rem;
 }
 
@@ -166,7 +167,7 @@ input[type="checkbox"]{
         width: 100%;
     }
 
-.defaultBtn{
+.defaultBtn, .addToCartBtn{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -210,6 +211,7 @@ input[type="checkbox"]{
     flex-direction: row;
     align-content: center;
     flex-wrap: wrap;
+    justify-content: space-evenly;
     
 }
 
@@ -218,12 +220,17 @@ input[type="checkbox"]{
     flex-direction: column;
     justify-content: space-evenly;
     width: 25vw;
-/*     height: 40vh;
- */    background-color: white;
-    border-radius: 25px;
+    background-color: white;
+    border-radius: 2rem;
     align-items: center;
-    padding: 5px;
-    margin: 5vh 0 5vh 5vh;
+    padding: 1.5rem;
+    margin:2rem 0;
+    /* font */
+    color: #707070;
+    font-family: cheap-pine, sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 1rem;
     
 }
 
@@ -232,14 +239,11 @@ input[type="checkbox"]{
     max-width: 50%;
     max-height: 50%;
 }
-.productBox > button{
-    width: 10vw;
-    
-    
+
+.addToCartBtn{
+    font-size: 1.2rem;
 }
-/* .fa-shopping-cart{
-    margin: 10px;
-} */
+
 
 .discountContainer{
     display: flex;
@@ -351,14 +355,14 @@ footer {
 .modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
+    z-index: 10; /* Sit on top */
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 100%; /* Full width */
     height: 100%; /* Full height */
     /* overflow: auto; */ /* Enable scroll if needed */
-    backdrop-filter:blur(3px);
+    /* backdrop-filter:blur(3px); */
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.7); /* Black w/ opacity */
 }
@@ -367,10 +371,11 @@ footer {
     flex-direction: column;
     align-items: center;
     background-color: white;
-    margin:10% auto; /* 15% from the top and centered */
-    padding: 20px;
-    border: 2px solid black;
-    border-radius: 25px;
+    margin:15% auto; /* 15% from the top and centered */
+    padding: 1.5rem;
+    z-index: 11;
+    border: 0.2rem solid black;
+    border-radius: 2rem;
     width: 30vw; /* Could be more or less, depending on screen size */
     animation: animatezoom 0.6s
     
@@ -381,7 +386,9 @@ footer {
     max-height: 30%;
 
 }
-
+.modal-content > p {
+    font-style: italic;
+}
 
 .close {
     align-self: flex-end;
@@ -418,8 +425,16 @@ footer {
         .productBox > button{
             width: 30vw;
         }
+        
         .modal-content{
-            width: 70vw;
+            margin-top: 10rem;
+            width: 60vw;
+        }
+        .modal-content >p{
+            font-size: 0.8rem;
+        }
+        #currentUser{
+            display: none;
         }
   
 

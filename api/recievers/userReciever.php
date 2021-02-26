@@ -4,11 +4,22 @@ try {
 
     if (isset($_SERVER["REQUEST_METHOD"])) { //IF SERVER
         require("../repositories/userRepo.php");
-
+        $ur = new userRepo;
 
 
         if ($_SERVER["REQUEST_METHOD"] == "GET") { //IF METHOD = GET
-
+            session_start();
+            $userId = $_SESSION["user"];
+            if(isset($_GET["check"])){
+                echo json_encode($ur->isAdminInfo($userId));
+            }else if (isset($_GET["user"])){
+                
+                echo json_encode($ur->currentUserName($userId));
+            }else{
+                
+                echo json_encode($ur->UserInfo($userId));
+            }
+            /* echo json_encode($ur->userInfo($userId)); */
 
         }
 
@@ -29,10 +40,10 @@ try {
 
                 $newsletter = $myArray->newsletter;
 
-                regUser($name, $reguserName, $regPassword, $Email, $regAddress, $regZip, $regPhone, 0);
+                $ur->regUser($name, $reguserName, $regPassword, $Email, $regAddress, $regZip, $regPhone, 0);
 
                 if ($newsletter == "Yes") {
-                    signUpNewsletter($reguserName);
+                    $ur->signUpNewsletter($reguserName);
                 }
 
                 echo json_encode("Successfully signed up");
@@ -45,7 +56,7 @@ try {
             $un = $myArray->username;
             $pw = $myArray->pw;
 
-            login($un, $pw);
+            $ur->login($un, $pw);
         }
 
         if ($_POST["action"] == "newsletter") {
@@ -53,7 +64,7 @@ try {
             $myArray = json_decode($_POST["newsL"]);
             $name = $myArray->name;
             $email = $myArray->email;
-            newsNoSignUp($email, $name);
+            $ur->newsNoSignUp($email, $name);
             echo json_encode("Signed up for newsletter");
         }
     }
