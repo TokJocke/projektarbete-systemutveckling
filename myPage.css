@@ -5,6 +5,7 @@
     display: flex;
     flex-direction: column;
     margin-top: 150px;
+   
     /* background-color: #000000; */
 }
 
@@ -17,21 +18,26 @@
     display: flex;
     justify-content: center;
     flex-direction: row-reverse;
-    justify-content: space-between;
+    
     flex-wrap: wrap;
 
 
 }
 
+
 .myPagecontent {
+
     display: flex;
     flex-direction: column;
-    min-width: 70%;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    
 }
 
 .myPageMenu{
     display: flex;
-    width: 30%;
+    width: 20%;
     max-height: 318px;
     border: solid thin  rgba(0, 0, 0, 0.233);
     flex-direction: column;
@@ -64,6 +70,27 @@
     box-shadow: inset 0px 0px 20px #B4CDCC;
     border-left: 10px solid #B4CDCC;
     
+}
+/* userInfo styling */
+
+
+.userInfoContainer{
+    display: flex;
+    flex-direction: column;
+    
+    font-size: large;
+}
+.userInfoContainer > p{
+    padding: 0.2rem;
+}
+
+/* current user print out name*/
+.myPageBtn{
+    display: flex;
+    
+}
+.currentUser {
+    font-size: 4rem;
 }
 
 

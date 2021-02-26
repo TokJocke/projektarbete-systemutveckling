@@ -9,6 +9,8 @@ class UserRepo {
   }
 
 
+
+
 function regUser($regName, $regUsername, $regPassword, $email, $regAdress, $regZip, $regPhone, $isAdmin) {
 
   $qry = "SELECT userName FROM user WHERE userName='$regUsername'";
@@ -37,6 +39,7 @@ function regUser($regName, $regUsername, $regPassword, $email, $regAdress, $regZ
       ':name' => $regName, ':userName' => $regUsername, ':password' => $hashedPwd,
       ':email' => $email, ':address' => $regAdress, ':zipCode' => $regZip, 'phoneNr' => $regPhone, ':isAdmin' => $isAdmin
     );
+
 
     $this->db->runQuery($query, $entity);
   }
@@ -68,6 +71,7 @@ function login($un, $pw)
 function fetchUserInfo($username)
 {
   $query = "SELECT password FROM user WHERE userName='$username'";
+
   $myResult = $this->db->fetchQuery($query);
   return $myResult[0]->password;
 }
@@ -79,11 +83,13 @@ function signUpNewsletter($username)
 
   $entity = array(':userId' => $this->fetchuId($username));
 
+
   $this->db->runQuery($query, $entity);
 }
 
 function fetchuId($username)
 {
+
   $qery = "SELECT userId FROM user WHERE userName='$username'";
   $result = $this->db->fetchQuery($qery);
   return $result[0]->userId;
@@ -92,10 +98,12 @@ function fetchuId($username)
 
 function fetchUsers()
 {
+
   $query = "SELECT * FROM user";
   $result = $this->db->fetchQuery($query);
   return json_encode($result);
 }
+
 
 function newsNoSignUp($email, $name) { //skicka med userid och göra en check om inloggad, skicka då userid istället.
   // ändra så man ej kan skicka upp samma email. 
@@ -142,6 +150,46 @@ function updateUser($isAdmin, $isAdm) {
 
 
 
+
+  
+  $this->db->runQuery($query, $entity);
+}
+// fetch userInfo except username & password
+function userInfo($userId){
+
+  $query = 
+  "SELECT userId, name, email,address,zipCode,phoneNr,isAdmin 
+  FROM user
+  WHERE userId = $userId";
+  $result = $this->db->fetchQuery($query);
+  return $result;
+
 }
 
+//fetch admin info on logged in 
+function isAdminInfo($userId){
 
+  $query = 
+  "SELECT isAdmin 
+  FROM user
+  WHERE userId = $userId";
+  $result = $this->db->fetchQuery($query);
+  if($result[0]->isAdmin == 0){
+    $result = "Nej";
+  }else {
+    $result = "Ja";
+  }
+  return $result;
+  
+}
+//fetch current name on logged in
+function currentUserName($userId){
+  $query = 
+    "SELECT name 
+    FROM user
+    WHERE userId = $userId";
+    $result = $this->db->fetchQuery($query);
+    return $result;
+
+}
+}

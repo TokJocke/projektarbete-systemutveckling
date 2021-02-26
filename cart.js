@@ -9,6 +9,7 @@ function initSite() {
         renderProducts()
         getShippers()
         renderShippers()
+        testing()
 	}
 }
 
@@ -77,7 +78,7 @@ async function renderProducts() {
         
     });
     // creates div and print totalprice of the cart
-    let totalPriceDiv = document.createElement("h2")
+    let totalPriceDiv = document.getElementById("totalPrice")
     totalPriceDiv.innerHTML += "Totaltpris " + " " + cart.totalPrice + " kr"
     productWrapper.append(totalPriceDiv)
     
@@ -155,3 +156,5 @@ async function myTest(){
     const response = await makeReq("./api/recievers/orderReciever.php", "POST", body)
     console.log(response)
 }
+
+
