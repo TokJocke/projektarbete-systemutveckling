@@ -181,7 +181,7 @@ function updateUser($isAdmin, $isAdm) {
     return $result;
   
   }
-//fetch current name on logged in
+/* //fetch current name on logged in
   function currentUserName($userId){
     $query = 
       "SELECT name 
@@ -189,7 +189,7 @@ function updateUser($isAdmin, $isAdm) {
       WHERE userId = $userId";
       $result = $this->db->fetchQuery($query);
       return $result;
-  }
+  } */
 
 
 }
