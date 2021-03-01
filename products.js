@@ -12,11 +12,11 @@ function initSite() {
         currentUser()
         getAllProdsInCategory()
         getAllProducts()
-	      amountInCart()
+	    
         
         
-         productPopUp()
-        clickOutSideToClose() 
+        /*  productPopUp()
+        clickOutSideToClose()  */
 	}
 } 
 
