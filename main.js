@@ -1,3 +1,5 @@
+import { getAllProducts, renderProducts, getAllProdsInCategory } from "./products.js"
+
 window.addEventListener("load", initSite)
 let body = document.getElementById("indexBody")
 
@@ -55,3 +57,29 @@ export function removeElementById(myId){
 	var elem = document.getElementById(myId)
 	elem.parentNode.removeChild(elem);	
 } 
+
+export function saveFilterChocie(choice) {
+
+    sessionStorage.setItem("productFilter", JSON.stringify(choice))
+
+
+}
+
+export function filterProducts(savedSession) {
+    let filterChocie = JSON.parse(sessionStorage.getItem("productFilter"))
+    let headline = document.getElementById("anchorProduct")
+    if(!filterChocie || filterChocie == "Alla Produkter") {
+        console.log("no session saved")
+        headline.innerText = filterChocie   
+       
+        renderProducts(getAllProducts())
+      
+    }
+    else {
+        console.log(filterChocie.categoryId)
+        headline.innerText = "Produkter > " + filterChocie.name   
+
+        renderProducts(getAllProdsInCategory(filterChocie.categoryId))
+    }
+
+}

@@ -34,8 +34,9 @@ header{
     display: none;
 }
 
-#headerTop > a {
+#headerTop > div {
     text-decoration: none;
+    cursor: pointer;
 }
 
 .headerBox {
@@ -57,7 +58,7 @@ header{
 
 .headerBox:active {
     box-shadow: none;
-    font-size: 0.3em;
+    box-shadow: inset 0px 0px 10px 0px black;
 }
 
 .growHeader {
@@ -74,8 +75,8 @@ header{
 .menu {    
     display: flex;
     cursor: pointer;
-    padding: 6px 16px;
-    border-radius: 5px;
+/*     padding: 6px 16px;
+ */    border-radius: 5px;
  }
 
 .menu:hover, .myPageBtn:hover, .cartBtn:hover {
@@ -88,6 +89,10 @@ header{
 
 .menu:hover > #menuBtn > .bar2 {
     background-color:lightskyblue;
+}
+
+.menu:hover > #menuBtn > .bar3 {
+    background-color:black;
 }
 
 .menu:active, .myPageBtn:active, .cartBtn:active  {
@@ -104,20 +109,36 @@ header{
     cursor: pointer;
 } 
 
-.navRight {
+#menuBtn {
+    padding: 15px;
+
 }
 
 .myPageBtn{
     font-size: 2rem;
     cursor: pointer;
-    padding: 5px;
+    padding: 15px;
     border-radius: 5px;
+    
 }
 
-.cartBtn{
-    display: flex;
+.cartBtn {
+    border-radius: 5px;
     font-size: 2rem;
+    padding: 15px;
+
+}
+
+#valueInCart {
+    font-size: 1.5rem;
+    padding-left: 10px;
+}
+
+.cartBtn > a {
+    display: flex;
+    align-items: center;
     cursor: pointer;
     padding: 5px;
-    border-radius: 5px;
+    text-decoration: none;
+    color: black;
 }

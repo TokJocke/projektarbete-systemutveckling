@@ -45,14 +45,14 @@ export async function renderProducts(fromWhere) {
 
     let allProducts = await fromWhere
     let productWrapper = document.getElementById("allProductBox")
+    //productWrapper.innerHTML = "" // Kanske lägga denna någon annanstans
     console.log("in render" , allProducts)
 
     allProducts.forEach(product => {
         let productDivWrapper = document.createElement("div")
         let productDiv = document.createElement("div")
         let productTitle = document.createElement("h3")
-/*         let productDesc = document.createElement("p")
- */     let productPrice = document.createElement("h3")
+        let productPrice = document.createElement("h3")
         let productImg = document.createElement("img")
         let addToCartBtn = document.createElement("button")
         

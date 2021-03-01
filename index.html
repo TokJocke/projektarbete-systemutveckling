@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="./common.css" />
     <link rel="stylesheet" href="./header.css" />
     <script type="module" src="./FrontendMain.js"></script>
+    <script type="module" src="./header.js"></script>
     <!-- <script type="module" src="./user.js"></script> -->
 
 </head>
@@ -35,12 +36,13 @@
        
         <div class="navRight">
             <div class="cartBtn">
-                <div id="valueInCart"></div>
+                <a href="./cartPage.html">
+                    
+                    <i id="cartIcon" class="fas fa-shopping-basket"></i>
+                    <div id="valueInCart"></div>
 
-            <a href="./cartPage.html"><i id="cartBtn" class="fas fa-shopping-basket"></i></a>
-
-            </div>
-        
+                </a>
+                </div>
             <div class="myPageBtn">
                 <div id="currentUser"></div>
                 <i id="userLogin" class="far fa-user"></i>

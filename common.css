@@ -26,10 +26,10 @@ h1, h2{
 /*     flex: 1 1 auto;
  */}
 
-.navRight i{
+/* .navRight i{
     padding: 0 10px;
 }
-
+ */
 
 
 
@@ -88,6 +88,7 @@ input[type="checkbox"]{
  
     background-color:#C8D7E0 ;
     z-index: 99;
+
     margin: 8% auto; 
     border: 1px solid #888;
     width: 60%; 
@@ -306,6 +307,7 @@ footer {
 
 
 /* ProductPopupDiv */
+
 /* .modal {
     display: none; 
     position: fixed;
@@ -373,6 +375,7 @@ footer {
 
         }#logInForm{
             width: 100%; 
+            
         }
 
         header{
