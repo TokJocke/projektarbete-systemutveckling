@@ -12,9 +12,7 @@ function initSite() {
         currentUser()
         getAllProdsInCategory()
         getAllProducts()
-	    
-        
-        
+	       
         /*  productPopUp()
         clickOutSideToClose()  */
 	}
@@ -158,15 +156,15 @@ async function update (change){
   export async function amountInCart(){
     let cartdiv = document.getElementById("valueInCart")
     
-    
-    let response = await makeReq("./api/recievers/cartReciever.php?count", "GET",)
-    console.log("amountInCart", response)
-    
-    if (response[0].antal == null) {
-        cartdiv.innerHTML = ""
-    }
-    else {
+    const userCheck = await makeReq("./api/recievers/userReciever.php?checkUser", "GET")
+    if(userCheck === "Logged") {
+        let response = await makeReq("./api/recievers/cartReciever.php?count", "GET",)
         cartdiv.innerHTML = response[0].antal
+        console.log("amountInCart", response)
+    }
+  
+    else {
+        cartdiv.innerHTML = ""
     }
 }
 

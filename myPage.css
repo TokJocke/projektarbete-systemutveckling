@@ -53,6 +53,7 @@
     background-color:#C8D7E0;
     border-left:10px solid transparent;
     cursor: pointer;
+    z-index: 99; /* Ser ej logga ut knapp utan denna, kolla senare */
 
 }
 .myPageMenuBtn i {

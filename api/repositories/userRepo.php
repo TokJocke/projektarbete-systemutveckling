@@ -76,9 +76,9 @@ function fetchUserInfo($username)
   return $myResult[0]->password;
 }
 
-function signUpNewsletter($username)
-{ //Skicka in userid vid reg, email och namn kan vara null
+function signUpNewsletter($username) { //Skicka in userid vid reg, email och namn kan vara null
   //Om ej inloggad, newsletter reg = namn/email.  
+  
   $query = ('INSERT INTO newsletter (userId) VALUES (:userId)'); //Glöm ej ändra email/name till NULL i databas.
 
   $entity = array(':userId' => $this->fetchuId($username));
@@ -107,11 +107,21 @@ function fetchUsers()
 
 function newsNoSignUp($email, $name) { //skicka med userid och göra en check om inloggad, skicka då userid istället.
   // ändra så man ej kan skicka upp samma email. 
+  $qery = "SELECT email FROM user WHERE email='$email'";
+  $newResult = $this->db->fetchQuery($qery);
+
+  if($newResult == true) { //kollar om email redan finns
+    echo json_encode("Email taken");
+    exit;
+  }
+
+  else {
   $query = ('INSERT INTO newsletter (email, name) VALUES (:email, :name)'); 
 
   $entity = array(':email' => $email, ':name' => $name);
   
   $this->db->runQuery($query, $entity);
+}
 }
 
 

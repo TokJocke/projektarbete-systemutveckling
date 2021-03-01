@@ -1,6 +1,7 @@
 import {makeReq} from "./main.js"
 //import { headerLinks, growHeader, filterProducts, headerNavBtn } from "./FrontendMain.js"
 import { amountInCart } from "./products.js"
+import { currentUser } from "./myPage.js"
 
 window.addEventListener("load", initSite)
 let body = document.getElementById("cartPageBody")
@@ -11,7 +12,8 @@ function initSite() {
         renderProducts()
         getShippers()
         renderShippers()
-        amountInCart()     
+        amountInCart() 
+        currentUser()    
 	
     }
 
@@ -186,13 +188,11 @@ const ship = document.getElementById("shipper")
 ship.addEventListener("click", myTest)
 
 
-
-
-
 async function myTest(){
     let body = new FormData()
     let selectedShipper = getValue()
     selectedShipper == null ? alert("du måste välja fraktmetod") : body.set("shipper", selectedShipper);
+    body.set("action", "sendOrder")
 
     const response = await makeReq("./api/recievers/orderReciever.php", "POST", body)
 }

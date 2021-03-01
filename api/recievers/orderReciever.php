@@ -17,8 +17,11 @@ try {
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") { //IF METHOD = POST
 
-            $or = new OrderRepo();
-            echo json_encode($or->placeOrder($_POST["shipper"]));
+            if ($_POST["action"] == "sendOrder") {
+ 
+                $or = new OrderRepo();
+                echo json_encode($or->placeOrder($_POST["shipper"]));
+            }
            
             if ($_POST["action"] == "loadAdminOrder") {
    
@@ -29,6 +32,7 @@ try {
      
                 echo json_encode($cbArray);
             }
+
         }
         
 
