@@ -1,5 +1,5 @@
 
-*{
+* {
     box-sizing: border-box;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
@@ -12,90 +12,26 @@ body{
 }
 
 
-h1{
+h1, h2{
     color:#707070;
     font-family: cheap-pine, sans-serif;
     font-weight: 400;
     font-style: normal;
-    font-size: 40px;
+    font-size: 2rem;
 }
 
-header{
-    position: fixed;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    padding: 0 50px ;
-    left: 0;
-    right: 0;
-    top: 0;
-    background-image: url(/assets/layout/godisrpsa.jpg);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: bottom;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    z-index: 97;
-}
-#headerBottom {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    align-self: flex-end;
-    height: 8vh;
-    width: 100%;
-    position: relative;
-    bottom: 0px;
-}
-
-#headerTop {
-    display: none;
-    background-color:chartreuse;
-    justify-content: space-evenly;
-}
-
-.headerBox {
-    display: none;
-    background-color: green;
-    overflow: hidden;
-}
-
-.menu {
-    display: flex;
-    flex:1 1 auto;
-}
-
-/* .brandLogo {
-    display: flex;  
-    width: 8vh;
-    height: 8vh;
-
-} */
-
- .brandLogo > a {
-    text-decoration: none;
-
-}
-
-
- 
 .navRight{
     display: flex;
     flex-direction: row-reverse;
-    flex: 1 1 auto;
-}
+/*     flex: 1 1 auto;
+ */}
 
 .navRight i{
     padding: 0 10px;
 }
 
-.myPageBtn{
-    font-size: 2rem;
-}
 
-.cartBtn{
-    display: flex;
-    font-size: 2rem;
-}
+
 
 
 .svgTop{
@@ -110,7 +46,7 @@ header{
     z-index: -1;
 }
 
-#popupBackground{
+#popupBackground, .modal{
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 98; /* Sit on top */
@@ -118,7 +54,7 @@ header{
     top: 0;
     width: 100%; 
     height: 100%; 
-    overflow: auto; 
+    
     backdrop-filter:blur(3px);
     background-color:rgba(0, 0, 0, 0.19);
 }
@@ -142,20 +78,20 @@ input[type="checkbox"]{
     border-radius: 3px;
 }
 
-#logInForm{
+#logInForm, .modal-content{
     display: none;
     left: 0;
     right: 0;
     align-items: center;
     flex-direction: column;
-    position: absolute;
+    position: fixed;
  
     background-color:#C8D7E0 ;
     z-index: 99;
-    margin: 5% auto 15% auto; 
+    margin: 8% auto; 
     border: 1px solid #888;
     width: 60%; 
-    padding: 30px;
+    padding: 0.5rem;
     animation: animatezoom 0.6s
 }
     #formUser{
@@ -166,7 +102,7 @@ input[type="checkbox"]{
         width: 100%;
     }
 
-.defaultBtn{
+.defaultBtn, .addToCartBtn{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -210,6 +146,28 @@ input[type="checkbox"]{
     flex-direction: row;
     align-content: center;
     flex-wrap: wrap;
+    justify-content: space-evenly;
+    
+    
+}
+
+.productBoxWrapper {
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30vw;
+    background-color: white;
+    border-radius: 2rem;
+    align-items: center;
+    padding: 1.5rem;
+    margin:2rem 0;
+    
+    color: #707070;
+    font-family: cheap-pine, sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 1rem;
     
 }
 
@@ -217,36 +175,40 @@ input[type="checkbox"]{
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    width: 25vw;
-/*     height: 40vh;
- */    background-color: white;
-    border-radius: 25px;
+    height: 90%;
+    background-color: white;
+    
     align-items: center;
-    padding: 5px;
-    margin: 5vh 0 5vh 5vh;
+   
+    
+    
     
 }
 
-.productBox > img {
+.productBoxWrapper > .productBox > img {
     object-fit: contain;
-    max-width: 50%;
-    max-height: 50%;
-}
-.productBox > button{
-    width: 10vw;
-    
+    width: 50%;
+    height: 50%;
     
 }
-/* .fa-shopping-cart{
-    margin: 10px;
-} */
+
+.addToCartBtn{
+    width: 15vw;
+    height: 10%;
+    font-size: 1.2rem;
+    justify-content: center;
+    
+
+  
+}
+
 
 .discountContainer{
     display: flex;
     flex-direction: row;
     margin-top: 25vh;
-    z-index: 2;
-
+/*     z-index: 2;
+ */
 
 }
 
@@ -335,53 +297,57 @@ footer {
 
 }
 
-/* Crate a hidden non clickable div to push anchorlinks to correct position */
-.anchorPoint::before {
-    content: '';
-    display: block;
-    height: 60px;
-    margin: -50px 0 0;
-    z-index: -99;
+#anchorProduct {
+/*     scroll-margin-top: 4em; */
 }
+
 
 
 
 
 /* ProductPopupDiv */
-.modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
+/* .modal {
+    display: none; 
+    position: fixed;
+    z-index: 10; 
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    /* overflow: auto; */ /* Enable scroll if needed */
+    width: 100%; 
+    height: 100%; 
+     overflow: auto; 
     backdrop-filter:blur(3px);
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.7); /* Black w/ opacity */
-}
+    background-color: rgb(0,0,0); 
+    background-color: rgba(0,0,0,0.7); 
+} */
 .modal-content {
     display: flex;
-    flex-direction: column;
+    
+    /* flex-direction: column;
     align-items: center;
     background-color: white;
-    margin:10% auto; /* 15% from the top and centered */
-    padding: 20px;
-    border: 2px solid black;
-    border-radius: 25px;
-    width: 30vw; /* Could be more or less, depending on screen size */
-    animation: animatezoom 0.6s
+    margin:15% auto; 
+    padding: 1.5rem;
+    z-index: 11;
+    border: 0.2rem solid black;
+    border-radius: 2rem;
+    width: 30vw; 
+    animation: animatezoom 0.6s */
     
 }
-.modal-content >img {
+.modal-content > h2 {
+    
+}
+ .modal-content >img {
     object-fit: contain;
     max-width: 30%;
     max-height: 30%;
+   
 
-}
-
+} 
+.modal-content > p {
+    font-style: italic;
+} 
 
 .close {
     align-self: flex-end;
@@ -395,7 +361,8 @@ footer {
 
 
 
-      /* Responsive layout - makes a one column layout instead of a two-column layout */
+
+      /* Phone mediaquery */
       @media (max-width: 800px) {
         .discountContainer{
           flex-direction: column;
@@ -411,18 +378,39 @@ footer {
         header{
             padding: 0 25px ;
         }
-        .productBox {
-            width: 35vw;
-            font-size: xx-small;
+        .productBoxWrapper {
+            justify-content: space-between;
+            width: 40vw;
+            font-size: x-small;
         }
-        .productBox > button{
-            width: 30vw;
+        .addToCartBtn{
+            width: 25vw;
+            font-size: x-small;
         }
+        
         .modal-content{
-            width: 70vw;
+            margin-top: 10rem;
+            width: 60vw;
+        }
+        .modal-content >p{
+            font-size: 0.7rem;
+        }
+        .modal-content > h2 {
+            font-size: 1.5rem;
+        }
+        #currentUser{
+            display: none;
         }
   
 
       }
+
+      /* Tablet */
+    @media screen and (max-width: 1050px){
+        .modal-content{
+            
+            margin: 30% auto;
+        }
+    }
 
 

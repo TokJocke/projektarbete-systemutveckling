@@ -6,8 +6,7 @@ require "../classes/orderClass.php";
 
 session_start();
 
-class OrderRepo
-{
+class OrderRepo {
 
     function __construct()
     {
@@ -104,13 +103,40 @@ class OrderRepo
         $this->db->runQuery($query, $entity);
         return "cartEmpy";
     }
+
+
+
+
+function getAllOrders() {
+    $allOrders = $this->db->fetchQuery("SELECT * FROM orders");  
+    $orderArray = $this->createOrderList($allOrders); 
+    return $orderArray;
+}
+ 
+function createOrderList($array) {
+    $orderArray = array();
+    foreach ($array as $item) { 
+        $order = new Order($item->orderId, $item->userId, $item->orderDate, $item->shipped, $item->shippingId);
+        array_push($orderArray, $order);
+    }
+    return $orderArray;
+}
+ 
+function updateShipped($orderId) { 
+    
+    foreach ($orderId as $id) {       
+    
+    $query = "UPDATE orders SET shipped=:shipOut WHERE orderId =:id";
+
+    $entity = array(
+        'id' => $id, 
+        'shipOut' => 1); 
+
+        $this->db->runQuery($query, $entity);
+            
+    } 
+    return "Order(s) was set as shipped";
 }
 
-
-/* $cartList = $this->db->fetchQuery(
-    "SELECT * 
-    FROM product 
-    INNER JOIN cart 
-        ON  product.productId = cart.productId 
-    WHERE userId = '$userId'"
-); */
+}
+?>

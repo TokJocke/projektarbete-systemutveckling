@@ -1,27 +1,39 @@
 import {makeReq} from "./main.js"
-/* import {update} from "./cart.js" */
+/* import {currentUser} from "./myPage.js" */
 
-window.addEventListener("load", initSite)
+/*  window.addEventListener("load", initSite)
 let body = document.getElementById("indexBody")
 
 
 function initSite() {
 	if (body){
-        renderProducts()
+
         amountInCart()
+        currentUser()
+        getAllProdsInCategory()
+        getAllProducts()
+	      amountInCart()
         
         
-        /* productPopUp()
-        clickOutSideToClose() */
+         productPopUp()
+        clickOutSideToClose() 
 	}
-}
+} */
+
+
 
 export async function getAllProducts() {
     const response = await makeReq("./api/recievers/productReciever.php", "GET")
-
-    console.log(response)
     return response
 }
+
+export async function getAllProdsInCategory(id) {
+
+    const response = await makeReq("./api/recievers/productReciever.php?id=" + id,  "GET")
+    return response
+}
+
+
 
 async function addProducts() {
     const response = await makeReq("./api/recievers/productReciever.php", "POST")
@@ -29,23 +41,24 @@ async function addProducts() {
 
 }
 
-async function renderProducts() {
+export async function renderProducts(fromWhere) {
 
-    let allProducts = await getAllProducts()
+    let allProducts = await fromWhere
     let productWrapper = document.getElementById("allProductBox")
     console.log("in render" , allProducts)
 
     allProducts.forEach(product => {
+        let productDivWrapper = document.createElement("div")
         let productDiv = document.createElement("div")
-        let productTitle = document.createElement("h2")
+        let productTitle = document.createElement("h3")
 /*         let productDesc = document.createElement("p")
  */     let productPrice = document.createElement("h3")
         let productImg = document.createElement("img")
         let addToCartBtn = document.createElement("button")
-        let moreInfoBtn = document.createElement("button")
+        
         
 
-        moreInfoBtn.addEventListener("click" , productPopUpDiv.bind(product,moreInfoBtn ))
+        productDiv.addEventListener("click" , productPopUpDiv.bind(product,productDiv ))
         addToCartBtn.addEventListener("click", update.bind(product, "add"))
         
         productTitle.innerText = product.name
@@ -53,18 +66,19 @@ async function renderProducts() {
         productPrice.innerText = product.price + "kr"
         productImg.src = product.img
         addToCartBtn.innerText = "Lägg till i Kundvagn"
-        /* addToCartBtn.className = "fas fa-shopping-cart" */
-        moreInfoBtn.innerText = "Mer Info"
+        addToCartBtn.className = "addToCartBtn"
+        
         productDiv.className = "productBox"
-        moreInfoBtn.id = "modalBtn"
-
-        productDiv.append(productTitle, productImg, productPrice,addToCartBtn,moreInfoBtn)
-        productWrapper.append(productDiv)
+        productDivWrapper.className = "productBoxWrapper"
+        
+        productDiv.append(productTitle, productImg, productPrice)
+        productDivWrapper.append(productDiv, addToCartBtn)
+        productWrapper.append(productDivWrapper)
 
     });
 }
-
-async function productPopUpDiv (moreInfoBtn){
+/*  */
+async function productPopUpDiv (productDiv){
     
     let thisName = this.name
     let thisImg = this.img
@@ -72,10 +86,10 @@ async function productPopUpDiv (moreInfoBtn){
     let thisDesc = this.description
     let thisUnitsInStock = this.unitsInStock
 
-    let divName = document.createElement("h3")
+    let divName = document.createElement("h2")
     let divImg = document.createElement("img")
-    let divPrice = document.createElement("h5")
-    let divStock = document.createElement("h6")
+    let divPrice = document.createElement("h3")
+    let divStock = document.createElement("p")
     let divDesc = document.createElement("p")
 
     divName.innerHTML = thisName
@@ -90,9 +104,11 @@ async function productPopUpDiv (moreInfoBtn){
     let span = document.createElement("span")
 
     modal.className = "modal"
+    /* modal.id = "modalBtn" */
     content.className = "modal-content"
     span.className = "close"
     span.innerHTML = "&times;"
+    modal.style.display = "block";
     
     content.append(span,divName,divImg,divPrice, divStock,divDesc)
     modal.append( content)
@@ -100,15 +116,10 @@ async function productPopUpDiv (moreInfoBtn){
 
     spanOnClick(span,modal)
     windowOnClick(modal)
-    btnClick(moreInfoBtn,modal)
+    
 
 }
-async function btnClick(moreInfoBtn,modal){
-// When the user clicks on the button, open the modal
-moreInfoBtn.onclick = function() {
-        modal.style.display = "block";
-    }
-}
+
 async function spanOnClick(span,modal){
 // When the user clicks on <span> (x), close the modal
     span.onclick = function() {
@@ -144,15 +155,19 @@ async function update (change){
 
 }
 // funktion som hämtar antalet produkter i cart och skriver ut på sidan vid cart ikonen
-  async function amountInCart (){
+  export async function amountInCart(){
     let cartdiv = document.getElementById("valueInCart")
     
     
     let response = await makeReq("./api/recievers/cartReciever.php?count", "GET",)
-    console.log("amountInCart",response)
+    console.log("amountInCart", response)
     
-
-    cartdiv.innerHTML = response[0].antal
+    if (response[0].antal == null) {
+        cartdiv.innerHTML = ""
+    }
+    else {
+        cartdiv.innerHTML = response[0].antal
+    }
 }
 
 

@@ -1,18 +1,21 @@
 import {makeReq} from "./main.js"
-
+import { headerLinks, growHeader, filterProducts, headerNavBtn } from "./FrontendMain.js"
+import { amountInCart } from "./products.js"
 
 window.addEventListener("load", initSite)
-let body = document.getElementById("cartBody")
+let body = document.getElementById("cartPageBody")
 
 function initSite() {
     if (body){
         renderProducts()
         getShippers()
         renderShippers()
-       
-	}
-}
+        amountInCart()     
+        //filterProducts()
+	
+    }
 
+}
 
 
 async function getCart() {
@@ -67,7 +70,7 @@ async function renderProducts() {
 
         
         productImg.src = "./assets/product/" + product.product.img 
-        productDiv.className = "productBox"
+        productDiv.className = "cartProductBox"
         productRemove.className = "fa fa-trash"
         //append
         productDiv.append(productImg, productTitle,productPrice,productMinus,productQuantity,productPlus, productTotalPrice, productRemove)
@@ -75,7 +78,7 @@ async function renderProducts() {
         
     });
     // creates div and print totalprice of the cart
-    let totalPriceDiv = document.createElement("h2")
+    let totalPriceDiv = document.getElementById("totalPrice")
     totalPriceDiv.innerHTML += "Totaltpris " + " " + cart.totalPrice + " kr"
     productWrapper.append(totalPriceDiv)
     
@@ -180,5 +183,5 @@ async function myTest(){
     selectedShipper == null ? alert("du måste välja fraktmetod") : body.set("shipper", selectedShipper);
 
     const response = await makeReq("./api/recievers/orderReciever.php", "POST", body)
-    console.log(selectedShipper)
 }
+
