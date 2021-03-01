@@ -78,11 +78,23 @@ async function renderProducts() {
         
     });
     // creates div and print totalprice of the cart
-    let totalPriceDiv = document.getElementById("totalPrice")
-    totalPriceDiv.innerHTML += "Totaltpris " + " " + cart.totalPrice + " kr"
+   /*  let totalPriceDiv = document.getElementById("totalPrice")
+    totalPriceDiv.innerHTML += "Totaltpris " + " " + cart.totalPrice + " kr" */
+    /* productWrapper.append(totalPriceDiv) */
+    
+    renderTotalPrice(cart)
+    
+    
+    
+}
+
+async function renderTotalPrice(cart){
+
+    let productWrapper = document.getElementById("testDiv")
+    
+    let totalPriceDiv = document.createElement("div")
+    totalPriceDiv.innerHTML = "Totaltpris " + " " + cart.totalPrice + " kr"
     productWrapper.append(totalPriceDiv)
-    
-    
 }
 
 //funktionen updaterar quantitet samt kan ta bort
