@@ -7,13 +7,11 @@ let body = document.getElementById("cartPageBody")
 
 function initSite() {
     if (body){
-     //   renderProducts()
-      //  getShippers()
-   //     renderShippers()
-     //   growHeader()
-      //  headerNavBtn("#")    
-   //     amountInCart()     
-        //filterProducts()
+
+        renderProducts()
+        getShippers()
+        renderShippers()
+        amountInCart()     
 	
     }
 
@@ -22,10 +20,7 @@ function initSite() {
 
 async function getCart() {
     const response = await makeReq("./api/recievers/cartReciever.php", "GET")
-
-
     console.log("i get", response)
-
     return response
 }
 
@@ -122,43 +117,71 @@ async function getShippers(){
 /** Renderar ut alla fraktalternativ. */
 async function renderShippers(){
     const shippingDiv = document.getElementById("shippingDiv")
-    const priceText = document.createElement("p")
     let shippers = await getShippers();
     shippingDiv.style.display = "flex"
    
     shippers.forEach((shipper) => {
-        const nameText = document.createElement("h4")
+        const shipperInput = document.createElement("input")
+        shipperInput.id = "shipperChoice" 
+        shipperInput.value = shipper.shippingId
+        shipperInput.name = "shipperChoice"
+        shipperInput.type = "radio"
+        shipperInput.style.display = "none" 
+        const shipperList = document.createElement("div")
+        const nameText = document.createElement("h5")
         const priceText = document.createElement("p")
         const descText = document.createElement("p")
-        const shipperName = shipper.shippingCompany;
+        const labelDiv = document.createElement("div")
+        const shipperName = shipper.shippingCompany
         const description = shipper.description
-        const shipperPrice = Number(shipper.shippingPrice).toLocaleString("sv-SE", {style: "currency", currency: "SEK"});
+        const shipperPrice = Number(shipper.shippingPrice).toLocaleString("sv-SE", {style: "currency", currency: "SEK"})
 
-     
-        const shipperOption = document.createElement("div")
+        const shipperOption = document.createElement("label")
         shipperOption.className = "shipperContainer"
-        const shipperDesc = document.createElement("div")
-        shipperDesc.className = "shipperDesc"
+        shipperOption.id = "shipperContainer"
+        
+      
         nameText.innerText = shipperName
         descText.innerText = description
-        priceText.innerText = shipperPrice
+        priceText.innerText = shipperPrice  
+        labelDiv.append(nameText,descText)
         
-        shipperDesc.append(nameText,descText)
-        shipperOption.append(shipperDesc,priceText)
-        shippingDiv.append(shipperOption)
+       
+        shipperOption.append(shipperInput,labelDiv,priceText)
+        shipperList.append(shipperOption)
+        shippingDiv.append(shipperList)
 
-        shipperOption.addEventListener("click", myTest.bind(shipper))
+        shipperOption.addEventListener("click", getValue)
+        
+
     })
-
-    
+  
 }
 
+function getValue(){  
+    const values = document.getElementsByName("shipperChoice") 
+    let selectedShipper;
+    values.forEach(value => {
+        value.checked == true ?
+        selectedShipper = value.value : 
+        selectedShipper == null 
+        });
+        return selectedShipper
+}
+
+
+const ship = document.getElementById("shipper")
+ship.addEventListener("click", myTest)
+
+
+
+
+
 async function myTest(){
-    
     let body = new FormData()
-    let shippingId = this.shippingId
-    body.set("shipper", shippingId)
+    let selectedShipper = getValue()
+    selectedShipper == null ? alert("du måste välja fraktmetod") : body.set("shipper", selectedShipper);
+
     const response = await makeReq("./api/recievers/orderReciever.php", "POST", body)
-    console.log(response)
 }
 

@@ -49,17 +49,18 @@ main {
 }
 
 #shippingDiv{
-    display: flex;
-
+    display: block;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     background-color: #ffff;
 }
 
+
 .shipperContainer{
     display: flex;
     justify-content: space-between;
+    color: #707070a8;
     width: 500px;
     border: 1px solid #70707074;
     padding: 23px 20px;
@@ -69,6 +70,7 @@ main {
 .shipperContainer:hover{
     transition: ease-in 1000;
     border: 1px solid #707070;
+    color:#707070;
 }
 
 

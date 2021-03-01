@@ -1,5 +1,5 @@
 import {makeReq} from "./main.js"
-import {currentUser} from "./myPage.js"
+/* import {currentUser} from "./myPage.js" */
 
 /*  window.addEventListener("load", initSite)
 let body = document.getElementById("indexBody")
