@@ -50,7 +50,7 @@
 
 
             ////update($userId,$productId,$quantity) tar in 3 para
-        }
+        
     
 } catch (Exception $e) { // om error har felmeddelande
     http_response_code($e->getCode());

@@ -115,6 +115,8 @@ header{
 }
 
 .myPageBtn{
+    display: flex;
+    align-items: center;
     font-size: 2rem;
     cursor: pointer;
     padding: 15px;
@@ -123,9 +125,13 @@ header{
 }
 
 .cartBtn {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 15px;
+    color: black;
     border-radius: 5px;
     font-size: 2rem;
-    padding: 15px;
 
 }
 
@@ -134,11 +140,15 @@ header{
     padding-left: 10px;
 }
 
-.cartBtn > a {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    padding: 5px;
-    text-decoration: none;
+#currentUser {
+
+    font-size: 1.5rem;
+    padding-right: 10px;
+}
+
+
+.navRight > a {
+
     color: black;
+    text-decoration: none;
 }

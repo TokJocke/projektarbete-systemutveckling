@@ -3,10 +3,8 @@ import {makeReq, getAllCategorys, saveFilterChocie, filterProducts } from "./mai
 window.addEventListener("load", initSite)
 let body
 function initSite() {
-  
     growHeader()
     headerNavBtn() 
-    
   }
 //Creates content for header  ** möjligtvis tabort alla A taggar då länk skapas i "headerBtnLink"
 export async function headerNavBtn(link) {
@@ -32,11 +30,12 @@ export async function headerNavBtn(link) {
       //Appends
       div.append(h2)
       headerTop.append(div)
-      
-       div.addEventListener("click", headerBtnLink.bind(category)) 
-  
+      div.addEventListener("click", headerBtnLink.bind(category)) 
+
     });
   } 
+
+
    
  /*   export function filterProducts() {
     let productContainer = document.getElementById("allProductBox")

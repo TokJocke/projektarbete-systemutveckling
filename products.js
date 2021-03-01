@@ -1,7 +1,7 @@
 import {makeReq} from "./main.js"
-/* import {currentUser} from "./myPage.js" */
+import {currentUser} from "./myPage.js" 
 
-/*  window.addEventListener("load", initSite)
+window.addEventListener("load", initSite)
 let body = document.getElementById("indexBody")
 
 
@@ -18,7 +18,7 @@ function initSite() {
          productPopUp()
         clickOutSideToClose() 
 	}
-} */
+} 
 
 
 
