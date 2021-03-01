@@ -11,22 +11,25 @@ const letterBtn = document.getElementById("letterBtn")
 
 function initSite() {
 	if (body){
-	/* 	userBtnClick()
-		ordersBtnClick()
-		letterBtnClick()
-		renderUserInfo() */
+		userBtnClick()
+		/* ordersBtnClick()
+		letterBtnClick() */
+		renderUserInfo()
 		amountInCart()
-	//	currentUser()
+		currentUser()
 	//	userInfo()
 		growHeader()
 		headerNavBtn("./index.html#anchorProduct")
+		getUserInfo()
  	}
 }
 
 async function getUserInfo() {
 
-    const response = await makeReq("./api/recievers/userReciever.php", "GET")
-    return response
+    const response = await makeReq("./api/recievers/userReciever.php?user", "GET")
+	console.log(response)
+	return response
+    
 }
 //prints out current users info
 async function userBtnClick(){
@@ -117,9 +120,15 @@ async function renderUserInfo (){
 
 export async function currentUser () {
 	let result = await makeReq("./api/recievers/userReciever.php?user", "GET")
-	console.log(result[0].name)
+	/* console.log(result[0].name) */
 	let nameContainer = document.getElementById("currentUser")
-	nameContainer.innerText = result[0].name
+	if (result[0].name == null) {
+        nameContainer.innerHTML = ""
+    }
+    else {
+        nameContainer.innerHTML = result[0].name
+    }
+	
 }
 async function checkIfAdmin (){
 	let check = await makeReq("./api/recievers/userReciever.php?check", "GET")

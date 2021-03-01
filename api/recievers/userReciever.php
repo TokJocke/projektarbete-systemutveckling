@@ -15,15 +15,14 @@ try {
                 echo json_encode($ur->isAdminInfo($userId));
             }else if (isset($_GET["user"])){
                 
-                echo json_encode($ur->UserInfo($userId));
-            }/*else{
+                echo json_encode($ur->userInfo($userId));
+            }else{
                 
-                echo json_encode($ur->UserInfo($userId));
-            }*/
-            /* echo json_encode($ur->userInfo($userId)); */
+                $ur = new UserRepo(); 
+                echo json_encode($ur->getAllUsers());
+               
+            }
 
-            $ur = new UserRepo(); 
-            echo json_encode($ur->getAllUsers());
 
 
         }

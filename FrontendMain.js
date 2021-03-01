@@ -1,6 +1,7 @@
 import {login, checkInputs} from "./user.js"
 import { getAllProducts, renderProducts, getAllProdsInCategory, amountInCart } from "./products.js"
 import {makeReq, getAllCategorys } from "./main.js"
+import {currentUser} from "./myPage.js"
 
 window.addEventListener("load", initSite)
 let body = document.getElementById("indexBody")
@@ -16,6 +17,7 @@ function initSite() {
     clickOutSideToClose()
     closePopUp()
     amountInCart()
+    currentUser()
  	}
 }
  
