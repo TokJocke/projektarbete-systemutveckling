@@ -2,7 +2,7 @@ import {makeReq} from "./main.js"
 
 
 window.addEventListener("load", initSite)
-let body = document.getElementById("indexBody")
+let body = document.getElementById("cartBody")
 
 function initSite() {
     if (body){
@@ -17,10 +17,7 @@ function initSite() {
 
 async function getCart() {
     const response = await makeReq("./api/recievers/cartReciever.php", "GET")
-
-
     console.log("i get", response)
-
     return response
 }
 
@@ -160,10 +157,11 @@ async function renderShippers(){
 
 function getValue(){  
     const values = document.getElementsByName("shipperChoice") 
-    const container = document.getElementById("shipperContainer") 
     let selectedShipper;
     values.forEach(value => {
-          value.checked == true ? selectedShipper = value.value : selectedShipper == false 
+        value.checked == true ?
+        selectedShipper = value.value : 
+        selectedShipper == null 
         });
         return selectedShipper
 }
@@ -179,7 +177,7 @@ ship.addEventListener("click", myTest)
 async function myTest(){
     let body = new FormData()
     let selectedShipper = getValue()
-    selectedShipper == undefined ? alert("du måste välja fraktmetod") : body.set("shipper", selectedShipper);
+    selectedShipper == null ? alert("du måste välja fraktmetod") : body.set("shipper", selectedShipper);
 
     const response = await makeReq("./api/recievers/orderReciever.php", "POST", body)
     console.log(selectedShipper)
