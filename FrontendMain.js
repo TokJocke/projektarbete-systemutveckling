@@ -1,6 +1,6 @@
 import {login, checkInputs} from "./user.js"
 import { getAllProducts, renderProducts, getAllProdsInCategory, amountInCart } from "./products.js"
-import {makeReq, getAllCategorys } from "./main.js"
+import {makeReq, getAllCategorys, filterProducts } from "./main.js"
 
 window.addEventListener("load", initSite)
 let body = document.getElementById("indexBody")
@@ -9,9 +9,7 @@ const formUser = document.getElementById("formUser")
 function initSite() {
   if (body){
 
-    renderProducts(getAllProducts())
-    growHeader()
-    headerNavBtn("#anchorProduct") 
+    filterProducts()
     loginPopUp()
     clickOutSideToClose()
     closePopUp()
@@ -160,115 +158,7 @@ function closePopUp() {
 
 
 
+
+
+
  
-export async function headerNavBtn(link) {
-  //Get alla elements needed
-  let allCategorys = await getAllCategorys()
-  let headerTop = document.getElementById("headerTop")
-  //Create a button for all categorys
-  let a = document.createElement("a")
-  let div = document.createElement("div") 
-  let h2 = document.createElement("h2")
-  a.href = link
-  a.id = "showAllProducts"
-  div.className = "headerBox"
-  h2.innerText = "Alla produkter"
-  a.addEventListener("click", showAllProducts)
-  div.append(h2)
-  a.append(div)
-  headerTop.append(a)
-  //Create a button for each category
-  allCategorys.forEach(category => {
-    //create elements
-    let a = document.createElement("a")
-    let div = document.createElement("div") 
-    let h2 = document.createElement("h2")
-    //properties
-    a.href = link
-    div.className = "headerBox"
-    h2.innerText = category.name
-    //Appends
-    div.append(h2)
-    a.append(div)
-    headerTop.append(a)
-    
-     a.addEventListener("click", filterProducts.bind(category)) 
-
-  });
-} 
-
- export function filterProducts() {
-  let productContainer = document.getElementById("allProductBox")
-  let headline = document.getElementById("anchorProduct")
-  
-  headline.innerText= "Produkter > " + this.name
-  productContainer.innerHTML  = ""
-  renderProducts(getAllProdsInCategory(this.categoryId)) 
-  headerLinks()
-}
- 
-function showAllProducts() {
-  let productContainer = document.getElementById("allProductBox")
-  let headline = document.getElementById("anchorProduct")
-
-  headline.innerText="Produkter"
-  productContainer.innerHTML  = ""
-  renderProducts(getAllProducts())
-  headerLinks()
-}
-
-
-
-  
-
-export function headerLinks() {
-  let menuBtn = document.getElementById("menuBtn")
-  let header = document.getElementsByTagName("header")[0]
-  let headerBox = document.getElementsByClassName("headerBox")
-
-  menuBtn.classList.toggle("change");
-  header.className = ""
-  window.setTimeout(() => {
-    for(let i = 0; i < headerBox.length; i++) {      
-      headerBox[i].className = "headerBox"
-    }
-  }, 500);
-  }      
-  
-
-export function growHeader() {
-  
-  let header = document.getElementsByTagName("header")[0] 
-  let headerTop = document.getElementById("headerTop")
-  let menuBtn = document.getElementById("menuBtn")
-  let menu = document.getElementsByClassName("menu")[0]//Change name this and the button above
-  let headerBox = document.getElementsByClassName("headerBox")
-
-  console.log(headerTop)
-  
-  menu.addEventListener("click", () => {
-    header.classList.toggle("growHeader")
-    menuBtn.classList.toggle("change");
-    headerTop.className = "showHeaderContent"
-    if(header.classList == "growHeader") { 
-      for(let i = 0; i < headerBox.length; i++) {
-        
-          headerBox[i].className = "showHeaderContent headerBox slideRight"
-          console.log("if")
-        }
-
-      }
-      else {
-        console.log("else")
-
-          window.setTimeout(() => {
-
-            for(let i = 0; i < headerBox.length; i++) {
-        
-              headerBox[i].className = "headerBox"
-            }
-          }, 500);
-      }
-  }) 
-}
-

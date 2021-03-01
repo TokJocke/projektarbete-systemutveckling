@@ -1,6 +1,6 @@
 import {makeReq} from "./main.js"
 import {amountInCart} from "./products.js"
-import { growHeader, filterProducts, headerNavBtn } from "./FrontendMain.js"
+//import { growHeader, filterProducts, headerNavBtn } from "./FrontendMain.js"
 
 window.addEventListener("load", initSite)
 let body = document.getElementById("myPageBody")
@@ -18,8 +18,8 @@ function initSite() {
 		amountInCart()
 	//	currentUser()
 	//	userInfo()
-		growHeader()
-		headerNavBtn("./index.html#anchorProduct")
+	//	growHeader()
+	//	headerNavBtn("./index.html#anchorProduct")
  	}
 }
 

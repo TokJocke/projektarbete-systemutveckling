@@ -1,5 +1,5 @@
 import {makeReq} from "./main.js"
-import { headerLinks, growHeader, filterProducts, headerNavBtn } from "./FrontendMain.js"
+//import { headerLinks, growHeader, filterProducts, headerNavBtn } from "./FrontendMain.js"
 import { amountInCart } from "./products.js"
 
 window.addEventListener("load", initSite)
@@ -7,12 +7,12 @@ let body = document.getElementById("cartPageBody")
 
 function initSite() {
     if (body){
-        renderProducts()
-        getShippers()
-        renderShippers()
-        growHeader()
-        headerNavBtn("#")    
-        amountInCart()     
+     //   renderProducts()
+      //  getShippers()
+   //     renderShippers()
+     //   growHeader()
+      //  headerNavBtn("#")    
+   //     amountInCart()     
         //filterProducts()
 	
     }
