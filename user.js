@@ -114,7 +114,12 @@ async function Newsletter() { //Signa newsletter ej inloggad.
     body.set("newsL", JSON.stringify(newsL))
     body.set("action", "newsletter")
     const response = await makeReq("./api/recievers/userReciever.php", "POST", body)
+    if(response === "Email taken") {
+        let x = document.getElementById("responsePhp")
+        x.innerText = "Email finns redan, testa en annan"
+    }
     console.log(response)
+    
 }
 async function signNews() {
     newsBtn.addEventListener("click", Newsletter)

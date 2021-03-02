@@ -27,9 +27,11 @@ try {
  
                 $or = new OrderRepo();
                 echo json_encode($or->placeOrder($_POST["shipper"]));
+
                 
            
             }else if ($_POST["action"] == "loadAdminOrder") {
+
    
                 $cbArray = json_decode($_POST["cbArray"]);
                 
@@ -49,6 +51,7 @@ try {
      
                 echo json_encode(true);
             }
+
         }
         
 

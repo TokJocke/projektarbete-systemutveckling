@@ -17,9 +17,9 @@ function initSite() {
 		renderUserInfo()
 		amountInCart()
 		currentUser()
-	
 		getUserInfo()
 		/* getCurrentUserOrder() */
+		checklogout()
 
  	}
 }
@@ -119,14 +119,15 @@ async function renderUserInfo (){
 }
 
 export async function currentUser () {
-	let result = await makeReq("./api/recievers/userReciever.php?user", "GET")
-	/* console.log(result[0].name) */
 	let nameContainer = document.getElementById("currentUser")
-	if (result[0].name == null) {
-        nameContainer.innerHTML = ""
-    }
+	const userCheck = await makeReq("./api/recievers/userReciever.php?checkUser", "GET")
+
+	if(userCheck === "Logged") {
+		let result = await makeReq("./api/recievers/userReciever.php?user", "GET")
+		nameContainer.innerHTML = result[0].name
+	}  
     else {
-        nameContainer.innerHTML = result[0].name
+        nameContainer.innerHTML =  " "
     }
 	
 }
@@ -250,3 +251,24 @@ async function updateShippingStatus() {
     loadOldOrders()
     return response 
 }
+
+async function checklogout() {
+	let logoutBtn = document.getElementById("logoutBtn")
+	const checkUser = await makeReq("./api/recievers/userReciever.php?checkUser", "GET")
+  	console.log(checkUser)
+	logoutBtn.addEventListener("click", logout)
+	  
+	if(checkUser === "NotLogged") {
+		document.getElementById("logoutBtn").style.display = "none"
+	}  
+}
+
+async function logout() {
+	body = new FormData()
+	body.set("action", "logout")
+	const response = await makeReq("./api/recievers/userReciever.php", "POST", body)
+  	console.log(response)
+	window.location = "index.html"
+}
+
+
