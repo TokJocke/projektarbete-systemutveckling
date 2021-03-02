@@ -30,6 +30,7 @@ class OrderRepo {
 
         $this->db->runQuery($query, $entity);
         $this->turnCartToOrderItem();
+        return "ORDER SKICKAD";
         // foreach loop för alla cartitems,
     }
 
@@ -58,7 +59,7 @@ class OrderRepo {
         }
 
         $this->emptyCart($userId);
-        return "ORDER SKICKAD";
+        
     }
 
 
@@ -112,7 +113,7 @@ function getAllOrders() {
     $orderArray = $this->createOrderList($allOrders); 
     return $orderArray;
 }
- 
+
 function createOrderList($array) {
     $orderArray = array();
     foreach ($array as $item) { 

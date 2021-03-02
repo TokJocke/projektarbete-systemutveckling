@@ -18,7 +18,7 @@ class Order
         $this->orderId = $orderId;
         $this->userId = $userId;
         $this->orderDate = $orderDate;
-        $this->shipper = $shipped;
+        $this->shipped = $shipped;
         $this->shippingId = $shippingId;
     }
 }
