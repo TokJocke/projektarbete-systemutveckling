@@ -1,6 +1,6 @@
 import {makeReq} from "./main.js"
-//import { headerLinks, growHeader, filterProducts, headerNavBtn } from "./FrontendMain.js"
 import { amountInCart } from "./products.js"
+import { currentUser } from "./myPage.js"
 
 window.addEventListener("load", initSite)
 let body = document.getElementById("cartPageBody")
@@ -9,8 +9,9 @@ function initSite() {
     if (body){
 
         renderProducts()
-        
-        amountInCart()     
+        getShippers()
+        amountInCart() 
+        currentUser()    
 	
     }
 
@@ -35,6 +36,7 @@ async function renderProducts() {
         let checkoutDiv = document.getElementById("checkoutDiv")
         productWrapper.innerHTML = ""
         console.log("response" , cart)
+
         
         if(!cart){
             console.log("gör detta")
@@ -224,6 +226,7 @@ function renderOrderbtn(){
 }
 
 
+
 async function sendOrder(){
     let body = new FormData()
     let selectedShipper = getValue()
@@ -234,5 +237,6 @@ async function sendOrder(){
     console.log(response)
     
 }
+
 
 

@@ -60,7 +60,7 @@ class OrderRepo
         }
 
         $this->emptyCart($userId);
-        return "ORDER SKICKAD";
+        
     }
 
 
@@ -109,12 +109,69 @@ class OrderRepo
 
 
 
-    function getAllOrders()
-    {
-        $allOrders = $this->db->fetchQuery("SELECT * FROM orders");
+
+function getAllOrders() {
+    $allOrders = $this->db->fetchQuery("SELECT * FROM orders");  
+    $orderArray = $this->createOrderList($allOrders); 
+    return $orderArray;
+}
+
+function getCurrentUsersOrder($userId) {
+    
+/* 
+    $allOrders = $this->db->fetchQuery(
+    "SELECT DISTINCT orders.orderDate,orders.orderId,orders.pending,product.productName,orderdetails.quantity, orders.shipped, orders.shippingId, orders.userId    FROM orderdetails
+    INNER JOIN orders
+    ON orderdetails.orderId = orders.orderId
+    INNER JOIN product
+    ON orderdetails.productId = product.productId 
+    WHERE orders.userId = $userId
+    ORDER BY orders.pending DESC");
+    return $allOrders; */
+    /* $allOrders = $this->db->fetchQuery(
+        "SELECT DISTINCT orders.orderDate,orders.orderId,orders.pending,product.productName,orderdetails.quantity, orders.shipped, orders.shippingId, orders.userId    FROM orderdetails
+        INNER JOIN orders
+        ON orderdetails.orderId = orders.orderId
+        INNER JOIN product
+        ON orderdetails.productId = product.productId 
+        WHERE orders.userId = $userId
+		ORDER BY orders.pending DESC");  
         $orderArray = $this->createOrderList($allOrders);
-        return $orderArray;
+
+    return $orderArray; */
+    //ORGINAL
+    $allOrders = $this->db->fetchQuery(
+    "SELECT * FROM orders 
+    WHERE userId = $userId
+    ORDER BY pending ASC"); 
+    $orderArray = $this->createOrderList($allOrders); 
+    return $orderArray;
+}
+
+function createOrderList($array) {
+    $orderArray = array();
+    foreach ($array as $item) { 
+        $order = new Order($item->orderId,$item->userId, $item->orderDate,$item->shipped, $item->shippingId, $item->pending);
+        array_push($orderArray, $order);
     }
+    return $orderArray;
+}
+
+//ORGINAL
+/* function createOrderList($array) {
+    $orderArray = array();
+    foreach ($array as $item) { 
+        $order = new Order($item->orderId, $item->userId, $item->orderDate, $item->shipped, $item->shippingId,$item->pending);
+        array_push($orderArray, $order);
+    }
+    return $orderArray;
+} */
+ 
+function updateShipped($orderId) { 
+    
+    foreach ($orderId as $id) {       
+    
+    $query = "UPDATE orders SET shipped=:shipOut WHERE orderId =:id";
 
     function createOrderList($array)
     {
@@ -142,4 +199,22 @@ class OrderRepo
         }
         return "Order(s) was set as shipped";
     }
+
+
+function updateRecieved($orderId, $sent) { 
+    
+    foreach ($orderId as $id) {       
+    
+    $query = "UPDATE orders SET pending=:recieved WHERE orderId =:id";
+
+    $entity = array(
+        'id' => $id, 
+        'recieved' => $sent); 
+
+        $this->db->runQuery($query, $entity);
+            
+    } 
+    return "Order(s) was set as recieved";
+}
+
 }

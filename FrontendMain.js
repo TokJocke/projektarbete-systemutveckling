@@ -17,7 +17,27 @@ function initSite() {
     closePopUp()
     amountInCart()
     currentUser()
+    cartButton() //Kan ej gå in i cart utan inlogg.
+    
  	}
+}
+
+async function cartButton() {
+  let x = document.getElementById("cartRedirection")
+  x.addEventListener("click", cartRedirection)
+}
+
+async function cartRedirection() {
+  const userCheck = await makeReq("./api/recievers/userReciever.php?checkUser", "GET")
+  
+  if(userCheck === "NotLogged") {
+    alert("Du måste logga in eller skapa konto först.")
+  }
+  
+  else {
+    window.location = "cartPage.html"
+  }
+   
 }
  
 
@@ -92,6 +112,7 @@ function loadRegForm(){
 function loadSignIn(){
   const username = document.createElement("input")
   const password = document.createElement("input")
+  password.type = "password"
   const errorlog = document.createElement("div")
   const loginBtn = document.createElement("div")
   const RegText = document.createElement("p")
@@ -133,15 +154,26 @@ function clickOutSideToClose() {
 
 }
 
-function loginPopUp() {
+
+
+async function loginPopUp() {
   const userLogin = document.getElementById("userLogin")
   const background = document.getElementById("popupBackground")
 
-  userLogin.addEventListener("click", () =>{
+  const response = await makeReq("./api/recievers/userReciever.php?checkUser", "GET") 
 
-    logInForm.style.display = "flex"
-    background.style.display = "flex"
-    loadSignIn()
+  userLogin.addEventListener("click", () =>{
+    if(response === "Logged") {
+      window.location = "myPage.html"
+     
+    }
+
+    else {
+      logInForm.style.display = "flex"
+      background.style.display = "flex"
+      loadSignIn()
+    }
+    
   })
  
 }
