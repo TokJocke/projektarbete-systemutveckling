@@ -195,5 +195,6 @@ async function myTest(){
     body.set("action", "sendOrder")
 
     const response = await makeReq("./api/recievers/orderReciever.php", "POST", body)
+   
 }
 

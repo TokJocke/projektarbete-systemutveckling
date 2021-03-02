@@ -405,6 +405,7 @@ async function loadOrders() {
         
     })  
 }
+
 //Funktion som skickar upp array med checkbox value
 async function updateShippingStatus() {
     let cb = document.getElementsByClassName("myCheckbox")
@@ -503,6 +504,7 @@ async function loadUsers() {
         
     })  
 }
+
 //Skickar upp isAdmin värden från checkbox.
 async function updateUserStatus() {
     let cb = document.getElementsByClassName("myCheckbox2")
