@@ -1,10 +1,13 @@
-
-
+.mainWrapper{
+    margin: 0;
+    height: 93vh;
+}
 
 .myPageContainer{
     display: flex;
     flex-direction: column;
-    margin-top: 150px;
+    
+   /*  margin-top: 14rem; */
    
     /* background-color: #000000; */
 }
@@ -12,6 +15,9 @@
 .headlineContainer{
     display: flex;
     justify-content: center;
+}
+.headlineContainer h1{
+    font-size: 4rem;
 }
 
 .myPage{
@@ -32,33 +38,44 @@
     justify-content: center;
     align-items: center;
     width: 80%;
+    margin-top: 2rem;
     
 }
 
 .myPageMenu{
     display: flex;
     width: 20%;
-    max-height: 318px;
+    
+    margin-top: 2rem;
     border: solid thin  rgba(0, 0, 0, 0.233);
     flex-direction: column;
+   
 } 
 
 .myPageMenuBtn {
-    display: flex;
-    align-content: flex-start;
-    align-items: center;
-    padding:30px;
+    /*
     min-width: 371px;
     min-height: 106px;
+    */
+    display: flex;
+    /* width: 100%; */
+    /* justify-content: space-around; */
+    align-content: flex-start;
+    align-items: center;
+    padding: 3rem;
+    border-left:10px solid transparent; 
     background-color:#C8D7E0;
-    border-left:10px solid transparent;
     cursor: pointer;
+    font-size: 1.5rem; 
     z-index: 99; /* Ser ej logga ut knapp utan denna, kolla senare */
-
 }
 .myPageMenuBtn i {
-    font-size: 2rem;
-    margin-right: 20px;
+    font-size: 1.5rem;
+    margin-right: 1rem;
+}
+.myPageMenuBtn h1 {
+    font-size: 1.3rem;
+    
 }
 
 .myPageMenuBtn:hover {
@@ -93,12 +110,66 @@
 .currentUser {
     font-size: 4rem;
 }
+.myCheckbox{
+    background-color: #4CAF50;
+    width: 8vw;
+    height: 4vh;
+}
+.myPageContent > table{
+    width: 100%;
+    align-items: stretch;
+}
 
 
-@media (max-width: 500px) {
-    .myPageMenu{ 
-       width: 100vw;
-    } 
+
+/* @media  screen and(min-width: 700px) and (max-width:799px) {
+    
+    .myPageContainer {
+        margin-top: 150px;
+    }
+    
 
 
+  } */
+  @media screen and (max-width: 800px){
+    
+    .mainWrapper{
+        width: 100vw;
+        height: 100vh;
+    }
+    .headlineContainer > h1{
+        font-size: 2rem;
+    }
+    .myPage{
+        display: block;
+    }
+    .myPageMenu{
+        width: 100%;
+        
+    }
+    .myPageContent{
+        width: 100%;
+        height: 40vh;
+        margin-top: 3rem;
+        margin-bottom: 5rem;
+    }
+    .myPageContainer{
+        margin-top: 25rem;
+    }
+    .myPageContent > table{
+        margin-top: 2rem;
+       
+    }
+    .myPageMenuBtn{
+        /* justify-content: center; */
+    }
+    .myCheckbox{
+        width: 25vw;
+        height: 5vh;
+       
+    }
+    footer{
+        margin-top: 15rem;
+    }
+    
   }

@@ -206,15 +206,12 @@ function updateUser($isAdmin, $isAdm) {
     return $result;
   
   }
-/* //fetch current name on logged in
-  function currentUserName($userId){
-    $query = 
-      "SELECT name 
-      FROM user
-      WHERE userId = $userId";
-      $result = $this->db->fetchQuery($query);
-      return $result;
-  } */
 
+  // fetch all from newsletter
+function fetchNewsInfo(){
+  $query = "SELECT * FROM newsletter";
+  $result = $this->db->fetchQuery($query);
+  return $result;
+}
 
 }

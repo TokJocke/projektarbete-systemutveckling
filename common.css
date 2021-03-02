@@ -156,7 +156,7 @@ input[type="checkbox"]{
     
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-evenly;
     width: 30vw;
     background-color: white;
     border-radius: 2rem;
@@ -175,7 +175,7 @@ input[type="checkbox"]{
 .productBox {
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: space-between;
     height: 90%;
     background-color: white;
     
@@ -195,7 +195,7 @@ input[type="checkbox"]{
 
 .addToCartBtn{
     width: 15vw;
-    height: 10%;
+    height: 5vh;
     font-size: 1.2rem;
     justify-content: center;
     
@@ -288,7 +288,7 @@ footer {
     justify-content: center;
     fill:#E9DADB;
     height: auto;
-    width: 250px;
+    width: 25vw;
 }
 
 

@@ -14,6 +14,7 @@ function initSite() {
         renderShippers()
         amountInCart() 
         currentUser()    
+
 	
     }
 
@@ -32,6 +33,7 @@ async function getCart() {
 async function renderProducts() {
     
     let cart = await getCart()
+    console.log(cart)
     let allProducts = cart.productList
     let productWrapper = document.getElementById("testDiv")
     productWrapper.innerHTML = ""
@@ -197,4 +199,3 @@ async function myTest(){
     const response = await makeReq("./api/recievers/orderReciever.php", "POST", body)
    
 }
-
