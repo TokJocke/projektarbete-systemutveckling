@@ -11,8 +11,7 @@ function initSite() {
         amountInCart()
         currentUser()
         getAllProdsInCategory()
-        getAllProducts()
-	       
+        getAllProducts()     
         /*  productPopUp()
         clickOutSideToClose()  */
 	}
@@ -27,7 +26,13 @@ export async function getAllProducts() {
 
 export async function getAllProdsInCategory(id) {
 
-    const response = await makeReq("./api/recievers/productReciever.php?id=" + id,  "GET")
+    const response = await makeReq("./api/recievers/productReciever.php?category=" + id,  "GET")
+    return response
+}
+
+export async function getAllProdsInOffer(id) {
+
+    const response = await makeReq("./api/recievers/productReciever.php?offer=" + id,  "GET")
     return response
 }
 
@@ -96,7 +101,6 @@ export async function renderProducts(fromWhere) {
 }
 
 
-/*  */
 async function productPopUpDiv (productDiv){
     
     let thisName = this.name

@@ -11,8 +11,11 @@
         
                 // här blir det fel med att hämta getTotalPrice, funkar ej
                 $pr = new ProductRepo; 
-                if(isset($_GET["id"])) {
-                    echo json_encode($pr->getAllProductsInCategory($_GET["id"]));
+                if(isset($_GET["category"])) {
+                    echo json_encode($pr->getAllProductsInCategory($_GET["category"]));  
+                }
+                else if (isset($_GET["offer"])) {
+                    echo json_encode($pr->getAllProductsInOffer($_GET["offer"]));  
                 }
                 else {
                  echo json_encode($pr->getAllProducts()); 
@@ -29,8 +32,8 @@
                     $productData = json_decode($_POST["productData"]);
                     $pr = new ProductRepo;
                         
-                       //Parametrar = $name, $price, $description, $unitsInStock, $categoryID, $img
-                       echo json_encode($pr->addProduct($productData->inputName, $productData->inputPrice, $productData->inputDesc, null, $productData->inputCategory, $pr->uploadImage($_FILES["image"])));
+                       //Parametrar = $name, $price, $description, $unitsInStock, $categoryID, $offerId, $img
+                       echo json_encode($pr->addProduct($productData->inputName, $productData->inputPrice, $productData->inputDesc, null, $productData->inputCategory, null, $pr->uploadImage($_FILES["image"])));
                       
                         exit;
                 }
