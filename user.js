@@ -8,6 +8,7 @@ let body = document.getElementById("indexBody")
 function initSite() {
 	if (body){
        signNews()
+       hideNewsInputs()
  	}
 }
 
@@ -104,7 +105,7 @@ export async function login() {
 }
 let newsBtn = document.getElementById("newsBtn")
 
-async function Newsletter() { //Signa newsletter ej inloggad.
+export async function Newsletter() { //Signa newsletter ej inloggad.
     let newsL = {
         name: document.getElementById("newsName").value,
         email: document.getElementById("newsEmail").value
@@ -114,14 +115,37 @@ async function Newsletter() { //Signa newsletter ej inloggad.
     body.set("newsL", JSON.stringify(newsL))
     body.set("action", "newsletter")
     const response = await makeReq("./api/recievers/userReciever.php", "POST", body)
+
     if(response === "Email taken") {
         let x = document.getElementById("responsePhp")
-        x.innerText = "Email finns redan, testa en annan"
+        x.innerText = "Email finns redan, använd en annan"
+        x.style.color = "green"
+    }
+
+    if(response === "You are already signed up") {
+        let x = document.getElementById("responsePhp")
+        x.innerText = "Du finns redan registrerad för nyhetsbrev!"
+        x.style.color = "green"
+    }
+
+    if(response === "Signed up for newsletter") {
+        let x = document.getElementById("responsePhp")
+        x.innerText = "Tack! Nu kommer nyhetsbrev till din mail!"
+        x.style.color = "green"
     }
     console.log(response)
     
 }
 async function signNews() {
     newsBtn.addEventListener("click", Newsletter)
+}
+
+export async function hideNewsInputs() {
+    const userCheck = await makeReq("./api/recievers/userReciever.php?checkUser", "GET")
+    if(userCheck === "Logged") {
+        document.getElementById("newsName").style.display = "none"
+        document.getElementById("newsEmail").style.display = "none"
+        document.getElementById("newsBtn").style.marginTop = "15px"
+    }
 }
 
