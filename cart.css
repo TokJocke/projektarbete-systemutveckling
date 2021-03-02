@@ -16,52 +16,93 @@ main {
     margin-top: 20vh;
 }
 
-.cartProductBox{
+#checkoutDiv{
     display: flex;
-    flex-flow: row wrap;
-    justify-content: space-evenly;
-    width: 60vw;
-    height: 15vh;
-    padding: 20px;
+    justify-content: center;
     flex-direction: column;
-    background-color: white;
-    border-radius: 2rem;
-    align-items: center;
-    padding: 1.5rem;
-    margin:2rem 0;
-    /* font */
-    color: #707070;
-    font-family: cheap-pine, sans-serif;
-    font-weight: 400;
-    font-style: normal;
-    font-size: 1rem;
-    
 }
-.cartProductBox > button{
-    
-    width: 5vw;
+#cartDiv{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
-.cartProductBox > img {
-    object-fit: contain;
-    max-width: 50%;
-    max-height: 50%;
+.quantityDiv h4{
+    cursor: pointer;
 }
+
+.cartProductBox{
+    display: flex;
+  
+    align-items: center;
+    width: 50%;
+    background-color: #E9D9E0;
+  
+}
+.cartProductBox:nth-child(even){
+
+    background-color: #C8D7E0;
+  
+}
+
+.imgDiv{
+    display: flex;
+    justify-content: flex-end;
+    height: 100px;
+   flex: 1;
+}
+.imgDiv >img{
+    display: flex;
+    object-fit: contain;
+    width: 100%;
+    height: auto;
+}
+
+.descDiv{
+    display: flex;
+    flex-direction: column;
+    flex: 2;
+   
+}
+
+.quantityDiv{
+    display: flex;
+    justify-content: space-around;
+    flex: 1;
+}
+
+
+.removeDiv{
+    display: flex;
+    justify-content: center;
+    flex: 2;
+}
+
 
 #shippingDiv{
     display: block;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background-color: #ffff;
 }
+
+.labelDiv{
+display: flex;
+justify-content: flex-start;
+flex-direction: column;
+
+flex: 1;
+}
+
 
 
 .shipperContainer{
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    width: 25vw;
     color: #707070a8;
-    width: 500px;
     border: 1px solid #70707074;
     padding: 23px 20px;
     margin: 6px 0;
@@ -78,20 +119,32 @@ main {
     transition: ease-in 2000;
     border: 1px solid #B5CDCC
 }
+input[name="shipperChoice"]{
+    width: 25px;
+    height: 25px;
+}
+
+input[name="shipperChoice"]:checked{
+    background-color: crimson;
+    width: 25px;
+    height: 25px;
+    border-color:crimson ;
+}
 
 
 
 /* Responsive layout - makes a one column layout instead of a two-column layout */
 @media screen and (max-width: 900px) {
-    .productBox{
-        flex: 1 2 auto;
-    }
-    .productBox > p{
-        font-size: x-small;
-    }
-    
 
+    .cartProductBox{
+        display: flex;
+        align-items: center;
+        width: 100%;
+        background-color: #E9D9E0;
 
+    }
+
+    .shipperContainer{
+        width: 100vw;
+    }
   }
-
-

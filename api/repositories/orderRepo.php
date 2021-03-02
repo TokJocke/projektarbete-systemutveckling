@@ -6,7 +6,8 @@ require "../classes/orderClass.php";
 
 session_start();
 
-class OrderRepo {
+class OrderRepo
+{
 
     function __construct()
     {
@@ -108,6 +109,7 @@ class OrderRepo {
 
 
 
+
 function getAllOrders() {
     $allOrders = $this->db->fetchQuery("SELECT * FROM orders");  
     $orderArray = $this->createOrderList($allOrders); 
@@ -171,15 +173,32 @@ function updateShipped($orderId) {
     
     $query = "UPDATE orders SET shipped=:shipOut WHERE orderId =:id";
 
-    $entity = array(
-        'id' => $id, 
-        'shipOut' => 1); 
+    function createOrderList($array)
+    {
+        $orderArray = array();
+        foreach ($array as $item) {
+            $order = new Order($item->orderId, $item->userId, $item->orderDate, $item->shipped, $item->shippingId);
+            array_push($orderArray, $order);
+        }
+        return $orderArray;
+    }
 
-        $this->db->runQuery($query, $entity);
-            
-    } 
-    return "Order(s) was set as shipped";
-}
+    function updateShipped($orderId)
+    {
+
+        foreach ($orderId as $id) {
+
+            $query = "UPDATE orders SET shipped=:shipOut WHERE orderId =:id";
+
+            $entity = array(
+                'id' => $id,
+                'shipOut' => 1
+            );
+
+            $this->db->runQuery($query, $entity);
+        }
+        return "Order(s) was set as shipped";
+    }
 
 
 function updateRecieved($orderId, $sent) { 
@@ -199,4 +218,3 @@ function updateRecieved($orderId, $sent) {
 }
 
 }
-?>
