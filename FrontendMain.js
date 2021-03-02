@@ -112,6 +112,7 @@ function loadRegForm(){
 function loadSignIn(){
   const username = document.createElement("input")
   const password = document.createElement("input")
+  password.type = "password"
   const errorlog = document.createElement("div")
   const loginBtn = document.createElement("div")
   const RegText = document.createElement("p")

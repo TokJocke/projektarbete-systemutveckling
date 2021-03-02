@@ -40,6 +40,7 @@ async function addProducts() {
 }
 
 export async function renderProducts(fromWhere) {
+    const userCheck = await makeReq("./api/recievers/userReciever.php?checkUser", "GET")
 
     let allProducts = await fromWhere
     let productWrapper = document.getElementById("allProductBox")
@@ -53,10 +54,17 @@ export async function renderProducts(fromWhere) {
         let productPrice = document.createElement("h3")
         let productImg = document.createElement("img")
         let addToCartBtn = document.createElement("button")
-        
-        
+
+        let p = document.createElement("p")
+        p.innerText = "Logga in för att lägga till i varukorg"
+        p.style.fontSize = "12px"
+        let myBtn = document.createElement("div")
+        myBtn.className = "addToCartBtn"
+        myBtn.append(p)
+         
 
         productDiv.addEventListener("click" , productPopUpDiv.bind(product,productDiv ))
+
         addToCartBtn.addEventListener("click", update.bind(product, "add"))
         
         productTitle.innerText = product.name
@@ -68,13 +76,26 @@ export async function renderProducts(fromWhere) {
         
         productDiv.className = "productBox"
         productDivWrapper.className = "productBoxWrapper"
+
         
         productDiv.append(productTitle, productImg, productPrice)
-        productDivWrapper.append(productDiv, addToCartBtn)
+
+        if(userCheck === "NotLogged") {
+            productDivWrapper.append(productDiv, myBtn)
+        }
+        
+        else if(userCheck === "Logged") {
+            productDivWrapper.append(productDiv, addToCartBtn)
+        }
+        
+    
+        /* productDivWrapper.append(productDiv, addToCartBtn) */
         productWrapper.append(productDivWrapper)
 
     });
 }
+
+
 /*  */
 async function productPopUpDiv (productDiv){
     
