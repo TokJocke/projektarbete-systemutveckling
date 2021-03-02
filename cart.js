@@ -1,5 +1,4 @@
 import {makeReq} from "./main.js"
-//import { headerLinks, growHeader, filterProducts, headerNavBtn } from "./FrontendMain.js"
 import { amountInCart } from "./products.js"
 
 window.addEventListener("load", initSite)

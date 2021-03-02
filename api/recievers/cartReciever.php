@@ -4,9 +4,7 @@
     
         if (isset($_SERVER["REQUEST_METHOD"])) { //IF SERVER
             session_start();
-
             require("../repositories/cartRepo.php");
-            session_start();
             $userId = $_SESSION["user"];
             $cr = new CartRepo;
      

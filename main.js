@@ -25,17 +25,15 @@ export async function makeReq(path, method, body) {
       } 
 }
 
-//Ska nog tas bort
-/* export function urlAndParam(myUrl, paramKey, paramvalue) {
-
-    let url = myUrl
-    let params = "?" + paramKey + "=" + paramvalue;
-    console.log(url + params.toString())
-    return url + params.toString()    
-} */
 
 export async function getAllCategorys() {
     const response = await makeReq("./api/recievers/categoryReciever.php", "GET")
+    console.log(response)
+    return response
+}
+
+export async function getAllOffers() {
+    const response = await makeReq("./api/recievers/offerReciever.php", "GET")
     console.log(response)
     return response
 }
@@ -47,6 +45,19 @@ export async function createCategoryDropDown() {
         let myOption = document.createElement("option")
         myOption.innerText = category.categoryId + " - " + category.name 
         myOption.value = category.categoryId
+        mySelect.append(myOption) 
+    })    
+    /* appendTo.append(mySelect) */
+    return mySelect
+}
+
+export async function createOfferDropDown() {
+    let allOffers = await getAllOffers()
+    let mySelect = document.createElement("select")
+    allOffers.forEach(offer => {
+        let myOption = document.createElement("option")
+        myOption.innerText = offer.offerId + " - " + offer.offerName 
+        myOption.value = offer.offerId
         mySelect.append(myOption) 
     })    
     /* appendTo.append(mySelect) */
@@ -83,3 +94,4 @@ export function filterProducts(savedSession) {
     }
 
 }
+
