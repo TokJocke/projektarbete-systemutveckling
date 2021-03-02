@@ -167,21 +167,6 @@ function createOrderList($array) {
     return $orderArray;
 } */
  
-function updateShipped($orderId) { 
-    
-    foreach ($orderId as $id) {       
-    
-    $query = "UPDATE orders SET shipped=:shipOut WHERE orderId =:id";
-
-    function createOrderList($array)
-    {
-        $orderArray = array();
-        foreach ($array as $item) {
-            $order = new Order($item->orderId, $item->userId, $item->orderDate, $item->shipped, $item->shippingId);
-            array_push($orderArray, $order);
-        }
-        return $orderArray;
-    }
 
     function updateShipped($orderId)
     {
