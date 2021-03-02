@@ -13,13 +13,16 @@ class OrderItem
 }
 class Order
 {
-    public function __construct($orderId, $userId, $orderDate, $shipped, $shippingId)
+    public function __construct($orderId, $userId, $orderDate, $shipped, $shippingId,$pending)
     {
         $this->orderId = $orderId;
         $this->userId = $userId;
         $this->orderDate = $orderDate;
         $this->shipper = $shipped;
+        $this->shipped = $shipped;
         $this->shippingId = $shippingId;
+        $this->pending = $pending;
     }
+
 }
 

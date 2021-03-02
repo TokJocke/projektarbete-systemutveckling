@@ -1,6 +1,7 @@
 import {makeReq} from "./main.js"
 //import { headerLinks, growHeader, filterProducts, headerNavBtn } from "./FrontendMain.js"
 import { amountInCart } from "./products.js"
+import {currentUser} from "./myPage.js"
 
 window.addEventListener("load", initSite)
 let body = document.getElementById("cartPageBody")
@@ -11,7 +12,8 @@ function initSite() {
         renderProducts()
         getShippers()
         renderShippers()
-        amountInCart()     
+        amountInCart()   
+        currentUser()  
 	
     }
 
@@ -30,6 +32,7 @@ async function getCart() {
 async function renderProducts() {
     
     let cart = await getCart()
+    console.log(cart)
     let allProducts = cart.productList
     let productWrapper = document.getElementById("testDiv")
     productWrapper.innerHTML = ""
@@ -196,4 +199,3 @@ async function myTest(){
 
     const response = await makeReq("./api/recievers/orderReciever.php", "POST", body)
 }
-
