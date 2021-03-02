@@ -1,7 +1,7 @@
 <?php
 
 try {
-
+    session_start();
     if (isset($_SERVER["REQUEST_METHOD"])) { //IF SERVER
         require("../repositories/userRepo.php");
         $ur = new userRepo;
@@ -9,25 +9,42 @@ try {
 
         if ($_SERVER["REQUEST_METHOD"] == "GET") { //IF METHOD = GET
 
-            session_start();
+
             $userId = $_SESSION["user"];
             if(isset($_GET["check"])){
                 echo json_encode($ur->isAdminInfo($userId));
             }else if (isset($_GET["user"])){
                 
                 echo json_encode($ur->userInfo($userId));
-            }else{
+            }else if(isset($_GET["getUsers"])){
                 
                 $ur = new UserRepo(); 
-                echo json_encode($ur->getAllUsers());
                
+                echo json_encode($ur->getAllUsers());       
             }
 
+             if(isset($_GET["checkUser"])) {
+                    
+                if(isset($_SESSION["user"])) {
+                    echo json_encode("Logged");
+                }
+    
+                else {
+                    echo json_encode("NotLogged");
+                }
+            }
 
 
         }
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") { //IF METHOD = POST
+
+            if ($_POST["action"] == "logout") {
+                if(isset($_SESSION["user"])) {
+                    session_destroy();
+                    echo json_encode("logged out");
+                }
+            }  
 
             if ($_POST["action"] == "register") {
 

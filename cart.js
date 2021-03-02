@@ -1,5 +1,6 @@
 import {makeReq} from "./main.js"
 import { amountInCart } from "./products.js"
+import { currentUser } from "./myPage.js"
 
 window.addEventListener("load", initSite)
 let body = document.getElementById("cartPageBody")
@@ -10,7 +11,9 @@ function initSite() {
         renderProducts()
         getShippers()
         renderShippers()
-        amountInCart()     
+        amountInCart() 
+        currentUser()    
+
 	
     }
 
@@ -29,6 +32,7 @@ async function getCart() {
 async function renderProducts() {
     
     let cart = await getCart()
+    console.log(cart)
     let allProducts = cart.productList
     let productWrapper = document.getElementById("testDiv")
     productWrapper.innerHTML = ""
@@ -77,11 +81,23 @@ async function renderProducts() {
         
     });
     // creates div and print totalprice of the cart
-    let totalPriceDiv = document.getElementById("totalPrice")
-    totalPriceDiv.innerHTML += "Totaltpris " + " " + cart.totalPrice + " kr"
+   /*  let totalPriceDiv = document.getElementById("totalPrice")
+    totalPriceDiv.innerHTML += "Totaltpris " + " " + cart.totalPrice + " kr" */
+    /* productWrapper.append(totalPriceDiv) */
+    
+    renderTotalPrice(cart)
+    
+    
+    
+}
+
+async function renderTotalPrice(cart){
+
+    let productWrapper = document.getElementById("testDiv")
+    
+    let totalPriceDiv = document.createElement("div")
+    totalPriceDiv.innerHTML = "Totaltpris " + " " + cart.totalPrice + " kr"
     productWrapper.append(totalPriceDiv)
-    
-    
 }
 
 //funktionen updaterar quantitet samt kan ta bort
@@ -173,14 +189,12 @@ const ship = document.getElementById("shipper")
 ship.addEventListener("click", myTest)
 
 
-
-
-
 async function myTest(){
     let body = new FormData()
     let selectedShipper = getValue()
     selectedShipper == null ? alert("du måste välja fraktmetod") : body.set("shipper", selectedShipper);
+    body.set("action", "sendOrder")
 
     const response = await makeReq("./api/recievers/orderReciever.php", "POST", body)
+   
 }
-

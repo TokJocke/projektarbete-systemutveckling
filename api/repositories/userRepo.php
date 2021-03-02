@@ -76,9 +76,9 @@ function fetchUserInfo($username)
   return $myResult[0]->password;
 }
 
-function signUpNewsletter($username)
-{ //Skicka in userid vid reg, email och namn kan vara null
+function signUpNewsletter($username) { //Skicka in userid vid reg, email och namn kan vara null
   //Om ej inloggad, newsletter reg = namn/email.  
+  
   $query = ('INSERT INTO newsletter (userId) VALUES (:userId)'); //Glöm ej ändra email/name till NULL i databas.
 
   $entity = array(':userId' => $this->fetchuId($username));
@@ -107,13 +107,38 @@ function fetchUsers()
 
 function newsNoSignUp($email, $name) { //skicka med userid och göra en check om inloggad, skicka då userid istället.
   // ändra så man ej kan skicka upp samma email. 
+  $activeUser = $_SESSION["user"];
+  
+  $myQuery = "SELECT email FROM newsletter WHERE email='$email'";
+  $newResult = $this->db->fetchQuery($myQuery);
+  
+  if($newResult == true) { //kollar om email redan finns
+    echo json_encode("Email taken"); 
+    exit;
+  }
+
+    if(isset($_SESSION["user"])) { //Skickar bara upp userId om inloggad.
+    $uid = $this->fetchuserId($activeUser);
+    $qry = ('INSERT INTO newsletter (userId) VALUES (:userId)');
+    $entity = array(':userId' => $uid);
+    $this->db->runQuery($qry, $entity);
+  } 
+
+  else{
   $query = ('INSERT INTO newsletter (email, name) VALUES (:email, :name)'); 
 
   $entity = array(':email' => $email, ':name' => $name);
   
   $this->db->runQuery($query, $entity);
+  }
 }
 
+function fetchuserId($userId)
+{
+  $qery = "SELECT userId FROM user WHERE userId='$userId'";
+  $result = $this->db->fetchQuery($qery);
+  return $result[0]->userId;
+}
 
 function getAllUsers() {
   $allUsers = $this->db->fetchQuery("SELECT * FROM user");  
@@ -181,15 +206,12 @@ function updateUser($isAdmin, $isAdm) {
     return $result;
   
   }
-/* //fetch current name on logged in
-  function currentUserName($userId){
-    $query = 
-      "SELECT name 
-      FROM user
-      WHERE userId = $userId";
-      $result = $this->db->fetchQuery($query);
-      return $result;
-  } */
 
+  // fetch all from newsletter
+function fetchNewsInfo(){
+  $query = "SELECT * FROM newsletter";
+  $result = $this->db->fetchQuery($query);
+  return $result;
+}
 
 }

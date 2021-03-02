@@ -3,7 +3,9 @@
     try {
     
         if (isset($_SERVER["REQUEST_METHOD"])) { //IF SERVER
+
             session_start();
+
             require("../repositories/cartRepo.php");
             $userId = $_SESSION["user"];
             $cr = new CartRepo;
@@ -21,33 +23,33 @@
                 
                    
                 
+            
+            } else if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                $productId = $_POST["productId"];
+                /* $cr = new CartRepo;  */
+
+                // action = remove
+                //! parametern $userId måste vara samma som session userid
+                if ($_POST["action"] == "remove") {
+                    echo json_encode($cr->deleteProducts($productId, $userId));
+
+                    // action = increase
+                } else if ($_POST["action"] == "increase") {
+                    echo json_encode($cr->update($productId, $userId));
+
+                    // action = decrease
+                } else if ($_POST["action"] == "decrease") {
+                    echo json_encode($cr->decrease($productId, $userId));
+
+                    // action = add
+                } else if ($_POST["action"] == "add") {
+                    echo json_encode($cr->addProductToCart($userId, $productId));
+                }
             }
-        } else if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $productId = 4;
-            /* $cr = new CartRepo;  */
-
-            // action = remove
-            //! parametern $userId måste vara samma som session userid
-            if ($_POST["action"] == "remove") {
-                echo json_encode($cr->deleteProducts($productId, $userId));
-
-                // action = increase
-            } else if ($_POST["action"] == "increase") {
-                echo json_encode($cr->update($productId, $userId));
-
-                // action = decrease
-            } else if ($_POST["action"] == "decrease") {
-                echo json_encode($cr->decrease($productId, $userId));
-
-                // action = add
-            } else if ($_POST["action"] == "add") {
-                echo json_encode($cr->addProductToCart($userId, $productId));
-            }
-        }
 
 
 
-            ////update($userId,$productId,$quantity) tar in 3 para
+        }    ////update($userId,$productId,$quantity) tar in 3 para
         
     
 } catch (Exception $e) { // om error har felmeddelande

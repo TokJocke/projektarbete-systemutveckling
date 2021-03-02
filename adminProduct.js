@@ -678,7 +678,7 @@ async function updateShippingStatus() {
 
 //Hämta användare
 async function getUsers() {
-    const response = await makeReq("./api/recievers/userReciever.php", "GET")
+    const response = await makeReq("./api/recievers/userReciever.php?getUsers", "GET")
     console.log(response)
     return response
 }
@@ -754,6 +754,7 @@ async function loadUsers() {
         
     })  
 }
+
 //Skickar upp isAdmin värden från checkbox.
 async function updateUserStatus() {
     let cb = document.getElementsByClassName("myCheckbox2")
