@@ -1,6 +1,7 @@
 import {makeReq} from "./main.js"
 import { amountInCart } from "./products.js"
 import { currentUser } from "./myPage.js"
+import { Newsletter, hideNewsInputs } from "./user.js"
 
 window.addEventListener("load", initSite)
 let body = document.getElementById("cartPageBody")
@@ -11,10 +12,17 @@ function initSite() {
         renderProducts()
         getShippers()
         amountInCart() 
-        currentUser()    
+        currentUser() 
+        hideNewsInputs()
+        signUpNews()   
 	
     }
 
+}
+
+async function signUpNews() {
+    let newsBtn = document.getElementById("newsBtn")
+    newsBtn.addEventListener("click", Newsletter)
 }
 
 
