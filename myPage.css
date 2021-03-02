@@ -1,0 +1,103 @@
+
+
+
+.myPageContainer{
+    display: flex;
+    flex-direction: column;
+    margin-top: 150px;
+   
+    /* background-color: #000000; */
+}
+
+.headlineContainer{
+    display: flex;
+    justify-content: center;
+}
+
+.myPage{
+    display: flex;
+    justify-content: center;
+    flex-direction: row-reverse;
+    
+    flex-wrap: wrap;
+
+
+}
+
+
+.myPageContent {
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    
+}
+
+.myPageMenu{
+    display: flex;
+    width: 20%;
+    max-height: 318px;
+    border: solid thin  rgba(0, 0, 0, 0.233);
+    flex-direction: column;
+} 
+
+.myPageMenuBtn {
+    display: flex;
+    align-content: flex-start;
+    align-items: center;
+    padding:30px;
+    min-width: 371px;
+    min-height: 106px;
+    background-color:#C8D7E0;
+    border-left:10px solid transparent;
+    cursor: pointer;
+
+}
+.myPageMenuBtn i {
+    font-size: 2rem;
+    margin-right: 20px;
+}
+
+.myPageMenuBtn:hover {
+    border-left: 10px solid #B4CDCC;
+    transition: all .2s;
+    
+}
+
+.myPageMenuBtn:active {
+    box-shadow: inset 0px 0px 20px #B4CDCC;
+    border-left: 10px solid #B4CDCC;
+    
+}
+/* userInfo styling */
+
+
+.userInfoContainer{
+    display: flex;
+    flex-direction: column;
+    
+    font-size: large;
+}
+.userInfoContainer > p{
+    padding: 0.2rem;
+}
+
+/* current user print out name*/
+.myPageBtn{
+    display: flex;
+    
+}
+.currentUser {
+    font-size: 4rem;
+}
+
+
+@media (max-width: 500px) {
+    .myPageMenu{ 
+       width: 100vw;
+    } 
+
+
+  }

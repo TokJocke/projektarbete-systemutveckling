@@ -17,27 +17,20 @@
         function runQuery($query, $entity) {
             $preparedQuery = $this->prepareQuery($query);
             $status = $preparedQuery->execute($entity);
+            
+            
+/*             error_log(json_encode($preparedQuery->errorInfo()));
+ */           
+           
             return $status;
         }
         function fetchQuery($query) {
             $preparedQuery = $this->prepareQuery($query);
             $preparedQuery->execute();
-            echo json_encode($preparedQuery->fetchAll(PDO::FETCH_OBJ));
+            return $preparedQuery->fetchAll(PDO::FETCH_OBJ);
+
         }
-
-/*         function addTestProduct() {
-            
-            $this->runQuery("INSERT INTO product (productName, price, description, unitsInStock) 
-            VALUES (:productName, :price, :description, :unitsInStock)", 
-            array("productName" => "lakritsknapp", "price" => 10, "description" => "supergod", "unitsInStock" => 3));
-
-        } */
-
 }
-
-
-
-    
 
 
 

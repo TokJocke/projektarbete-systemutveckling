@@ -1,0 +1,97 @@
+/* * {
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+} */
+
+body{
+    background-color: #E8E0E4;
+    background-image: url(./assets/layout/shape.svg);
+    background-repeat: no-repeat;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    margin-top: 20vh;
+}
+
+.cartProductBox{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    width: 60vw;
+    height: 15vh;
+    padding: 20px;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 2rem;
+    align-items: center;
+    padding: 1.5rem;
+    margin:2rem 0;
+    /* font */
+    color: #707070;
+    font-family: cheap-pine, sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 1rem;
+    
+}
+.cartProductBox > button{
+    
+    width: 5vw;
+}
+
+.cartProductBox > img {
+    object-fit: contain;
+    max-width: 50%;
+    max-height: 50%;
+}
+
+#shippingDiv{
+    display: block;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #ffff;
+}
+
+
+.shipperContainer{
+    display: flex;
+    justify-content: space-between;
+    color: #707070a8;
+    width: 500px;
+    border: 1px solid #70707074;
+    padding: 23px 20px;
+    margin: 6px 0;
+}
+
+.shipperContainer:hover{
+    transition: ease-in 1000;
+    border: 1px solid #707070;
+    color:#707070;
+}
+
+
+.shipperContainer:active{
+    transition: ease-in 2000;
+    border: 1px solid #B5CDCC
+}
+
+
+
+/* Responsive layout - makes a one column layout instead of a two-column layout */
+@media screen and (max-width: 900px) {
+    .productBox{
+        flex: 1 2 auto;
+    }
+    .productBox > p{
+        font-size: x-small;
+    }
+    
+
+
+  }
+
+

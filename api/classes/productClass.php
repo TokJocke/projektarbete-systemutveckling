@@ -1,36 +1,18 @@
-/*      function fetchQuerry($sqlQuery) { 
-        //kommunikation med db minst i tre steg, förbered, execute, fetch
-        $preparedQuery = $this->db->prepare($sqlQuery);
-        $preparedQuery->execute();
-        echo json_encode($preparedQuery->fetchAll(PDO::FETCH_OBJ));       
-        exit;
-        }
+<?php 
 
-        function runQuerry($sqlQuery) { 
-        //kommunikation med db minst i tre steg, förbered, execute, fetch
-        $preparedQuery = $this->db->prepare($sqlQuery);
-        $status = $preparedQuery->execute();
+class Product {
+    function __construct($productId, $name, $price, $description, $unitsInStock, $categoryId, $offerId, $img) {
+        $this->productId = $productId;
+        $this->name = $name;
+        $this->price = $price;
+        $this->description = $description;
+        $this->unitsInStock = $unitsInStock;
+        $this->categoryId = $categoryId;
+        $this->offerId = $offerId;
+        $this->img = $img;
         
-        return $status;
         }
- */
+}
 
 
-/* 
-    class ProductRepo extends Database {
-
-        function fetchAllProducts() {
-
-            $this->fetchQuery("SELECT * FROM product");
-
-        }
- */
-/*         function addProduct() {
-
-            $preparedQuery = $this->db->prepare("INSERT INTO product (productName, price, description, unitsInStock) VALUES (:productName, :price, :description, :unitsInStock)");
-            $status = $preparedQuery->execute(array("productName" => "lakritsknapp", "price" => 10, "description" => "supergod", "unitsInStock" => 3));
-
-            echo json_encode($status)
-            exit;
-        }
- */
+?>
