@@ -79,7 +79,7 @@ async function letterBtnClick(){
 }
 
 async function adminBtn() {
-	
+	let check = await makeReq("./api/recievers/userReciever.php?check", "GET")
 	const myPageMenu = document.getElementsByClassName("myPageMenu")[0]
 	const adminBtn = document.createElement("div")
 	const adminIcon = document.createElement("i")
@@ -89,8 +89,10 @@ async function adminBtn() {
 	adminIcon.className = "fas fa-tools"
 	adminBtnText.innerText = "Admin Panel"
 
-	adminBtn.append(adminIcon, adminBtnText)
-	myPageMenu.append(adminBtn)
+	if(check === "Ja") { //visar endast adminpanel om admin.
+		adminBtn.append(adminIcon, adminBtnText)
+		myPageMenu.append(adminBtn)
+	}
 
 	adminBtn.addEventListener("click", renderAdminPanel)
 }
