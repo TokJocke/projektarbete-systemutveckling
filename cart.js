@@ -170,7 +170,7 @@ async function update (change){
     console.log(response)
     
     renderProducts()
-
+    amountInCart()
 }
 
     /**Hämtar alla fraktalternativ */
