@@ -33,7 +33,7 @@ class CartRepo
         $totalPrice = 0;
 
         foreach ($productList as $item) {
-            $product = new Product($item->productId, $item->productName,(int) $item->price, $item->description, $item->unitsInStock,(int) $item->categoryId, $item->offerId, $item->img);
+            $product = new Product($item->productId, $item->productName, (int) $item->price, $item->description, $item->unitsInStock, (int) $item->categoryId, $item->offerId, $item->img);
             $cartItem = new CartItem($product, (int) $item->quantity, $this->calculatePrice($item->quantity, $item->price), (int)$item->productId, (int)$item->userId);
 
             $totalPrice += $cartItem->totalPrice;

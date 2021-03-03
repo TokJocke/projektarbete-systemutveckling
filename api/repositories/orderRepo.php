@@ -47,7 +47,7 @@ class OrderRepo
         );
 
         $orderId = $this->db->fetchQuery(
-            "SELECT  MAX(orderId) 
+            "SELECT MAX(orderId) 
             FROM orders
             WHERE userId = '$userId'"
         );
@@ -60,7 +60,6 @@ class OrderRepo
         }
 
         $this->emptyCart($userId);
-        
     }
 
 
@@ -110,15 +109,17 @@ class OrderRepo
 
 
 
-function getAllOrders() {
-    $allOrders = $this->db->fetchQuery("SELECT * FROM orders");  
-    $orderArray = $this->createOrderList($allOrders); 
-    return $orderArray;
-}
+    function getAllOrders()
+    {
+        $allOrders = $this->db->fetchQuery("SELECT * FROM orders");
+        $orderArray = $this->createOrderList($allOrders);
+        return $orderArray;
+    }
 
-function getCurrentUsersOrder($userId) {
-    
-/* 
+    function getCurrentUsersOrder($userId)
+    {
+
+        /* 
     $allOrders = $this->db->fetchQuery(
     "SELECT DISTINCT orders.orderDate,orders.orderId,orders.pending,product.productName,orderdetails.quantity, orders.shipped, orders.shippingId, orders.userId    FROM orderdetails
     INNER JOIN orders
@@ -128,7 +129,7 @@ function getCurrentUsersOrder($userId) {
     WHERE orders.userId = $userId
     ORDER BY orders.pending DESC");
     return $allOrders; */
-    /* $allOrders = $this->db->fetchQuery(
+        /* $allOrders = $this->db->fetchQuery(
         "SELECT DISTINCT orders.orderDate,orders.orderId,orders.pending,product.productName,orderdetails.quantity, orders.shipped, orders.shippingId, orders.userId    FROM orderdetails
         INNER JOIN orders
         ON orderdetails.orderId = orders.orderId
@@ -139,26 +140,28 @@ function getCurrentUsersOrder($userId) {
         $orderArray = $this->createOrderList($allOrders);
 
     return $orderArray; */
-    //ORGINAL
-    $allOrders = $this->db->fetchQuery(
-    "SELECT * FROM orders 
+        //ORGINAL
+        $allOrders = $this->db->fetchQuery(
+            "SELECT * FROM orders 
     WHERE userId = $userId
-    ORDER BY pending ASC"); 
-    $orderArray = $this->createOrderList($allOrders); 
-    return $orderArray;
-}
-
-function createOrderList($array) {
-    $orderArray = array();
-    foreach ($array as $item) { 
-        $order = new Order($item->orderId,$item->userId, $item->orderDate,$item->shipped, $item->shippingId, $item->pending);
-        array_push($orderArray, $order);
+    ORDER BY pending ASC"
+        );
+        $orderArray = $this->createOrderList($allOrders);
+        return $orderArray;
     }
-    return $orderArray;
-}
 
-//ORGINAL
-/* function createOrderList($array) {
+    function createOrderList($array)
+    {
+        $orderArray = array();
+        foreach ($array as $item) {
+            $order = new Order($item->orderId, $item->userId, $item->orderDate, $item->shipped, $item->shippingId, $item->pending);
+            array_push($orderArray, $order);
+        }
+        return $orderArray;
+    }
+
+    //ORGINAL
+    /* function createOrderList($array) {
     $orderArray = array();
     foreach ($array as $item) { 
         $order = new Order($item->orderId, $item->userId, $item->orderDate, $item->shipped, $item->shippingId,$item->pending);
@@ -166,7 +169,7 @@ function createOrderList($array) {
     }
     return $orderArray;
 } */
- 
+
 
     function updateShipped($orderId)
     {
@@ -186,20 +189,20 @@ function createOrderList($array) {
     }
 
 
-function updateRecieved($orderId, $sent) { 
-    
-    foreach ($orderId as $id) {       
-    
-    $query = "UPDATE orders SET pending=:recieved WHERE orderId =:id";
+    function updateRecieved($orderId, $sent)
+    {
 
-    $entity = array(
-        'id' => $id, 
-        'recieved' => $sent); 
+        foreach ($orderId as $id) {
 
-        $this->db->runQuery($query, $entity);
-            
-    } 
-    return "Order(s) was set as recieved";
-}
+            $query = "UPDATE orders SET pending=:recieved WHERE orderId =:id";
 
+            $entity = array(
+                'id' => $id,
+                'recieved' => $sent
+            );
+
+            $this->db->runQuery($query, $entity);
+        }
+        return "Order(s) was set as recieved";
+    }
 }
