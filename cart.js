@@ -105,7 +105,7 @@ async function renderProducts() {
                 productMinus.addEventListener("click", update.bind(product, "decrease"))
                 productRemove.addEventListener("click", update.bind(product, "remove"))
         
-                productImg.src = "./assets/product/" + product.product.img 
+                productImg.src = "./assets/products/" + product.product.img
                 productDiv.className = "cartProductBox"
                 productRemove.className = "fa fa-trash"
                 
