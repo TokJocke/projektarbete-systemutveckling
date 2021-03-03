@@ -14,6 +14,7 @@ function initSite() {
         amountInCart() 
         currentUser() 
         hideNewsInputs()
+
         signUpNews()   
     }
 }
@@ -169,6 +170,7 @@ async function update (change){
     console.log(response)
     
     renderProducts()
+
 }
 
     /**Hämtar alla fraktalternativ */
@@ -255,13 +257,21 @@ async function sendOrder(){
         body.set("action", "sendOrder")
         body.set("shipper", selectedShipper.shippingId);
         const response = await makeReq("./api/recievers/orderReciever.php", "POST", body)
-        alert("tack för din beställning!")
+
+        alert(response)
+
         renderProducts()
 				window.location = "./myPage.html"
+
         console.log(response)
       
     }
 }
+/* async function test() {
+    const response = await makeReq("./api/recievers/orderReciever.php?test", "GET")
+    console.log("test response = ", response)
+        return response
+} */
 
 
 

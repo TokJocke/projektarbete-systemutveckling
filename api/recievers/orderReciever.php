@@ -11,7 +11,7 @@ try {
         $userId = $_SESSION["user"];
         if ($_SERVER["REQUEST_METHOD"] == "GET") { //IF METHOD = GET
 
- 
+            
             $or = new OrderRepo(); 
             if(isset($_GET["user"])){
                 echo json_encode($or->getCurrentUsersOrder($userId));
@@ -27,8 +27,10 @@ try {
         if ($_SERVER["REQUEST_METHOD"] == "POST") { //IF METHOD = POST'
 
             if ($_POST["action"] == "sendOrder") {
-
+                $productId = 1;
+                $userId = $_SESSION["user"];
                 $or = new OrderRepo();
+                /* echo json_encode($or->compareValues($productId, $userId)); */
                 echo json_encode($or->placeOrder($_POST["shipper"]));
             } else if ($_POST["action"] == "loadAdminOrder") {
 

@@ -17,24 +17,40 @@ class OrderRepo
 
     function placeOrder($shippingId)
     {
-        $userId = $_SESSION["user"];
-        $orderDate = date("l jS \of F Y h:i:s A");
+        // hämtar cart
+        $cart = $this->activeUserCart();
+        // gör en check på ifall unitsinstock är mindre än quantity
+        foreach ($cart as $product) {
+            $quantity = $product->quantity;
+            $unitsInStock = $product->unitsInStock;
+            
+                if($unitsInStock < $quantity){
+                    return $product->productName . " har bara " . $unitsInStock . " kvar i lager";
+                    
+                }
+        }
+         //kontrollera ifall lagetstatus stämmer
+         $userId = $_SESSION["user"];
+         $orderDate = date("l jS \of F Y h:i:s A");
 
-        $query = ('
-        INSERT INTO orders (userId, orderDate, shippingId) 
-        VALUES (:userId, :orderDate, :shippingId)');
-        $entity = array(
-            ':userId' => $userId,
-            ':orderDate' => $orderDate,
-            ':shippingId' => $shippingId,
-        );
+         $query = ('
+         INSERT INTO orders (userId, orderDate, shippingId) 
+         VALUES (:userId, :orderDate, :shippingId)');
+         $entity = array(
+             ':userId' => $userId,
+             ':orderDate' => $orderDate,
+             ':shippingId' => $shippingId,
+         );
 
-        $this->db->runQuery($query, $entity);
-        $this->turnCartToOrderItem();
-        return "ORDER SKICKAD";
-        // foreach loop för alla cartitems,
+         $this->db->runQuery($query, $entity);
+         $this->turnCartToOrderItem();
+         return "ORDER SKICKAD";
+         // foreach loop för alla cartitems,
+        
+    
     }
-
+    
+    
     function turnCartToOrderItem()
     {
         $userId = $_SESSION["user"];
@@ -119,32 +135,11 @@ class OrderRepo
     function getCurrentUsersOrder($userId)
     {
 
-        /* 
-    $allOrders = $this->db->fetchQuery(
-    "SELECT DISTINCT orders.orderDate,orders.orderId,orders.pending,product.productName,orderdetails.quantity, orders.shipped, orders.shippingId, orders.userId    FROM orderdetails
-    INNER JOIN orders
-    ON orderdetails.orderId = orders.orderId
-    INNER JOIN product
-    ON orderdetails.productId = product.productId 
-    WHERE orders.userId = $userId
-    ORDER BY orders.pending DESC");
-    return $allOrders; */
-        /* $allOrders = $this->db->fetchQuery(
-        "SELECT DISTINCT orders.orderDate,orders.orderId,orders.pending,product.productName,orderdetails.quantity, orders.shipped, orders.shippingId, orders.userId    FROM orderdetails
-        INNER JOIN orders
-        ON orderdetails.orderId = orders.orderId
-        INNER JOIN product
-        ON orderdetails.productId = product.productId 
-        WHERE orders.userId = $userId
-		ORDER BY orders.pending DESC");  
-        $orderArray = $this->createOrderList($allOrders);
-
-    return $orderArray; */
-        //ORGINAL
+     
         $allOrders = $this->db->fetchQuery(
             "SELECT * FROM orders 
-    WHERE userId = $userId
-    ORDER BY pending ASC"
+            WHERE userId = $userId
+            ORDER BY pending ASC"
         );
         $orderArray = $this->createOrderList($allOrders);
         return $orderArray;
@@ -160,15 +155,15 @@ class OrderRepo
         return $orderArray;
     }
 
-    //ORGINAL
-    /* function createOrderList($array) {
-    $orderArray = array();
-    foreach ($array as $item) { 
-        $order = new Order($item->orderId, $item->userId, $item->orderDate, $item->shipped, $item->shippingId,$item->pending);
-        array_push($orderArray, $order);
-    }
-    return $orderArray;
-} */
+        //ORGINAL
+        /* function createOrderList($array) {
+        $orderArray = array();
+        foreach ($array as $item) { 
+            $order = new Order($item->orderId, $item->userId, $item->orderDate, $item->shipped, $item->shippingId,$item->pending);
+            array_push($orderArray, $order);
+        }
+        return $orderArray;
+    } */
 
 
     function updateShipped($orderId)
