@@ -167,7 +167,7 @@ header{
     .growHeader{
         display: flex;
         justify-content: space-between;
-        height: 50%;
+        height: 100%;
         
     }
     #headerTop{
@@ -180,7 +180,7 @@ header{
         justify-content: center;
     }
     .headerBox > h2 {
-        font-size: 3rem;
+        font-size: 2rem;
     }
 
     .headerBox:not(:last-child) {
