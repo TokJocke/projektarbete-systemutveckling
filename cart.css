@@ -16,23 +16,62 @@ main {
     margin-top: 20vh;
     min-height: 80vh;
 }
+.totalPriceDiv{
+    display: flex;
+    justify-content: flex-end;
+    align-content: flex-end;
+}
+
+hr {
+    width: 30vw;
+    border: 0;
+    height: 3px;
+    background-image: linear-gradient(to right,rgba(200, 215, 224, 0),rgba(200, 215, 224, 0.609),rgba(200, 215, 224, 0));
+  }
 
 #checkoutDiv{
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-}
-#cartDiv{
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
 }
 
-.confirmOrderDiv{
+#confirmOrderDiv{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+}
+#confirmOrderDiv >p{
+   color: #707070;
+}
+#confirmOrderDiv >h4{
+    font-size: 2em;
+    letter-spacing: 1px;
+   color: #707070;
+}
+#cartDiv{
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+}
+.headlineDiv{
+    color: #707070;
+    display: flex;
+    width: 100%;
+}
+.headlineOne{
+    
     display: flex;
     justify-content: center;
+    flex: 1;
+}
+.headlineTwo{
 
+    display: flex;
+    justify-content: center;
+    flex: 1;
 }
 
 .quantityDiv h4{
@@ -41,9 +80,8 @@ main {
 
 .cartProductBox{
     display: flex;
-  
     align-items: center;
-    width: 50%;
+    width: 100%;
     background-color: #E9D9E0;
   
 }
@@ -69,7 +107,7 @@ main {
 .descDiv{
     display: flex;
     flex-direction: column;
-    flex: 2;
+    flex: 3;
    
 }
 
@@ -83,7 +121,7 @@ main {
 .removeDiv{
     display: flex;
     justify-content: center;
-    flex: 2;
+    flex: 1;
 }
 
 
@@ -152,6 +190,10 @@ input[name="shipperChoice"]:checked{
     }
 
     .shipperContainer{
+        width: 100vw;
+    }
+
+    hr{
         width: 100vw;
     }
   }
