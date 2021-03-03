@@ -14,7 +14,9 @@ function initSite() {
         amountInCart() 
         currentUser() 
         hideNewsInputs()
-        signUpNews()   
+        signUpNews() 
+        
+        
 	
     }
 
@@ -151,6 +153,7 @@ async function update (change){
     
     renderProducts()
     renderShippers()
+    
  
 }
 
@@ -245,10 +248,16 @@ async function sendOrder(){
         body.set("action", "sendOrder")
         body.set("shipper", selectedShipper);
         const response = await makeReq("./api/recievers/orderReciever.php", "POST", body)
+        alert(response)
         console.log(response)
       
     }
 }
+/* async function test() {
+    const response = await makeReq("./api/recievers/orderReciever.php?test", "GET")
+    console.log("test response = ", response)
+        return response
+} */
 
 
 

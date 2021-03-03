@@ -69,7 +69,7 @@ export async function renderProducts(fromWhere) {
          
 
         productDiv.addEventListener("click" , productPopUpDiv.bind(product,productDiv ))
-
+        
         addToCartBtn.addEventListener("click", update.bind(product, "add"))
         
         productTitle.innerText = product.name
@@ -84,7 +84,7 @@ export async function renderProducts(fromWhere) {
 
         
         productDiv.append(productTitle, productImg, productPrice)
-
+       
         if(userCheck === "NotLogged") {
             productDivWrapper.append(productDiv, myBtn)
         }
@@ -92,11 +92,13 @@ export async function renderProducts(fromWhere) {
         else if(userCheck === "Logged") {
             productDivWrapper.append(productDiv, addToCartBtn)
         }
-        
+         if(product.unitsInStock <= 0 ){
+            addToCartBtn.innerText = "Tillfälligt slut"        
+        }
     
         /* productDivWrapper.append(productDiv, addToCartBtn) */
         productWrapper.append(productDivWrapper)
-
+        
     });
 }
 
@@ -161,9 +163,14 @@ async function windowOnClick(modal){
 
 async function update (change){
     //svaret från this sparas i variable
+    let thisUnitsInStock = this.unitsInStock
+    if(thisUnitsInStock <= 0){
+        
+        return alert("produkten är tyvärr slut")
+    }
     let thisProductId = this.productId
     
-    console.log(thisProductId)
+    
     //skapar en body
     let body = new FormData()
     
@@ -173,6 +180,7 @@ async function update (change){
     
     const response = await makeReq("./api/recievers/cartReciever.php", "POST", body)
     console.log(response)
+    
     amountInCart ()
     
 

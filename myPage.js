@@ -197,6 +197,7 @@ async function loadOldOrders() {
     
     let orderDateTitle = document.createElement("td")
     let shippedTitle = document.createElement("td")
+    let recievedTitle = document.createElement("td")
     // confirm knapp
     let confirmBtn = document.createElement("button")
     confirmBtn.addEventListener("click", updateShippingStatus)
@@ -206,9 +207,10 @@ async function loadOldOrders() {
     orderIdTitle.innerHTML = "<h3>OrderId</h3>"
     
     orderDateTitle.innerHTML = "<h3>Order Date</h3>"
-    shippedTitle.innerHTML = "<h3>Recieved</h3>"
+    shippedTitle.innerHTML = "<h3>Shipped</h3>"
+    recievedTitle.innerHTML = "<h3>Recieved</h3>"
     
-    titleTr.append(orderIdTitle, orderDateTitle, shippedTitle)
+    titleTr.append(orderIdTitle, orderDateTitle, shippedTitle,recievedTitle)
     myTable.append(titleTr)
     content.append(myTable, confirmBtn)
 
@@ -217,22 +219,25 @@ async function loadOldOrders() {
        /*  if(order.pending == null) { */
         let newRow = document.createElement("tr")
         newRow.align = "center"
+		
         let orderId = document.createElement("td")
-        
-        
         let orderDate = document.createElement("td")
         let shipped = document.createElement("td")
+        let recieved = document.createElement("td")
         let checkbox = document.createElement("input")
         checkbox.className = "myCheckbox"
         checkbox.type = "checkbox"
         /* checkbox.style.width = "5vw"
         checkbox.style.height = "5vh" */
-
+		shipped.innerHTML = "Skickad"
         checkbox.value = order.orderId
         orderId.innerText = order.orderId
         orderDate.innerText = order.orderDate
         
-        
+        if(order.shipped == null){
+			shipped.innerHTML = "Ej skickad"
+		}
+
 		if(order.pending == "1") { //Checkbox är checkad om användare är admin. 
             checkbox.checked = true 
 			checkbox.type = "none"
@@ -242,8 +247,8 @@ async function loadOldOrders() {
 			checkbox.style.background = "#4CAF50" */
         }
 		
-        shipped.append(checkbox)
-        newRow.append(orderId, orderDate, shipped)
+        recieved.append(checkbox)
+        newRow.append(orderId, orderDate, shipped, recieved)
         myTable.append(newRow)
         /* } */
         
