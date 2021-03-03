@@ -1,4 +1,4 @@
-import {makeReq} from "./main.js"
+import {getAllOffers, makeReq} from "./main.js"
 import {currentUser} from "./myPage.js" 
 
 window.addEventListener("load", initSite)
@@ -30,17 +30,23 @@ export async function getAllProdsInCategory(id) {
     return response
 }
 
-export async function getAllProdsInOffer(id) {
+export async function getAllProdsInOffer(name) {
 
-    const response = await makeReq("./api/recievers/productReciever.php?offer=" + id,  "GET")
+    const response = await makeReq("./api/recievers/productReciever.php?offer=" + name,  "GET")
     return response
+}
+
+async function testing(name) {
+
+        const response = await makeReq("./api/recievers/offerReciever.php?testing=" + name,  "GET")
+        return response
+    
 }
 
 
 
 async function addProducts() {
     const response = await makeReq("./api/recievers/productReciever.php", "POST")
-    console.log(response)
 
 }
 
@@ -50,7 +56,6 @@ export async function renderProducts(fromWhere) {
     let allProducts = await fromWhere
     let productWrapper = document.getElementById("allProductBox")
     //productWrapper.innerHTML = "" // Kanske lägga denna någon annanstans
-    console.log("in render" , allProducts)
 
     allProducts.forEach(product => {
         let productDivWrapper = document.createElement("div")
@@ -193,7 +198,48 @@ async function update (change){
     }
 }
 
+    export async function renderProductsInOffer() {
+        let allOffers = await getAllOffers()
+        let discountBox = document.getElementsByClassName("discountItems")[0]
+        console.log("allOffers = ", allOffers)
+/*         console.log("discBox = ", discountBox)   
+        console.log("for render offerProds = ", getAllProdInOffer, allOffers) */
+         
+        allOffers.forEach(offer => {
+            let offerDiv = document.createElement("div")
+            let offerName = document.createElement("h2")   
+            
+            createProdFromOffer(offer.offerName, offerDiv)
+             
+            //console.log("inforeach = ", getAllProdInOffer)
+
+            offerName.innerText = offer.offerName
+            offerDiv.append(offerName)
+            discountBox.append(offerDiv)
+
+        });
+
+    }
+
+    async function createProdFromOffer(param, parent) {
+        let allProdsFromOffer = await testing(param)
+        console.log("in fuunc",allProdsFromOffer)
+        let priceArr = []
+        
+        
+        allProdsFromOffer.forEach(product => {
+            let name = document.createElement("p")
+            name.innerText = product.productName + " x " + product.quantity
+            
+          
+
+            parent.append(name)
+        });
+
+    }
 
 
-
-
+    /* 
+    var arr = [1,2,3,4];
+    var total=0;
+    for(var i in arr) { total += arr[i];  */

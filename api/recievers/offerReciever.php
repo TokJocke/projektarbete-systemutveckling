@@ -10,25 +10,32 @@
                
                 $or = new OfferRepo; 
 
-                echo json_encode($or->getAllOffers()); 
+                if(isset($_GET["testing"])) {
+
+                    echo json_encode($or->testing($_GET["testing"]));
+                }
+                else {
+                    echo json_encode($or->getAllOffers()); 
+                }
+
 
            
             }
             else if ($_SERVER["REQUEST_METHOD"] == "POST") {
              
                 $or = new OfferRepo; 
-                $offerData = json_decode($_POST["offerData"]);
+               // $offerData = json_decode($_POST["offerData"]);
 
                 
-                if($_POST["offerData"]) {
-                    echo json_encode($or->addOffer($offerData->offerName, $offerData->offerDiscount)); 
-                } 
-                else if($_POST["offerCheck"] && $_POST["offerId"]) {
-                    $offerId = json_decode($_POST["offerId"]);
+    /*             if($_POST["offerData"]) {
+                     echo json_encode($or->addOffer($offerData->offerName, $offerData->offerDiscount)); 
+                 }  */
+                if($_POST["offerCheck"] && $_POST["newOfferName"]) {
+                    $offerName = json_decode($_POST["newOfferName"]);
+                    $offerDiscount = json_decode($_POST["offerDiscount"]);
                     $offerCheck = json_decode($_POST["offerCheck"]);
-
-                    echo json_encode($or->changeOffer($offerCheck, (int)$offerId));
-                   // echo json_encode($offerCheck);
+                    echo json_encode($or->addOffer($offerName, $offerDiscount, $offerCheck));
+                 //   echo json_encode($offerCheck[0]->checked);
                 } 
                 else if($_POST["removeOfferCheck"]) {
                     $removeOfferCheck = json_decode($_POST["removeOfferCheck"]);

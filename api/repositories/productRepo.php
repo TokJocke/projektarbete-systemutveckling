@@ -19,34 +19,39 @@
             return $productArray;
         }
 
-        function getAllProductsInOffer($id) {
-            $allInOffer = $this->db->fetchQuery("SELECT * FROM Product WHERE offerId='$id'");
+        function getAllProductsInOffer($name) {
+            $allInOffer = $this->db->fetchQuery("SELECT * FROM product INNER JOIN offer ON product.productId = offer.productId WHERE offerName = '$name'");
             $productArray = $this->createProductList($allInOffer);
-            return $productArray;
+            $totalPrice = array();
+      /*       foreach($productArray as $product) {
+                array_push($totalPrice, $product->price);
+            }
+            array_push($productArray, array_sum($totalPrice)); */
+            
+            return $productArray; 
         }
 
         //Skapa lista med produktinstanser
         function createProductList($array) {
             $productArray = array();
             foreach ($array as $item) { //Kan uppnås med array_map
-                $product = new Product((int)$item->productId, $item->productName, (int)$item->price, $item->description, (int)$item->unitsInStock, (int)$item->categoryId, (int)$item->offerId, $item->img);
+                $product = new Product((int)$item->productId, $item->productName, (int)$item->price, $item->description, (int)$item->unitsInStock, (int)$item->categoryId, $item->img);
                 array_push($productArray, $product);
             }
             return $productArray;
         }
            
-        function addProduct($name, $price, $description, $unitsInStock, $categoryId, $offerId, $img) {
+        function addProduct($name, $price, $description, $unitsInStock, $categoryId, $img) {
             
             $query = ('
-                INSERT INTO product (productName, price, description, unitsInStock, categoryId, offerId, img) 
-                VALUES (:productName, :price, :description, :unitsInStock, :categoryId, :offerId, :img)');
+                INSERT INTO product (productName, price, description, unitsInStock, categoryId, img) 
+                VALUES (:productName, :price, :description, :unitsInStock, :categoryId, :img)');
             $entity = array(
                 ':productName' => $name, 
                 ':price' => $price, 
                 ':description' => $description, 
                 ':unitsInStock' => $unitsInStock, 
                 'categoryId' => $categoryId, 
-                'offerId' => $offerId,
                 'img' => $img);
             
             $this->db->runQuery($query, $entity);

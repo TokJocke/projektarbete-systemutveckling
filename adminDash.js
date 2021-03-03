@@ -305,45 +305,47 @@ async function adminOfferPanel() {
     let productNameTitleTd = document.createElement("td")
     let productPriceTitleTd = document.createElement("td")
     let productInStockTitleTd = document.createElement("td")
+    let quantityTitleTd = document.createElement("td")
     let addToOfferTitleTd = document.createElement("td")
-    
+    let offerName = document.createElement("input")
+    let offerDiscount = document.createElement("input")
+
     titleTr.className="updatePanalTitleRow"
     productIdTitleTd.innerHTML = "<h3>Id</h3>"
     productNameTitleTd.innerHTML = "<h3>Name</h3>"
     productPriceTitleTd.innerHTML = "<h3>Price</h3>"
     productInStockTitleTd.innerHTML = "<h3>In Stock</h3>"
+    quantityTitleTd.innerHTML = "<h3>Quantity</h3>"
     addToOfferTitleTd.innerHTML = "<h3>add to offer</h3>"
+    offerName.type = "text"
+    offerName.placeholder = "Offer name"
+    offerDiscount.type = "number"
+    offerDiscount.placeholder = "Discount"
 
     let optionDiv = document.createElement("div")
     let offerButtonDiv = document.createElement("div")
     let confirmDiv = document.createElement("div")
-    offerButtonDiv.className = "secondButtonDivStyle"                                                    //HÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄR
-    let createOfferBtn = document.createElement("button")
+    confirmDiv.id = "offerConfirmDiv"
+    offerButtonDiv.className = "secondButtonDivStyle"    
+    offerName.id = "newOfferName"
+    offerDiscount.id = "offerDiscount"
     let addToOfferBtn = document.createElement("button")
     let editOfferBtn = document.createElement("button")
     let confirmBtn = document.createElement("button")
-    let offerDropDown = await createOfferDropDown()
 
     editOfferBtn.addEventListener("click", adminEditOfferPanel)
-    createOfferBtn.addEventListener("click", adminCreateOfferPanel)
-    confirmBtn.addEventListener("click", addProductsToOffer.bind(offerDropDown))                                /* WORKING HERE!!!! */
+
+   confirmBtn.addEventListener("click", addProductsToOffer)                                /* WORKING HERE!!!! */
     
     addToOfferBtn.innerText = "Add products to offer"
-    createOfferBtn.innerText = "Create Offer"
     editOfferBtn.innerText = "Edit Offer"
-    confirmBtn.innerText = "asdsad"
+    confirmBtn.innerText = "Create Offer"
 
-    titleTr.className="updatePanalTitleRow"
-    productIdTitleTd.innerHTML = "<h3>Id</h3>"
-    productNameTitleTd.innerHTML = "<h3>Name</h3>"
-    productPriceTitleTd.innerHTML = "<h3>Price</h3>"
-    productInStockTitleTd.innerHTML = "<h3>In Stock</h3>"
-    addToOfferTitleTd.innerHTML = "<h3>add to offer</h3>"
-    
-    confirmDiv.append(confirmBtn)
-    offerButtonDiv.append(addToOfferBtn, createOfferBtn, editOfferBtn)
-    optionDiv.append(offerDropDown, offerButtonDiv)
-    titleTr.append(productIdTitleTd, productNameTitleTd, productPriceTitleTd, productInStockTitleTd, addToOfferTitleTd)
+
+    confirmDiv.append(confirmBtn, offerDiscount, offerName)
+    offerButtonDiv.append(addToOfferBtn, editOfferBtn)
+    optionDiv.append(offerButtonDiv)
+    titleTr.append(productIdTitleTd, productNameTitleTd, productPriceTitleTd, productInStockTitleTd, quantityTitleTd, addToOfferTitleTd)
     myTable.append(titleTr)
     adminBox.append(optionDiv, myTable, confirmDiv)
 
@@ -355,14 +357,21 @@ async function adminOfferPanel() {
         let productName = document.createElement("td")
         let productPrice = document.createElement("td")
         let productInStock = document.createElement("td")
-        let addToOffer = document.createElement("td")          
+        let addToOffer = document.createElement("td")      
         let checkBox = document.createElement("input")
+        let quantityTd = document.createElement("td")                                         //Här är quantity för offers
+        let quantity = document.createElement("input")    
+        
         checkBox.className = "offerCheck"
         checkBox.type = "checkbox"
         checkBox.style.width = "5vw"
         checkBox.style.height = "5vh" 
         checkBox.value = product.productId
+        quantity.type = "number"
+        quantity.width = "20px"
+        quantity.id = "offerQuantity"
         //Innertext
+        quantityTd.append(quantity)
         addToOffer.append(checkBox)
         productId.innerText = product.productId
         productName.innerText = product.name
@@ -370,61 +379,12 @@ async function adminOfferPanel() {
         productInStock.innerText = product.unitsInStock
         //Apends
 
-        newRow.append(productId, productName, productPrice, productInStock, addToOffer)
+        newRow.append(productId, productName, productPrice, productInStock, quantityTd, addToOffer)
         myTable.appendChild(newRow)
     })    
     
 }
 
-async function adminCreateOfferPanel() {
-    
-    let adminProductBox = document.getElementById("adminProductBox")
-    let myTable = document.createElement("table")
-    let optionDiv = document.createElement("div")
-    let buttonDiv = document.createElement("div")
-    let offerButtonDiv = document.createElement("div")
-
-    let nameTr = document.createElement("tr")
-    let nameTd = document.createElement("td")
-    let nameInput = document.createElement("td")
-    let discountTr = document.createElement("tr")
-    let discountTd = document.createElement("td")
-    let discountInput = document.createElement("td")
-
-    
-    let addToOfferBtn = document.createElement("button")
-    let createOfferBtn = document.createElement("button")
-    let editOfferBtn = document.createElement("button")
-    let confirmBtn = document.createElement("button")
-    
-    addToOfferBtn.innerText = "Add products to offer"
-    createOfferBtn.innerText = "Create Offer"
-    editOfferBtn.innerText = "Edit Offer"
-
-    addToOfferBtn.addEventListener("click", adminOfferPanel)
-    editOfferBtn.addEventListener("click", adminEditOfferPanel)
-    
-    //*****properties
-    adminProductBox.innerHTML = ""
-    myTable.id = "addProductTabel"
-    
-    nameTd.innerText = "Name"
-    nameInput.innerHTML = "<input type='text' id='offerNameInput'>" 
-    discountTd.innerText = "Discount"
-    discountInput.innerHTML = "<input type='number' id='offerDiscountInput'>" 
-
-    confirmBtn.innerText = "Confirm"
-    confirmBtn.addEventListener("click", createOffer)
-    //*****All appends
-
-    offerButtonDiv.append(addToOfferBtn, createOfferBtn, editOfferBtn)
-    buttonDiv.append(confirmBtn)
-    nameTr.append(nameTd, nameInput)
-    discountTr.append(discountTd, discountInput)
-    myTable.append(nameTr, discountTr)
-    adminProductBox.append(offerButtonDiv, myTable, buttonDiv)  
-
-}
 
 //Panel for Edeting offers
 async function adminEditOfferPanel(value) {
@@ -447,7 +407,7 @@ async function adminEditOfferPanel(value) {
     let editOfferBtn = document.createElement("button")
 
     addToOfferBtn.addEventListener("click", adminOfferPanel)
-    createOfferBtn.addEventListener("click", adminCreateOfferPanel)
+    //createOfferBtn.addEventListener("click", adminCreateOfferPanel)
 
     createOfferBtn.innerText = "Create Offer"
     addToOfferBtn.innerText = "Add to offer"
@@ -458,26 +418,25 @@ async function adminEditOfferPanel(value) {
     optionDiv.append(offerDropDown, offerButtonDiv)
     adminBox.append(optionDiv, myTable)
 
-    renderEditOfferTable(1)
+    renderEditOfferTable(offerDropDown.value)                                                      //MÅÅÅÅÅÅÅSSTEEE FIIIIXAAAA EDIT RENDER
 }
 
 async function dropDownValue() {
     console.log("värde =", this.value)
     let sortedByOffer = await getAllProdsInOffer(this.value)
     console.log(sortedByOffer) 
-    renderEditOfferTable(this.value)
+    renderEditOfferTable(this.value) 
 }
 
 //Skriver ut alla produkter från valt Offer med checkboxar
-async function renderEditOfferTable(offerId) {
-    let sortedByOffer = await getAllProdsInOffer(offerId)
+async function renderEditOfferTable(offerName) {                                                                                  //JOBBA HÄÄÄÄÄÄÄÄÄÄÄÄÄR
+    let sortedByOffer = await getAllProdsInOffer(offerName)
     let adminBox = document.getElementById("adminProductBox")
     let myTable = document.getElementById("offerTable")
     let buttonDiv = document.createElement("div")
     myTable.innerHTML = ""
 
     let titleTr = document.createElement("tr")
-    let productIdTitleTd = document.createElement("td")
     let productNameTitleTd = document.createElement("td")
     let productPriceTitleTd = document.createElement("td")
     let productInStockTitleTd = document.createElement("td")
@@ -486,10 +445,9 @@ async function renderEditOfferTable(offerId) {
     let removeOfferBtn = document.createElement("button")
     
     removeFromOfferBtn.addEventListener("click", removeProductsFromOffer.bind(sortedByOffer))
-    removeOfferBtn.addEventListener("click", removeOffer.bind(offerId))
+    removeOfferBtn.addEventListener("click", removeOffer.bind(offerName))
 
     titleTr.className="updatePanalTitleRow"
-    productIdTitleTd.innerHTML = "<h3>Id</h3>"
     productNameTitleTd.innerHTML = "<h3>Name</h3>"
     productPriceTitleTd.innerHTML = "<h3>Price</h3>"
     productInStockTitleTd.innerHTML = "<h3>In Stock</h3>"
@@ -498,14 +456,13 @@ async function renderEditOfferTable(offerId) {
     removeOfferBtn.innerText = "Remove offer"
     
     buttonDiv.append(removeFromOfferBtn, removeOfferBtn)
-    titleTr.append(productIdTitleTd, productNameTitleTd, productPriceTitleTd, productInStockTitleTd, addToOfferTitleTd)
+    titleTr.append(productNameTitleTd, productPriceTitleTd, productInStockTitleTd, addToOfferTitleTd)
     myTable.append(titleTr)
     adminBox.append(myTable)
     sortedByOffer.forEach(product => { 
         //every Td
         let newRow = document.createElement("tr")
         newRow.className="UpdatePanelProdRow"
-        let productId = document.createElement("td")
         let productName = document.createElement("td")
         let productPrice = document.createElement("td")
         let productInStock = document.createElement("td")
@@ -518,43 +475,42 @@ async function renderEditOfferTable(offerId) {
         checkBox.value = product.productId
         //Innertext
         addToOffer.append(checkBox)
-        productId.innerText = product.productId
         productName.innerText = product.name
         productPrice.innerText = product.price
         productInStock.innerText = product.unitsInStock
         //Apends
-        newRow.append(productId, productName, productPrice, productInStock, addToOffer)
+        newRow.append(productName, productPrice, productInStock, addToOffer)
         myTable.appendChild(newRow)
-    })
+    }) 
     myTable.append(buttonDiv)
 }
-//Creating offer and saving in DB
-async function createOffer() {
-    let offerName = document.getElementById("offerNameInput").value
-    let offerDiscount = document.getElementById("offerDiscountInput").value
-    let offerData = { offerName, offerDiscount}
-    let data = new FormData()
 
-    data.append("offerData", JSON.stringify(offerData))
 
-    const response = await makeReq("./api/recievers/offerReciever.php", "POST", data)
-    console.log(response)
-}
-
-async function addProductsToOffer() {                                                               
+async function addProductsToOffer() {                                                                               //WORKING HEEEEERE
     let offerCheck = document.getElementsByClassName("offerCheck")
     let checkedArray = []
+    let quantity = document.getElementById("offerQuantity")
+    let offerName = document.getElementById("newOfferName").value
+    let offerDiscount = document.getElementById("offerDiscount").value
+
     for (let i = 0; i < offerCheck.length; i++) {
         if(offerCheck[i].checked) {
-            checkedArray.push(offerCheck[i].value)
+            let checkAndQuantity = {
+                checked: offerCheck[i].value,
+                quantity: offerQuantity[i].value                                         //Varför funkar denna?
+            }
+            console.log("value= ", offerCheck[i].value)
+            checkedArray.push(checkAndQuantity)
+            console.log(checkedArray)
         }
-    }
+    } 
     let body = new FormData()
     body.set("offerCheck", JSON.stringify(checkedArray))
-    body.set("offerId", JSON.stringify(this.value))
+    body.set("newOfferName", JSON.stringify(offerName))
+    body.set("offerDiscount", JSON.stringify(offerDiscount))
    
     const response = await makeReq("./api/recievers/offerReciever.php", "POST", body)
-    console.log(response)
+    console.log(response)   
 }
 
 async function removeProductsFromOffer() {
@@ -567,7 +523,7 @@ async function removeProductsFromOffer() {
         }
     }
 
-    body = new FormData()
+    let body = new FormData()
     body.set("removeOfferCheck", JSON.stringify(checkedArray))
 
     const response = await makeReq("./api/recievers/offerReciever.php", "POST", body)
@@ -679,7 +635,7 @@ async function updateShippingStatus() {
     }       
             console.log(myArray)
 
-    body = new FormData()
+    let body = new FormData()
     body.set("cbArray", JSON.stringify(myArray))     
     body.set("action", "loadAdminOrder")     
     
@@ -786,7 +742,7 @@ async function updateUserStatus() {
             console.log("hej", checkedArr, "då", notCheckedArr)
 
 
-    body = new FormData()
+    let body = new FormData()
     body.set("checkedArr", JSON.stringify(checkedArr))
     body.set("notCheckedArr", JSON.stringify(notCheckedArr))
     body.set("action", "updateUser")        

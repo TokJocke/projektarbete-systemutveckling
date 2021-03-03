@@ -1,5 +1,5 @@
 import {login, checkInputs} from "./user.js"
-import { getAllProducts, renderProducts, getAllProdsInCategory, amountInCart } from "./products.js"
+import { getAllProducts, renderProducts, getAllProdsInCategory, amountInCart, renderProductsInOffer } from "./products.js"
 import {makeReq, getAllCategorys, filterProducts } from "./main.js"
 import {currentUser} from "./myPage.js"
 
@@ -18,7 +18,7 @@ function initSite() {
     amountInCart()
     currentUser()
     cartButton() //Kan ej gå in i cart utan inlogg.
-    
+    renderProductsInOffer()
  	}
 }
 
@@ -66,6 +66,12 @@ function loadRegForm(){
   inputPhone.placeholder = "Telefon" 
   newsletter.placeholder = "Nyhetsbrev"
 
+  inputMail.type = "text"
+  inputUsername.type = "text"
+  inputPassword.type = "text"
+  inputName.type = "text"
+  inputAdress.type = "text"
+  
   inputZip.type = "number"
   inputPhone.type = "number"
 
@@ -112,6 +118,7 @@ function loadRegForm(){
 function loadSignIn(){
   const username = document.createElement("input")
   const password = document.createElement("input")
+  username.type = "text"
   password.type = "password"
   const errorlog = document.createElement("div")
   const loginBtn = document.createElement("div")

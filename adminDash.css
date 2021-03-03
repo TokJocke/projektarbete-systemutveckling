@@ -161,6 +161,15 @@ textarea {
     height: 100%;
     
 }
+
+#offerConfirmDiv {
+    display: flex;
+    justify-content: flex-start;
+}
+
+#offerConfirmDiv > * {
+    margin: 10px 10px 0 0;
+}
 /* To style uploadButton */
 /* #adminProductBox > div {
     display: flex;

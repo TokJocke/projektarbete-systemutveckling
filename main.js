@@ -56,8 +56,8 @@ export async function createOfferDropDown() {
     let mySelect = document.createElement("select")
     allOffers.forEach(offer => {
         let myOption = document.createElement("option")
-        myOption.innerText = offer.offerId + " - " + offer.offerName 
-        myOption.value = offer.offerId
+        myOption.innerText = offer.offerName 
+        myOption.value = offer.offerName 
         mySelect.append(myOption) 
     })    
     /* appendTo.append(mySelect) */

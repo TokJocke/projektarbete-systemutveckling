@@ -59,7 +59,7 @@ h1, h2{
     background-color:rgba(0, 0, 0, 0.19);
 }
 /* Dumt att göra så generell som det va från början */
-input[type="text"], input[type="number"], select, textarea{
+input[type="text"], input[type="number"], input[type="password"], select, textarea{
      
     border: solid 2px white;
     background-color: transparent;
@@ -67,8 +67,9 @@ input[type="text"], input[type="number"], select, textarea{
 
      
  transition: background-color .3s
+
 }
-input[type="text"]:focus, input[type="number"]:focus, select:focus, textarea:focus{
+input[type="text"]:focus, input[type="number"]:focus, input[type="password"]:focus, select:focus, textarea:focus{
     background-color: rgba(255, 255, 255, 0.616);
 }
 
