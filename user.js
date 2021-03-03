@@ -147,5 +147,9 @@ export async function hideNewsInputs() {
         document.getElementById("newsEmail").style.display = "none"
         document.getElementById("newsBtn").style.marginTop = "15px"
     }
+
+    if(userCheck === "NotLogged") {
+        document.getElementsByClassName("cartBtn")[0].style.display = "none"
+    }
 }
 
