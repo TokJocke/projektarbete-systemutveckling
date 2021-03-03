@@ -16,6 +16,7 @@
                 }
                 else if (isset($_GET["offer"])) {
                     echo json_encode($pr->getAllProductsInOffer($_GET["offer"]));  
+                 //echo json_encode($_GET["offer"]);
                 }
                 else {
                  echo json_encode($pr->getAllProducts()); 
@@ -32,8 +33,8 @@
                     $productData = json_decode($_POST["productData"]);
                     $pr = new ProductRepo;
                         
-                       //Parametrar = $name, $price, $description, $unitsInStock, $categoryID, $offerId, $img
-                       echo json_encode($pr->addProduct($productData->inputName, $productData->inputPrice, $productData->inputDesc, null, $productData->inputCategory, null, $pr->uploadImage($_FILES["image"])));
+                       //Parametrar = $name, $price, $description, $unitsInStock, $categoryID, $img
+                       echo json_encode($pr->addProduct($productData->inputName, $productData->inputPrice, $productData->inputDesc, null, $productData->inputCategory, $pr->uploadImage($_FILES["image"])));
                       
                         exit;
                 }
