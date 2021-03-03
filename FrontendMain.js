@@ -157,7 +157,7 @@ function clickOutSideToClose() {
 
 
 async function loginPopUp() {
-  const userLogin = document.getElementById("userLogin")
+  const userLogin = document.getElementsByClassName("myPageBtn")[0]
   const background = document.getElementById("popupBackground")
 
   const response = await makeReq("./api/recievers/userReciever.php?checkUser", "GET") 
