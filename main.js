@@ -1,16 +1,16 @@
 import { getAllProducts, renderProducts, getAllProdsInCategory } from "./products.js"
 
-window.addEventListener("load", initSite)
-let body = document.getElementById("indexBody")
+/* window.addEventListener("load", initSite)
+ */let body = document.getElementById("indexBody")
 
 
 
-function initSite() {
+/* function initSite() {
 	if (body){
        
         
 	}
-}
+} */
 
 export async function makeReq(path, method, body) {
     try {
