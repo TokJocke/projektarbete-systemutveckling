@@ -1,34 +1,43 @@
 import {makeReq, getAllCategorys, createCategoryDropDown, getAllOffers, createOfferDropDown, removeElementById} from "./main.js"
 import {getAllProducts, getAllProdsInOffer} from "./products.js"
 
-window.addEventListener("load", initSite)
-let body = document.getElementById("adminProductBody")
 
-
-function initSite() {
-	if (body){
-        myAdminBox()
-        getAllProducts()
-        getAllCategorys()
-        getOrders()
-        getUsers()
-    }
-}
 
 /*****       ADMIN DASHBOARD     *****/
 
-function myAdminBox() {
-    let adminUppdateBoxBtn = document.getElementsByClassName("adminProductBoxBtn")[0]
+export function myAdminBox() {
+/*     let adminUppdateBoxBtn = document.getElementsByClassName("adminProductBoxBtn")[0]
     let adminAddBoxBtn = document.getElementsByClassName("adminProductBoxBtn")[1]
     let adminOfferBoxBtn = document.getElementsByClassName("adminProductBoxBtn")[2]
     let adminOrderBtn = document.getElementsByClassName("adminProductBoxBtn")[3]
-    let adminUserBtn = document.getElementsByClassName("adminProductBoxBtn")[4]
+    let adminUserBtn = document.getElementsByClassName("adminProductBoxBtn")[4] */
+    const myPageDiv = document.getElementById("myPageContent")
+    
+    let adminProductWrapp = document.createElement("div")
+    let adminBox = document.createElement("div")
+    let adminUppdateBoxBtn = document.createElement("button")
+    let adminAddBoxBtn = document.createElement("button")
+    let adminOfferBoxBtn = document.createElement("button")
+    let adminOrderBtn = document.createElement("button")
+    let adminUserBtn = document.createElement("button")
 
-   
+    adminBox.id = "adminProductBox"
+    adminUppdateBoxBtn.className = "adminProductBoxBtn"
+    adminAddBoxBtn.className = "adminProductBoxBtn"
+    adminOfferBoxBtn.className = "adminProductBoxBtn"
+    adminOrderBtn.className = "adminProductBoxBtn"
+    adminUserBtn.className = "adminProductBoxBtn"
+    
+    adminUppdateBoxBtn.innerText = "Update"
+    adminAddBoxBtn.innerText = "Add"
+    adminOfferBoxBtn.innerText = "Offers"
+    adminOrderBtn.innerText = "Mark Order"
+    adminUserBtn.innerText = "User Admin"
 
-    let adminBox = document.getElementById("adminProductBox")
-    adminUpdateProductPanel()
+    adminProductWrapp.append(adminUppdateBoxBtn, adminAddBoxBtn, adminOfferBoxBtn, adminOrderBtn, adminUserBtn, adminBox)
 
+    adminUpdateProductPanel() 
+ 
     adminAddBoxBtn.addEventListener("click", () => {
         console.log("add")
         adminBox.innerHTML = ""
@@ -54,6 +63,8 @@ function myAdminBox() {
         console.log("userPanel")
         loadUsers()
     }) 
+
+    return adminProductWrapp
 }
 
 /*****       ADMIN DASH FOR PRODUCTS     *****/        
@@ -92,6 +103,7 @@ async function adminAddProductPanel() {
     uploadImg.name = "image"
     uploadImg.id="uploadImgInput"
     confirmBtn.innerText = "Confirm"
+    buttonDiv.className = "firstButtonDivStyle"
     confirmBtn.addEventListener("click", sendProductData)
     //*****All appends
     buttonDiv.append(uploadImg, confirmBtn)
@@ -186,7 +198,7 @@ async function deleteProduct() {
 //Creating popUp for editing products
 async function editProduct() {
     
-    let main = document.getElementsByTagName("main")[0]
+    let adminProductBox = document.getElementById("adminProductBox")
     let title = document.createElement("h2")
     let popUpDiv = document.createElement("div")
     let nameInput = document.createElement("input")
@@ -194,7 +206,7 @@ async function editProduct() {
     let descInput = document.createElement("input")
     let inStockInput = document.createElement("input")
     let categoryInput = await createCategoryDropDown()
-    let buttonContainer = document.createElement("div")
+    let buttonDiv = document.createElement("div")
     let updateBtn = document.createElement("button")
     let cancelBtn = document.createElement("button")
 
@@ -204,6 +216,7 @@ async function editProduct() {
     descInput.className = "editPopUpInput"
     inStockInput.className = "editPopUpInput"
     categoryInput.id = "editPopUpCategory"
+    buttonDiv.className = "secondButtonDivStyle"
     
     title.innerText = this.name
     nameInput.placeholder = this.name
@@ -213,15 +226,17 @@ async function editProduct() {
     updateBtn.innerText="update"
     cancelBtn.innerText = "cancel"
     
+    nameInput.type = "text"
     priceInput.type = "number"
+    descInput.type = "text"
     inStockInput.type = "number"
 
     updateBtn.addEventListener("click", update.bind(this))//Alternativ lösning för att gå runt att funktionen kallas vid init    
     cancelBtn.addEventListener("click", cancel)           //==.onclick = () => { update(this.productId); }; okej eller dödssynd?
 
-    buttonContainer.append(updateBtn, cancelBtn)
-    popUpDiv.append(title, nameInput, priceInput, descInput, inStockInput, categoryInput, buttonContainer)
-    main.append(popUpDiv)
+    buttonDiv.append(updateBtn, cancelBtn)
+    popUpDiv.append(title, nameInput, priceInput, descInput, inStockInput, categoryInput, buttonDiv)
+    adminProductBox.append(popUpDiv)
 }
 
 //Close popup window
@@ -534,7 +549,7 @@ async function addProductsToOffer() {
             checkedArray.push(offerCheck[i].value)
         }
     }
-    body = new FormData()
+    let body = new FormData()
     body.set("offerCheck", JSON.stringify(checkedArray))
     body.set("offerId", JSON.stringify(this.value))
    
