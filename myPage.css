@@ -62,7 +62,7 @@
     background-color:#C8D7E0;
     cursor: pointer;
     font-size: 1.5rem; 
-  /*   z-index: 99; */ /* Ser ej logga ut knapp utan denna, kolla senare */
+
 }
 .myPageMenuBtn i {
     font-size: 1.5rem;
