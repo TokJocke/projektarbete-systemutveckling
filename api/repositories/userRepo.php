@@ -111,6 +111,14 @@ function newsNoSignUp($email, $name) { //skicka med userid och göra en check om
   
   $myQuery = "SELECT email FROM newsletter WHERE email='$email'";
   $newResult = $this->db->fetchQuery($myQuery);
+
+  $myQry = "SELECT userId FROM newsletter WHERE userId='$activeUser'";
+  $Result = $this->db->fetchQuery($myQry);
+
+  if($Result == true) { //kollar om email redan finns
+    echo json_encode("You are already signed up"); 
+    exit;
+  }
   
   if($newResult == true) { //kollar om email redan finns
     echo json_encode("Email taken"); 
@@ -169,14 +177,6 @@ function updateUser($isAdmin, $isAdm) {
   } 
   return "Admin permission was given";
 }
-
-
-
-
-
-
-
-  
 
   // fetch userInfo except username & password
   function userInfo($userId){

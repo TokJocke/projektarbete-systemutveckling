@@ -1,5 +1,6 @@
 import {makeReq} from "./main.js"
 import {amountInCart} from "./products.js"
+import {myAdminBox} from "./adminDash.js"
 //import { growHeader, filterProducts, headerNavBtn } from "./FrontendMain.js"
 
 window.addEventListener("load", initSite)
@@ -20,7 +21,7 @@ function initSite() {
 		getUserInfo()
 		/* getCurrentUserOrder() */
 		checklogout()
-
+		adminBtn()
  	}
 }
 
@@ -77,7 +78,28 @@ async function letterBtnClick(){
 	})
 }
 
+async function adminBtn() {
+	
+	const myPageMenu = document.getElementsByClassName("myPageMenu")[0]
+	const adminBtn = document.createElement("div")
+	const adminIcon = document.createElement("i")
+	const adminBtnText = document.createElement("h1")
 
+	adminBtn.className = "myPageMenuBtn"
+	adminIcon.className = "fas fa-tools"
+	adminBtnText.innerText = "Admin Panel"
+
+	adminBtn.append(adminIcon, adminBtnText)
+	myPageMenu.append(adminBtn)
+
+	adminBtn.addEventListener("click", renderAdminPanel)
+}
+
+async function renderAdminPanel() {
+	let adminPanel = myAdminBox()
+	myPageDiv.innerHTML = ""
+	myPageDiv.append(adminPanel)
+}
 
 // skriv ut kunduppgifter
 async function renderUserInfo (){
