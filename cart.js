@@ -5,19 +5,17 @@ import { Newsletter, hideNewsInputs } from "./user.js"
 
 window.addEventListener("load", initSite)
 let body = document.getElementById("cartPageBody")
+let selectedShipper;
 
 function initSite() {
     if (body){
-
+				renderShippers()
         renderProducts()
-        getShippers()
         amountInCart() 
         currentUser() 
         hideNewsInputs()
         signUpNews()   
-	
     }
-
 }
 
 async function signUpNews() {
@@ -44,22 +42,32 @@ async function renderProducts() {
         let btn = document.getElementById("confirmOrderDiv")
         btn.innerHTML = ""
         productWrapper.innerHTML = ""
+				const headline = document.createElement("h1")
+				headline.innerText = "Din kundvagn"
+				productWrapper.append(headline)
+				const headlineDiv = document.createElement("div")
+				headlineDiv.className = "headlineDiv"
+				const headlineOne = document.createElement("div")
+				headlineOne.className = "headlineOne"
+				const headlineTwo = document.createElement("div")
+				headlineTwo.className = "headlineTwo"
 
-        console.log("response" , cart)
+				headlineOne.innerText = "Produkter"
+				headlineTwo.innerText = "Antal"
+				headlineDiv.append(headlineOne,headlineTwo)
 
-        
+				productWrapper.append(headlineDiv)
+
         if(!cart){
             console.log("gör detta")
-            checkoutDiv.innerHTML = ""
+        		checkoutDiv.innerHTML = ""
            const emptyText = document.createElement("h1")
            emptyText.style.textAlign = "center"
            emptyText.innerText = "Här var det tomt :("
            checkoutDiv.append(emptyText)
-
         }else{
 
             allProducts.forEach(product => {
-                
                 
                 //create elements
                 let productDiv = document.createElement("div")
@@ -81,8 +89,8 @@ async function renderProducts() {
                 descDiv.className = "descDiv"
                 quantityDiv.className = "quantityDiv"
                 removeDiv.className = "removeDiv"
+
                 //set innertext
-                
                 productTitle.innerText = product.product.name
                 productPrice.innerText = product.product.price.toLocaleString("sv-SE", {style: "currency", currency: "SEK"})
                 productTotalPrice.innerText = product.totalPrice.toLocaleString("sv-SE", {style: "currency", currency: "SEK"})
@@ -91,13 +99,11 @@ async function renderProducts() {
                 productMinus.innerText = "-"
                 
                 //eventlisteners
-        
                                  // här ändrar jag para "change" till action -> increase/decrease 
                 productPlus.addEventListener("click", update.bind(product, "increase"))
                 productMinus.addEventListener("click", update.bind(product, "decrease"))
                 productRemove.addEventListener("click", update.bind(product, "remove"))
         
-                
                 productImg.src = "./assets/product/" + product.product.img 
                 productDiv.className = "cartProductBox"
                 productRemove.className = "fa fa-trash"
@@ -112,23 +118,36 @@ async function renderProducts() {
                 productDiv.append(imgDiv,descDiv,quantityDiv,removeDiv)
                 productWrapper.append(productDiv)
                 
-            });
-            // creates div and print totalprice of the cart
-           /*  let totalPriceDiv = document.getElementById("totalPrice")
-            totalPriceDiv.innerHTML += "Totaltpris " + " " + cart.totalPrice + " kr" */
-            /* productWrapper.append(totalPriceDiv) */
-            
+            });     
+					
             renderTotalPrice(cart)
-            renderShippers()
             renderOrderbtn()
         }
 }
 
 async function renderTotalPrice(cart){
-    let productWrapper = document.getElementById("cartDiv") 
-    let totalPriceDiv = document.createElement("div")
-    totalPriceDiv.innerHTML = "Totaltpris " + " " + cart.totalPrice.toLocaleString("sv-SE", {style: "currency", currency: "SEK"})
-    productWrapper.append(totalPriceDiv)
+	let productWrapper = document.getElementById("cartDiv") 
+	let totalPriceDiv = document.createElement("div")
+	totalPriceDiv.className = "totalPriceDiv"
+	
+
+	 if(!selectedShipper){
+		 totalPriceDiv.innerHTML = `Totalt pris ${cart.totalPrice.toLocaleString("sv-SE", {style: "currency", currency: "SEK"})}`
+		 productWrapper.append(totalPriceDiv)
+
+	 }else {
+		const headlineTxt = document.createElement("p")
+		totalPriceDiv.innerHTML = `Totalt pris ${cart.totalPrice.toLocaleString("sv-SE", {style: "currency", currency: "SEK"})}`
+		productWrapper.append(totalPriceDiv)
+		const checkoutPrice = document.createElement("h4")
+	
+		const confirmOrderDiv = document.getElementById("confirmOrderDiv")
+
+		headlineTxt.innerText = "Att betala ink frakt:"
+		let totalSum = Number(selectedShipper.shippingPrice) + cart.totalPrice
+		checkoutPrice.innerText = totalSum.toLocaleString("sv-SE", {style: "currency", currency: "SEK"})
+		confirmOrderDiv.append(headlineTxt,checkoutPrice)
+	 }
 }
 
 /**funktionen updaterar quantitet samt kan ta bort*/
@@ -150,8 +169,6 @@ async function update (change){
     console.log(response)
     
     renderProducts()
-    renderShippers()
- 
 }
 
     /**Hämtar alla fraktalternativ */
@@ -163,15 +180,18 @@ async function getShippers(){
 /** Renderar ut alla fraktalternativ. */
 async function renderShippers(){
     const shippingDiv = document.getElementById("shippingDiv")
+		const headline = document.createElement("h1")
     let shippers = await getShippers();
     shippingDiv.style.display = "flex"
     shippingDiv.innerHTML = ""
+		headline.innerText = "Fraktalternativ"
+		shippingDiv.append(headline)
    
     shippers.forEach((shipper) => {
         //create inputElement
         const shipperInput = document.createElement("input")
         shipperInput.id = shipper.shippingCompany
-        shipperInput.value = shipper.shippingId
+      /*   shipperInput.value = shipper.shippingId */
         shipperInput.name = "shipperChoice"
         shipperInput.className = "shipperChoice"
         shipperInput.type = "radio"
@@ -202,49 +222,42 @@ async function renderShippers(){
         shipperList.append(shipperOption)
         shippingDiv.append(shipperList)
 
-        shipperOption.addEventListener("click", getShipperId)
+        shipperOption.addEventListener("click", getShipperInfo.bind(shipper))
     })
 }
 
+
 //** Hämtar Id från valt frakt*/
-function getShipperId(){  
-    const values = document.getElementsByClassName("shipperChoice") 
-    let myarray = []
-    for (let i = 0; i < values.length; i++) {
-       if(values[i].checked){
-           myarray.push(values[i].value)   
-       }
-    } 
-    return myarray
+function getShipperInfo(){  
+	renderProducts()
+	 return selectedShipper = this
 } 
 
 //** skapar orderknapp  */
 function renderOrderbtn(){
-    
-    const confirmOrderDiv = document.getElementById("confirmOrderDiv")
-    confirmOrderDiv.id = "confirmOrderDiv"
+  const confirmOrderDiv = document.getElementById("confirmOrderDiv")
+  confirmOrderDiv.id = "confirmOrderDiv"
   const orderBtn = document.createElement("div")
   orderBtn.className = "defaultBtn"
   orderBtn.innerText = "Slutför köp"  
-  confirmOrderDiv.className = "confirmOrderDiv"
   let checkoutDiv = document.getElementById("checkoutDiv")
   confirmOrderDiv.append(orderBtn)
   checkoutDiv.append(confirmOrderDiv)
-
   orderBtn.addEventListener("click", sendOrder)
 }
 
 //** Skapar order */
 async function sendOrder(){
     let body = new FormData()
-    let selectedShipper = getShipperId()
-    if(selectedShipper.length == 0){
+    if(!selectedShipper){
         alert("välj fraktmetod!")
     }else {
-        console.log(selectedShipper)
         body.set("action", "sendOrder")
-        body.set("shipper", selectedShipper);
+        body.set("shipper", selectedShipper.shippingId);
         const response = await makeReq("./api/recievers/orderReciever.php", "POST", body)
+        alert("tack för din beställning!")
+        renderProducts()
+				window.location = "./myPage.html"
         console.log(response)
       
     }
