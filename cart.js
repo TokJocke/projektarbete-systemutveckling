@@ -22,7 +22,6 @@ async function getCart() {
     const response = await makeReq("./api/recievers/cartReciever.php", "GET")
     console.log("i get", response)
         return response
-
 }
 
 
@@ -34,7 +33,10 @@ async function renderProducts() {
         let allProducts = cart.productList
         let productWrapper = document.getElementById("cartDiv")
         let checkoutDiv = document.getElementById("checkoutDiv")
+        let btn = document.getElementById("confirmOrderDiv")
+        btn.innerHTML = ""
         productWrapper.innerHTML = ""
+
         console.log("response" , cart)
 
         
@@ -42,6 +44,7 @@ async function renderProducts() {
             console.log("gör detta")
             checkoutDiv.innerHTML = ""
            const emptyText = document.createElement("h1")
+           emptyText.style.textAlign = "center"
            emptyText.innerText = "Här var det tomt :("
            checkoutDiv.append(emptyText)
 
@@ -73,10 +76,10 @@ async function renderProducts() {
                 //set innertext
                 
                 productTitle.innerText = product.product.name
-                productPrice.innerText = product.product.price + "kr/st"
+                productPrice.innerText = product.product.price.toLocaleString("sv-SE", {style: "currency", currency: "SEK"})
                 productTotalPrice.innerText = product.totalPrice.toLocaleString("sv-SE", {style: "currency", currency: "SEK"})
-                productQuantity.innerText = product.quantity + "st"
-                productPlus.innerText = "+"
+                productQuantity.innerText = product.quantity 
+                productPlus.innerText = "+" 
                 productMinus.innerText = "-"
                 
                 //eventlisteners
@@ -109,18 +112,12 @@ async function renderProducts() {
             
             renderTotalPrice(cart)
             renderShippers()
+            renderOrderbtn()
         }
-        
-
-    
-    
-    
 }
 
 async function renderTotalPrice(cart){
-
-    let productWrapper = document.getElementById("cartDiv")
-    
+    let productWrapper = document.getElementById("cartDiv") 
     let totalPriceDiv = document.createElement("div")
     totalPriceDiv.innerHTML = "Totaltpris " + " " + cart.totalPrice.toLocaleString("sv-SE", {style: "currency", currency: "SEK"})
     productWrapper.append(totalPriceDiv)
@@ -146,13 +143,12 @@ async function update (change){
     
     renderProducts()
     renderShippers()
-    
+ 
 }
 
     /**Hämtar alla fraktalternativ */
 async function getShippers(){
     const response = await makeReq("./api/recievers/shipperReciever.php", "GET")
-   
     return response
 }
 
@@ -172,7 +168,6 @@ async function renderShippers(){
         shipperInput.className = "shipperChoice"
         shipperInput.type = "radio"
      
-        
         //createElements
         const shipperList = document.createElement("div")
         const nameText = document.createElement("h5")
@@ -199,44 +194,54 @@ async function renderShippers(){
         shipperList.append(shipperOption)
         shippingDiv.append(shipperList)
 
-        shipperOption.addEventListener("click", getValue)
-        
+        shipperOption.addEventListener("click", getShipperId)
     })
-    
 }
 
-function getValue(){  
+//** Hämtar Id från valt frakt*/
+function getShipperId(){  
     const values = document.getElementsByClassName("shipperChoice") 
-    let shipperChoice = document.getElementsByClassName("shipperContainer")
-    let selectedShipper;
-    
-   let myarray = []
-  for (let i = 0; i < values.length; i++) {
+    let myarray = []
+    for (let i = 0; i < values.length; i++) {
        if(values[i].checked){
-           myarray.push(values[i].value)
+           myarray.push(values[i].value)   
        }
     } 
     return myarray
 } 
 
-
+//** skapar orderknapp  */
 function renderOrderbtn(){
-  const orderBtn = document.createElement("div")
     
+    const confirmOrderDiv = document.getElementById("confirmOrderDiv")
+    confirmOrderDiv.id = "confirmOrderDiv"
+  const orderBtn = document.createElement("div")
+  orderBtn.className = "defaultBtn"
+  orderBtn.innerText = "Slutför köp"  
+  confirmOrderDiv.className = "confirmOrderDiv"
+  let checkoutDiv = document.getElementById("checkoutDiv")
+  confirmOrderDiv.append(orderBtn)
+  checkoutDiv.append(confirmOrderDiv)
+
+  orderBtn.addEventListener("click", sendOrder)
 }
 
-
-
+//** Skapar order */
 async function sendOrder(){
     let body = new FormData()
-    let selectedShipper = getValue()
-    
-    body.set("action", "sendOrder")
-    body.set("shipper", selectedShipper);
-    const response = await makeReq("./api/recievers/orderReciever.php", "POST", body)
-    console.log(response)
-    
+    let selectedShipper = getShipperId()
+    if(selectedShipper.length == 0){
+        alert("välj fraktmetod!")
+    }else {
+        console.log(selectedShipper)
+        body.set("action", "sendOrder")
+        body.set("shipper", selectedShipper);
+        const response = await makeReq("./api/recievers/orderReciever.php", "POST", body)
+        console.log(response)
+      
+    }
 }
+
 
 
 

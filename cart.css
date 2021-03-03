@@ -28,6 +28,12 @@ main {
     flex-direction: column;
 }
 
+.confirmOrderDiv{
+    display: flex;
+    justify-content: center;
+
+}
+
 .quantityDiv h4{
     cursor: pointer;
 }
