@@ -200,6 +200,7 @@ async function editProduct() {
     
     let adminProductBox = document.getElementById("adminProductBox")
     let title = document.createElement("h2")
+    let backgroundPopup = document.createElement("div")
     let popUpDiv = document.createElement("div")
     let nameInput = document.createElement("input")
     let priceInput = document.createElement("input")
@@ -210,6 +211,8 @@ async function editProduct() {
     let updateBtn = document.createElement("button")
     let cancelBtn = document.createElement("button")
 
+    backgroundPopup.className = "backgroundPopup"
+    backgroundPopup.style.display = "block";
     popUpDiv.id = "editPopUpDiv"
     nameInput.className = "editPopUpInput"
     priceInput.className = "editPopUpInput"
@@ -236,8 +239,18 @@ async function editProduct() {
 
     buttonDiv.append(updateBtn, cancelBtn)
     popUpDiv.append(title, nameInput, priceInput, descInput, inStockInput, categoryInput, buttonDiv)
-    adminProductBox.append(popUpDiv)
+    backgroundPopup.append(popUpDiv)
+    adminProductBox.append(backgroundPopup)
+    windowOnClick(backgroundPopup)
 }
+async function windowOnClick(backgroundPopup){
+    // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == backgroundPopup) {
+                backgroundPopup.style.display = "none";
+            }
+        }
+    }
 
 //Close popup window
 function cancel() {
@@ -799,15 +812,3 @@ async function updateUserStatus() {
     return response 
 }
     
-    
-
-
-    
-
-
-
-
-
-
-
-
