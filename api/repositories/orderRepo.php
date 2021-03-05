@@ -15,83 +15,161 @@ class OrderRepo
     }
 
 
-    function placeOrder($shippingId)
+    function placeOrder($shippingId, $array)
     {
         // hämtar cart
-        $cart = $this->activeUserCart();
-        // gör en check på ifall unitsinstock är mindre än quantity
-        foreach ($cart as $product) {
-            $quantity = $product->quantity;
-            $unitsInStock = $product->unitsInStock;
-            
-                if($unitsInStock < $quantity){
-                    return $product->productName . " har bara " . $unitsInStock . " kvar i lager";
-                    
-                }
-        }
-         //kontrollera ifall lagetstatus stämmer
-         $userId = $_SESSION["user"];
-         $orderDate = date("l jS \of F Y h:i:s A");
-
-         $query = ('
-         INSERT INTO orders (userId, orderDate, shippingId) 
-         VALUES (:userId, :orderDate, :shippingId)');
-         $entity = array(
-             ':userId' => $userId,
-             ':orderDate' => $orderDate,
-             ':shippingId' => $shippingId,
-         );
-
-         $this->db->runQuery($query, $entity);
-         $this->turnCartToOrderItem();
-         return "ORDER SKICKAD";
-         // foreach loop för alla cartitems,
+        //$cart = $this->activeUserCart();
         
+        
+        $productCart = $array[0];
+        $offerCart = $array[1];
+
+        // gör en check på ifall unitsinstock är mindre än quantity
+        if(!empty($productCart)) {
+            foreach ($productCart as $product) {
+                $quantity = $product->quantity;
+                $unitsInStock = $product->unitsInStock;
+                
+                if($unitsInStock < $quantity){
+                    return $product->productName . " har bara " . $unitsInStock . " kvar i lager";   
+                    }
+            } 
+             //kontrollera ifall lagetstatus stämmer
+             $userId = $_SESSION["user"];
+             $orderDate = date("l jS \of F Y h:i:s A");
     
+             $query = ('
+             INSERT INTO orders (userId, orderDate, shippingId) 
+             VALUES (:userId, :orderDate, :shippingId)');
+             $entity = array(
+                 ':userId' => $userId,
+                 ':orderDate' => $orderDate,
+                 ':shippingId' => $shippingId,
+             );
+             $this->db->runQuery($query, $entity);
+             $this->turnCartToOrderItem($productCart);
+            // return "ORDER SKICKAD";
+             // foreach loop för alla cartitems,
+
+        } 
+        if(!empty($offerCart)) {
+
+            $nyArray = array();
+         
+            foreach ($offerCart as $offer) {
+                $offerPrice = array();
+                $offers = $this->db->fetchQuery(
+                    "SELECT product.productId, offer.quantity, offer.discount,  product.price FROM offer 
+                    INNER JOIN product 
+                    ON offer.productId = product.productId 
+                    WHERE offerName = '$offer->offerName'"      
+                ); 
+                $userId = $_SESSION["user"];
+                $orderDate = date("l jS \of F Y h:i:s A");
+                $query = ('
+                INSERT INTO orders (userId, orderDate, shippingId) 
+                VALUES (:userId, :orderDate, :shippingId)');
+                $entity = array(
+                    ':userId' => $userId,
+                    ':orderDate' => $orderDate,
+                    ':shippingId' => $shippingId,
+                );
+                $this->db->runQuery($query, $entity);
+
+                 foreach ($offers as $product) { 
+
+        
+
+                    $offerDiscount = $product->discount / 100;
+                    $offerProductPrice = $product->price * ($product->quantity);   
+                    array_push($offerPrice, $offerProductPrice);
+                    $this->updateUnitsInStock($product->productId, $product->quantity * $offer->quantity);
+                } 
+                $offerProductTotalPrice = array_sum($offerPrice);
+                $offerTotalDiscounted = $offerProductTotalPrice - ($offerProductTotalPrice * $offerDiscount);
+               
+                $flooredTotal = floor($offerTotalDiscounted);
+                array_push($nyArray, $flooredTotal) ;
+
+            } 
+            $this->turnOfferToOrderItem($offerCart, $nyArray);
+            
+     
+        } 
+    $this->emptyCart($userId);  
     }
     
     
-    function turnCartToOrderItem()
+    function turnCartToOrderItem($products)
     {
         $userId = $_SESSION["user"];
-        $cartList = $this->db->fetchQuery(
-            "SELECT * 
-            FROM product 
-            INNER JOIN cart 
-                ON  product.productId = cart.productId 
-            WHERE userId = '$userId'"
-        );
-
         $orderId = $this->db->fetchQuery(
             "SELECT MAX(orderId) 
             FROM orders
             WHERE userId = '$userId'"
         );
-
         $id = get_object_vars($orderId[0]);
+        foreach ($products as $item) {
+            foreach ($item as $key) {
+                $this->insertOrderdetails($key->productId, $id["MAX(orderId)"], $key->quantity, $key->product->price);
+                $this->updateUnitsInStock($key->productId, $key->quantity); 
+            }
+        }  
+    }
 
-        foreach ($cartList as $item) {
-            $this->insertOrderdetails($item->productId, $id["MAX(orderId)"], $item->quantity, $item->price);
-            $this->updateUnitsInStock($item->productId, $item->quantity);
+    function turnOfferToOrderItem($offer, $total)
+    {
+        $userId = $_SESSION["user"];
+        $orderId = $this->db->fetchQuery(
+            "SELECT MAX(orderId) 
+            FROM orders
+            WHERE userId = '$userId'"
+        );
+        $id = get_object_vars($orderId[0]);
+        
+        
+        for($i = 0; $i < count($offer); $i++) {  
+            $this->insertOrderdetails($offer[$i]->offerName, $id["MAX(orderId)"], $offer[$i]->quantity, $total[$i]); 
+           
         }
 
-        $this->emptyCart($userId);
+
+
+
+
     }
 
 
 
     function insertOrderdetails($productId, $orderId, $quantity, $unitPrice)
     {
-        $query = ('
-        INSERT INTO orderdetails (productId, orderId, quantity, unitPrice) 
-        VALUES (:productId, :orderId, :quantity, :unitPrice)');
-        $entity = array(
-            ':productId' => $productId,
-            ':orderId' => $orderId,
-            ':quantity' => $quantity,
-            ':unitPrice' => $unitPrice
-        );
-        $this->db->runQuery($query, $entity);
+        
+        if (is_numeric($productId)) {   
+            $query = ('
+            INSERT INTO orderdetails (productId, orderId, quantity, unitPrice) 
+            VALUES (:productId, :orderId, :quantity, :unitPrice)');
+            $entity = array(
+                ':productId' => $productId,
+                ':orderId' => $orderId,
+                ':quantity' => $quantity,
+                ':unitPrice' => $unitPrice
+            );
+            $this->db->runQuery($query, $entity);
+        }
+        
+        else if (is_string($productId)) {
+            $query = ('
+            INSERT INTO orderdetails (offerName, orderId, quantity, unitPrice) 
+            VALUES (:offerName, :orderId, :quantity, :unitPrice)');
+            $entity = array(
+                ':offerName' => $productId,
+                ':orderId' => $orderId,
+                ':quantity' => $quantity,
+                ':unitPrice' => $unitPrice
+            );
+            $this->db->runQuery($query, $entity);
+        } 
+
     }
 
 

@@ -16,13 +16,6 @@
         
             $totalPrice = array();
      
-     
-     
-     
-            /*       foreach($productArray as $product) {
-                array_push($totalPrice, $product->price);
-            }
-            array_push($productArray, array_sum($totalPrice)); */
             
             return $productArray; 
         }
@@ -35,10 +28,10 @@
         return $offersArray;
     }
 
-    function createOfferList($array) {
+    public function createOfferList($array) {
         $offersArray = array();
         foreach ($array as $item) { //Kan uppnås med array_map
-            $offer = new Offer($item->offerName, $item->discount, $item->productId, $item->quantity, $item->productName);
+            $offer = new Offer($item->offerName, $item->discount, $item->productId, $item->quantity, $item->productName, $item->price);
             array_push($offersArray, $offer);
         }
         return $offersArray;

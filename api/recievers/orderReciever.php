@@ -27,11 +27,18 @@ try {
         if ($_SERVER["REQUEST_METHOD"] == "POST") { //IF METHOD = POST'
 
             if ($_POST["action"] == "sendOrder") {
-                $productId = 1;
+               
+                $cart = json_decode($_POST["cart"]); 
+               // return json_encode($cart);
+           
+
+
+
                 $userId = $_SESSION["user"];
                 $or = new OrderRepo();
                 /* echo json_encode($or->compareValues($productId, $userId)); */
-                echo json_encode($or->placeOrder($_POST["shipper"]));
+                echo json_encode($or->placeOrder($_POST["shipper"], $cart));
+               // echo json_encode($or->turnOfferToOrderItem($cart[1], 2));
             } else if ($_POST["action"] == "loadAdminOrder") {
 
                 $cbArray = json_decode($_POST["cbArray"]);

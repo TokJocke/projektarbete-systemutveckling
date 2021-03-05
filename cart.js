@@ -1,5 +1,5 @@
 import {makeReq} from "./main.js"
-import { amountInCart } from "./products.js"
+import { amountInCart, testing } from "./products.js"
 import { currentUser } from "./myPage.js"
 import { Newsletter, hideNewsInputs } from "./user.js"
 
@@ -27,7 +27,6 @@ async function signUpNews() {
 
 async function getCart() {
     const response = await makeReq("./api/recievers/cartReciever.php", "GET")
-    console.log("i get", response)
         return response
 }
 
@@ -37,7 +36,11 @@ async function getCart() {
 async function renderProducts() {
     
         let cart = await getCart()
-        let allProducts = cart.productList
+        console.log(cart)
+        let allProducts = cart[0].productList
+        let allOffers = cart[1]
+        console.log(allOffers)
+        console.log("häär ",allProducts)
         let productWrapper = document.getElementById("cartDiv")
         let checkoutDiv = document.getElementById("checkoutDiv")
         let btn = document.getElementById("confirmOrderDiv")
@@ -58,107 +61,247 @@ async function renderProducts() {
 				headlineDiv.append(headlineOne,headlineTwo)
 
 				productWrapper.append(headlineDiv)
+ 
+        if(cart[0] != false){
 
-        if(!cart){
-            console.log("gör detta")
-        		checkoutDiv.innerHTML = ""
-           const emptyText = document.createElement("h1")
-           emptyText.style.textAlign = "center"
-           emptyText.innerText = "Här var det tomt :("
-           checkoutDiv.append(emptyText)
-        }else{
+           allProducts.forEach(product => {
+               
+               //create elements
+               let productDiv = document.createElement("div")
+               let imgDiv = document.createElement("div")
+               let descDiv = document.createElement("div")
+               let quantityDiv = document.createElement("div")
+               let removeDiv = document.createElement("div")
+               let productTitle = document.createElement("h5")
+               let productPrice = document.createElement("p")
+               let productQuantity = document.createElement("h4")
+               let productTotalPrice = document.createElement("p")
+               let productImg = document.createElement("img")
+               let productPlus = document.createElement("h4")
+               let productMinus = document.createElement("h4")
+               let productRemove = document.createElement("p")
+       
+               //classnames
+               imgDiv.className = "imgDiv"
+               descDiv.className = "descDiv"
+               quantityDiv.className = "quantityDiv"
+               removeDiv.className = "removeDiv"
 
-            allProducts.forEach(product => {
-                
-                //create elements
+               //set innertext
+               productTitle.innerText = product.product.name
+               productPrice.innerText = product.product.price.toLocaleString("sv-SE", {style: "currency", currency: "SEK"})
+               productTotalPrice.innerText = product.totalPrice.toLocaleString("sv-SE", {style: "currency", currency: "SEK"})
+               productQuantity.innerText = product.quantity 
+               productPlus.innerText = "+" 
+               productMinus.innerText = "-"
+               
+               //eventlisteners
+                                // här ändrar jag para "change" till action -> increase/decrease 
+               productPlus.addEventListener("click", update.bind(product, "increase"))
+               productMinus.addEventListener("click", update.bind(product, "decrease"))
+               productRemove.addEventListener("click", update.bind(product, "remove"))
+       
+               productImg.src = "./assets/products/" + product.product.img
+               productDiv.className = "cartProductBox"
+               productRemove.className = "fa fa-trash"
+               
+               //append
+               imgDiv.append(productImg)
+               descDiv.append(productTitle, productPrice)
+               quantityDiv.append(productPlus,productQuantity, productMinus)
+               removeDiv.append(productRemove)
+       
+       
+               productDiv.append(imgDiv,descDiv,quantityDiv,removeDiv)
+               productWrapper.append(productDiv)
+               
+           });   
+                  
+        } 
+        if(cart[1] != false) {
+            console.log("not false", cart[1])
+            allOffers.forEach(offer => {
+                let offerTitleDiv = document.createElement("div")
+                let offerTitle = document.createElement("h2")
                 let productDiv = document.createElement("div")
-                let imgDiv = document.createElement("div")
-                let descDiv = document.createElement("div")
+                let productInfoDiv = document.createElement("div")
                 let quantityDiv = document.createElement("div")
                 let removeDiv = document.createElement("div")
-                let productTitle = document.createElement("h5")
-                let productPrice = document.createElement("p")
-                let productQuantity = document.createElement("h4")
-                let productTotalPrice = document.createElement("p")
-                let productImg = document.createElement("img")
                 let productPlus = document.createElement("h4")
                 let productMinus = document.createElement("h4")
                 let productRemove = document.createElement("p")
-        
-                //classnames
-                imgDiv.className = "imgDiv"
-                descDiv.className = "descDiv"
+                let productQuantity = document.createElement("h4")
+    
+                productInfoDiv.className = "descDiv"
+                offerTitleDiv.className = "imgDiv"
                 quantityDiv.className = "quantityDiv"
                 removeDiv.className = "removeDiv"
-
-                //set innertext
-                productTitle.innerText = product.product.name
-                productPrice.innerText = product.product.price.toLocaleString("sv-SE", {style: "currency", currency: "SEK"})
-                productTotalPrice.innerText = product.totalPrice.toLocaleString("sv-SE", {style: "currency", currency: "SEK"})
-                productQuantity.innerText = product.quantity 
+                productInfoDiv.style.display = "flex"
+                productInfoDiv.style.flexDirection = "column"
+                productDiv.className = "cartProductBox"
                 productPlus.innerText = "+" 
                 productMinus.innerText = "-"
-                
-                //eventlisteners
-                                 // här ändrar jag para "change" till action -> increase/decrease 
-                productPlus.addEventListener("click", update.bind(product, "increase"))
-                productMinus.addEventListener("click", update.bind(product, "decrease"))
-                productRemove.addEventListener("click", update.bind(product, "remove"))
-        
-                productImg.src = "./assets/products/" + product.product.img
-                productDiv.className = "cartProductBox"
                 productRemove.className = "fa fa-trash"
+                productQuantity.innerText = offer.quantity
                 
-                //append
-                imgDiv.append(productImg)
-                descDiv.append(productTitle, productPrice)
-                quantityDiv.append(productPlus,productQuantity, productMinus)
-                removeDiv.append(productRemove)
-        
-        
-                productDiv.append(imgDiv,descDiv,quantityDiv,removeDiv)
-                productWrapper.append(productDiv)
+                productPlus.addEventListener("click", update.bind(offer, "increase"))
+                productMinus.addEventListener("click", update.bind(offer, "decrease"))
+                productRemove.addEventListener("click", update.bind(offer, "remove"))
+    
+                    offerTitle.innerText = offer.offerName
+
+
+                    offerTitleDiv.append(offerTitle)
+                    productDiv.append(offerTitleDiv)
+                    quantityDiv.append(productPlus, productQuantity, productMinus)
+                    removeDiv.append(productRemove)
+    
                 
-            });     
-					
-            renderTotalPrice(cart)
-            renderOrderbtn()
+                    renderOfferDetails(offer.offerName, productInfoDiv)
+                    productDiv.append(productInfoDiv, quantityDiv, removeDiv)
+                    productWrapper.append(productDiv)
+                });
         }
+        if (cart[0] == false && cart[1] == false) {
+            console.log("gör detta")
+            checkoutDiv.innerHTML = ""
+            const emptyText = document.createElement("h1")
+            emptyText.style.textAlign = "center"
+            emptyText.innerText = "Här var det tomt :("
+            checkoutDiv.append(emptyText)  
+        }
+        else {
+
+            renderTotalPrice(cart)
+        }
+            
+        
+           
+         
 }
 
+
+async function offerTotalPrice(param) {
+    let productsInOffer = await testing(param)
+    let totalPrice = []
+    let discount 
+    productsInOffer.forEach(product => {
+
+        totalPrice.push(product.price * product.quantity)
+        discount = product.discount / 100
+
+    })
+    let calculatedTotal = totalPrice.reduce((total, currentValue)=>{
+        return total + currentValue})
+    let discountTotal = Math.floor(calculatedTotal - (calculatedTotal * discount))
+
+    return discountTotal
+
+ }
+
+
+
+async function renderOfferDetails(param, parent) {
+
+    let productsInOffer = await testing(param)
+    let totalPrice = []
+    let discount 
+
+
+    productsInOffer.forEach(product => {
+        let productName = document.createElement("p")
+        productName.innerText = product.productName + " x " + product.quantity
+
+        totalPrice.push(product.price * product.quantity)
+        discount = product.discount / 100
+
+        parent.append(productName)
+    })
+    let calculatedTotal = totalPrice.reduce((total, currentValue)=>{
+        return total + currentValue})
+    let discountTotal = Math.floor(calculatedTotal - (calculatedTotal * discount))
+    let renderTotalPrice = document.createElement("p")
+    let renderDiscountPrice = document.createElement("p")
+    renderDiscountPrice.data = discountTotal
+    
+    renderTotalPrice.id="renderTotalPrice"
+    renderTotalPrice.innerText = calculatedTotal + " kr"
+    renderTotalPrice.style.textDecoration = "line-through"
+    renderDiscountPrice.className="renderDiscountPrice"
+    renderDiscountPrice.innerText = discountTotal + " kr"
+    renderDiscountPrice.style.color = "red"
+
+    let pricesArray = []
+
+    pricesArray.push(calculatedTotal, discountTotal)
+    
+
+    parent.append(renderTotalPrice, renderDiscountPrice)
+}
+
+
 async function renderTotalPrice(cart){
+    let allOffers = cart[1] 
+    let allProducts = cart[0]
+    let offerAndProductPrice = 0
 	let productWrapper = document.getElementById("cartDiv") 
 	let totalPriceDiv = document.createElement("div")
-	totalPriceDiv.className = "totalPriceDiv"
-	
+    totalPriceDiv.className = "totalPriceDiv"
+    totalPriceDiv.innerHTML = ""
+    let priceArray = []
+    let calculatedPrice = 0
+    productWrapper.append(totalPriceDiv)
+
+    for(let i = 0; i < allOffers.length; i++) {
+
+        let blaha = await offerTotalPrice(allOffers[i].offerName) * allOffers[i].quantity
+        priceArray.push(blaha)
+
+    }
+     if(cart[1] != false) {
+        console.log("tjoho")
+        calculatedPrice = priceArray.reduce((total, currentValue)=>{
+           return total + currentValue})
+    } 
+    
+    if(cart[0] != false) {
+        offerAndProductPrice = allProducts.totalPrice  + calculatedPrice 
+    }else {
+        offerAndProductPrice = calculatedPrice
+    }
+    
 
 	 if(!selectedShipper){
-		 totalPriceDiv.innerHTML = `Totalt pris ${cart.totalPrice.toLocaleString("sv-SE", {style: "currency", currency: "SEK"})}`
-		 productWrapper.append(totalPriceDiv)
+		 totalPriceDiv.innerHTML = `Totalt pris ${offerAndProductPrice.toLocaleString("sv-SE", {style: "currency", currency: "SEK"})}`
+		 
 
 	 }else {
-		const headlineTxt = document.createElement("p")
-		totalPriceDiv.innerHTML = `Totalt pris ${cart.totalPrice.toLocaleString("sv-SE", {style: "currency", currency: "SEK"})}`
-		productWrapper.append(totalPriceDiv)
-		const checkoutPrice = document.createElement("h4")
-	
-		const confirmOrderDiv = document.getElementById("confirmOrderDiv")
 
+		const headlineTxt = document.createElement("p")
+		totalPriceDiv.innerHTML = `Totalt pris ${offerAndProductPrice.toLocaleString("sv-SE", {style: "currency", currency: "SEK"})}`
+		const checkoutPrice = document.createElement("h4")
+		const confirmOrderDiv = document.getElementById("confirmOrderDiv")
+        confirmOrderDiv.innerHTML = ""
 		headlineTxt.innerText = "Att betala ink frakt:"
-		let totalSum = Number(selectedShipper.shippingPrice) + cart.totalPrice
+		let totalSum = Number(selectedShipper.shippingPrice) + offerAndProductPrice
 		checkoutPrice.innerText = totalSum.toLocaleString("sv-SE", {style: "currency", currency: "SEK"})
 		confirmOrderDiv.append(headlineTxt,checkoutPrice)
+
+        renderOrderbtn()
 	 }
 }
 
 /**funktionen updaterar quantitet samt kan ta bort*/
 async function update (change){
     //svaret från this sparas i variable
+
     if(change == "decrease" && this.quantity == 1){
         change = "remove"
     }
-    let thisProductId = this.productId
-    console.log(thisProductId)
+    let thisProductId = this.productId 
+    if (thisProductId == null) {
+        thisProductId = this.offerName
+    }
     //skapar en body
     let body = new FormData()
     
@@ -167,7 +310,7 @@ async function update (change){
     body.append("productId", JSON.stringify(thisProductId))
     
     const response = await makeReq("./api/recievers/cartReciever.php", "POST", body)
-    console.log(response)
+    console.log("Kolla ==== ", response)
     
     renderProducts()
     amountInCart()
@@ -251,28 +394,21 @@ function renderOrderbtn(){
 //** Skapar order */
 async function sendOrder(){
     let body = new FormData()
+    let cart = await getCart()
     if(!selectedShipper){
         alert("välj fraktmetod!")
     }else {
         body.set("action", "sendOrder")
         body.set("shipper", selectedShipper.shippingId);
+        body.set("cart", JSON.stringify(cart))
         const response = await makeReq("./api/recievers/orderReciever.php", "POST", body)
 
-        alert(response)
-
+/*         alert(response)
+ */
         renderProducts()
-				window.location = "./myPage.html"
-
+/* 				window.location = "./myPage.html"
+ */
         console.log(response)
       
     }
 }
-/* async function test() {
-    const response = await makeReq("./api/recievers/orderReciever.php?test", "GET")
-    console.log("test response = ", response)
-        return response
-} */
-
-
-
-
