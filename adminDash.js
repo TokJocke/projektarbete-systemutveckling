@@ -39,28 +39,23 @@ export function myAdminBox() {
     adminUpdateProductPanel() 
  
     adminAddBoxBtn.addEventListener("click", () => {
-        console.log("add")
         adminBox.innerHTML = ""
         adminAddProductPanel()
     })
 
     adminUppdateBoxBtn.addEventListener("click", () => {
-        console.log("uppdate")
         adminUpdateProductPanel()
     })
 
     adminOfferBoxBtn.addEventListener("click", () => {
-        console.log("Offers")
         adminOfferPanel()
 
     })
     adminOrderBtn.addEventListener("click", () => {
-        console.log("orderPanel")
         loadOrders() 
     })
     
     adminUserBtn.addEventListener("click", () => {
-        console.log("userPanel")
         loadUsers()
     }) 
 
@@ -190,7 +185,6 @@ async function deleteProduct() {
     
         const response = await makeReq("./api/recievers/productReciever.php", "POST", data)
         adminUpdateProductPanel()
-        console.log(response)
     } 
     
 }
@@ -259,7 +253,7 @@ function cancel() {
 
 //Function for updateing products in DB
 async function update() {
-    console.log(this.productId)//Med .bind lösning blir denna "this.productId"
+    //Med .bind lösning blir denna "this.productId"
     let input = document.getElementsByTagName("input")
     let myInputValueArray = []
     let inputCategory = document.getElementById("editPopUpCategory")
@@ -278,7 +272,6 @@ async function update() {
     data.append("product", JSON.stringify(myInputValueArray))
 
     const response = await makeReq("./api/recievers/productReciever.php", "POST", data)
-    console.log("response = ", response)
   
     removeElementById("editPopUpDiv")
     adminUpdateProductPanel()
@@ -300,7 +293,6 @@ async function sendProductData() {
     data.append("productData", JSON.stringify(productData))
 
     const response = await makeReq("./api/recievers/productReciever.php", "POST", data)
-    console.log(response) 
 }
 
 
@@ -435,9 +427,7 @@ async function adminEditOfferPanel(value) {
 }
 
 async function dropDownValue() {
-    console.log("värde =", this.value)
     let sortedByOffer = await getAllProdsInOffer(this.value)
-    console.log(sortedByOffer) 
     renderEditOfferTable(this.value) 
 }
 
@@ -512,9 +502,7 @@ async function addProductsToOffer() {                                           
                 checked: offerCheck[i].value,
                 quantity: offerQuantity[i].value                                         //Varför funkar denna?
             }
-            console.log("value= ", offerCheck[i].value)
             checkedArray.push(checkAndQuantity)
-            console.log(checkedArray)
         }
     } 
     let body = new FormData()
@@ -522,8 +510,7 @@ async function addProductsToOffer() {                                           
     body.set("newOfferName", JSON.stringify(offerName))
     body.set("offerDiscount", JSON.stringify(offerDiscount))
    
-    const response = await makeReq("./api/recievers/offerReciever.php", "POST", body)
-    console.log(response)   
+    const response = await makeReq("./api/recievers/offerReciever.php", "POST", body)  
 }
 
 async function removeProductsFromOffer() {
@@ -540,19 +527,15 @@ async function removeProductsFromOffer() {
     body.set("removeOfferCheck", JSON.stringify(checkedArray))
 
     const response = await makeReq("./api/recievers/offerReciever.php", "POST", body)
-    console.log(response) 
     renderEditOfferTable(this[0].offerId)
 }
 
 async function removeOffer() {
                                                                                                         //WORKING HERE
-    console.log(this)
-
     if (confirm("are you sure you want to delete offer with ID = " + this + " from products?")) {        
         let data = new FormData()
         data.append("removeOffer", JSON.stringify(this))
         const response = await makeReq("./api/recievers/offerReciever.php", "POST", data)
-        console.log(response)
         adminEditOfferPanel()
 
     }
@@ -562,7 +545,6 @@ async function removeOffer() {
 
 async function getOrders() {
     const response = await makeReq("./api/recievers/orderReciever.php", "GET")
-    console.log(response)
     return response
 }
 
@@ -646,14 +628,12 @@ async function updateShippingStatus() {
             myArray.push(cb[i].value)           
          }
     }       
-            console.log(myArray)
 
     let body = new FormData()
     body.set("cbArray", JSON.stringify(myArray))     
     body.set("action", "loadAdminOrder")     
     
     const response = await makeReq("./api/recievers/orderReciever.php", "POST", body)
-    console.log(response)
     loadOrders()
     return response 
 }
@@ -663,7 +643,6 @@ async function updateShippingStatus() {
 //Hämta användare
 async function getUsers() {
     const response = await makeReq("./api/recievers/userReciever.php?getUsers", "GET")
-    console.log(response)
     return response
 }
 //laddar panel med alla användare
@@ -752,7 +731,6 @@ async function updateUserStatus() {
             notCheckedArr.push(cb[i].value)
          }
     }       
-            console.log("hej", checkedArr, "då", notCheckedArr)
 
 
     let body = new FormData()
@@ -763,7 +741,6 @@ async function updateUserStatus() {
   
   
     const response = await makeReq("./api/recievers/userReciever.php", "POST", body)
-    console.log(response)
     loadUsers()
     return response 
 }

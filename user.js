@@ -16,11 +16,9 @@ async function regUser() {
     let checkbox = document.getElementById("cb")
     if(checkbox.checked) { //Kollar om checkbox för newsletter är 
         checkbox = "Yes"   //checkad och skickar upp Yes/No.
-        console.log("Yes")
     }
     else {
         checkbox = "No"
-        console.log("No")
     }
 
     let newUser =  {
@@ -48,7 +46,6 @@ async function regUser() {
         text.innerText = "Tack för din registrering"
         formUser.append(text) 
     }
-    console.log(response)
 }
 
 export async function checkInputs() {
@@ -101,8 +98,8 @@ export async function login() {
         window.location.href = "/myPage.html"; 
     }
     
-    console.log(response)
 }
+
 let newsBtn = document.getElementById("newsBtn")
 
 export async function Newsletter() { //Signa newsletter ej inloggad.
@@ -133,7 +130,6 @@ export async function Newsletter() { //Signa newsletter ej inloggad.
         x.innerText = "Tack! Nu kommer nyhetsbrev till din mail!"
         x.style.color = "green"
     }
-    console.log(response)
     
 }
 async function signNews() {

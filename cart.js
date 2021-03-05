@@ -9,12 +9,11 @@ let selectedShipper;
 
 function initSite() {
     if (body){
-				renderShippers()
+		renderShippers()
         renderProducts()
         amountInCart() 
         currentUser() 
         hideNewsInputs()
-
         signUpNews()   
     }
 }
@@ -27,7 +26,6 @@ async function signUpNews() {
 
 async function getCart() {
     const response = await makeReq("./api/recievers/cartReciever.php", "GET")
-    console.log("i get", response)
         return response
 }
 
@@ -60,7 +58,6 @@ async function renderProducts() {
 				productWrapper.append(headlineDiv)
 
         if(!cart){
-            console.log("gör detta")
         		checkoutDiv.innerHTML = ""
            const emptyText = document.createElement("h1")
            emptyText.style.textAlign = "center"
@@ -158,7 +155,6 @@ async function update (change){
         change = "remove"
     }
     let thisProductId = this.productId
-    console.log(thisProductId)
     //skapar en body
     let body = new FormData()
     
@@ -166,9 +162,7 @@ async function update (change){
     body.append("action", change)
     body.append("productId", JSON.stringify(thisProductId))
     
-    const response = await makeReq("./api/recievers/cartReciever.php", "POST", body)
-    console.log(response)
-    
+    const response = await makeReq("./api/recievers/cartReciever.php", "POST", body)  
     renderProducts()
 
 }
@@ -263,15 +257,10 @@ async function sendOrder(){
         renderProducts()
 				window.location = "./myPage.html"
 
-        console.log(response)
       
     }
 }
-/* async function test() {
-    const response = await makeReq("./api/recievers/orderReciever.php?test", "GET")
-    console.log("test response = ", response)
-        return response
-} */
+
 
 
 
