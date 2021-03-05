@@ -175,8 +175,6 @@ async function update (change){
         return alert("produkten är tyvärr slut")
     }
     let thisProductId = this.productId
-    
-    console.log("update, ", this)
 
     //skapar en body
     let body = new FormData()
@@ -228,6 +226,7 @@ async function update (change){
 
     async function createProdFromOffer(param, parent) {
         let allProdsFromOffer = await testing(param)
+        const userCheck = await makeReq("./api/recievers/userReciever.php?checkUser", "GET")
 
         let totalPrice = []
         let discount 
@@ -250,6 +249,23 @@ async function update (change){
         let renderTotalPrice = document.createElement("h2")
         let renderDiscountPrice = document.createElement("h2")
         let addOfferToCartBtn = document.createElement("button")
+        
+        let p = document.createElement("p")
+        p.innerText = "Logga in"
+        p.style.fontSize = "0.7rem"
+        let myBtn = document.createElement("div")
+        myBtn.className = "addToCartBtn"
+        myBtn.append(p)
+       
+        if(userCheck === "NotLogged") {
+            parent.append(renderTotalPrice, renderDiscountPrice, myBtn)
+           
+        }
+        
+        else if(userCheck === "Logged") {
+            parent.append(renderTotalPrice, renderDiscountPrice, addOfferToCartBtn)
+        }    
+
         addOfferToCartBtn.className = "addToCartBtn"
         
         renderTotalPrice.id="renderTotalPrice"
@@ -266,7 +282,7 @@ async function update (change){
         
         addOfferToCartBtn.addEventListener("click", addOffer.bind(allProdsFromOffer, pricesArray))
 
-        parent.append(renderTotalPrice, renderDiscountPrice, addOfferToCartBtn)
+        /* parent.append(renderTotalPrice, renderDiscountPrice, addOfferToCartBtn) */
     
     }
 
@@ -275,14 +291,12 @@ async function update (change){
     async function addOffer(pricesArray) {
         let offer = []
         offer.push(this, pricesArray)
-        console.log(offer)
 
         let body = new FormData()
         body.append("action", "addOffer")
         body.append("offer", JSON.stringify(offer))
         
         const response = await makeReq("./api/recievers/cartReciever.php", "POST", body)
-        console.log(response)
         amountInCart()
   
     }
