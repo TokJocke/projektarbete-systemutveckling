@@ -403,11 +403,11 @@ async function sendOrder(){
         body.set("cart", JSON.stringify(cart))
         const response = await makeReq("./api/recievers/orderReciever.php", "POST", body)
 
-/*         alert(response)
- */
+        alert("Ordern skickades!")
+
         renderProducts()
-/* 				window.location = "./myPage.html"
- */
+				window.location = "./myPage.html"
+
         console.log(response)
       
     }
