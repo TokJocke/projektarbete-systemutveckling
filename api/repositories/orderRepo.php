@@ -55,6 +55,19 @@ class OrderRepo
         if(!empty($offerCart)) {
 
             $nyArray = array();
+
+            $userId = $_SESSION["user"];
+            $orderDate = date("l jS \of F Y h:i:s A");
+            $query = ('
+            INSERT INTO orders (userId, orderDate, shippingId) 
+            VALUES (:userId, :orderDate, :shippingId)');
+            $entity = array(
+                ':userId' => $userId,
+                ':orderDate' => $orderDate,
+                ':shippingId' => $shippingId,
+            );
+
+            $this->db->runQuery($query, $entity);
          
             foreach ($offerCart as $offer) {
                 $offerPrice = array();
@@ -64,17 +77,6 @@ class OrderRepo
                     ON offer.productId = product.productId 
                     WHERE offerName = '$offer->offerName'"      
                 ); 
-                $userId = $_SESSION["user"];
-                $orderDate = date("l jS \of F Y h:i:s A");
-                $query = ('
-                INSERT INTO orders (userId, orderDate, shippingId) 
-                VALUES (:userId, :orderDate, :shippingId)');
-                $entity = array(
-                    ':userId' => $userId,
-                    ':orderDate' => $orderDate,
-                    ':shippingId' => $shippingId,
-                );
-                $this->db->runQuery($query, $entity);
 
                  foreach ($offers as $product) { 
 

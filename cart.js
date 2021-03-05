@@ -35,11 +35,8 @@ async function getCart() {
 async function renderProducts() {
     
         let cart = await getCart()
-        console.log(cart)
         let allProducts = cart[0].productList
         let allOffers = cart[1]
-        console.log(allOffers)
-        console.log("häär ",allProducts)
         let productWrapper = document.getElementById("cartDiv")
         let checkoutDiv = document.getElementById("checkoutDiv")
         let btn = document.getElementById("confirmOrderDiv")
@@ -119,7 +116,6 @@ async function renderProducts() {
                   
         } 
         if(cart[1] != false) {
-            console.log("not false", cart[1])
             allOffers.forEach(offer => {
                 let offerTitleDiv = document.createElement("div")
                 let offerTitle = document.createElement("h2")
@@ -163,7 +159,6 @@ async function renderProducts() {
                 });
         }
         if (cart[0] == false && cart[1] == false) {
-            console.log("gör detta")
             checkoutDiv.innerHTML = ""
             const emptyText = document.createElement("h1")
             emptyText.style.textAlign = "center"
@@ -259,7 +254,6 @@ async function renderTotalPrice(cart){
 
     }
      if(cart[1] != false) {
-        console.log("tjoho")
         calculatedPrice = priceArray.reduce((total, currentValue)=>{
            return total + currentValue})
     } 

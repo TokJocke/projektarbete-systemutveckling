@@ -33,7 +33,6 @@ export async function getAllCategorys() {
 
 export async function getAllOffers() {
     const response = await makeReq("./api/recievers/offerReciever.php", "GET")
-    console.log(response)
     return response
 }
 
@@ -79,14 +78,12 @@ export function filterProducts(savedSession) {
     let filterChocie = JSON.parse(sessionStorage.getItem("productFilter"))
     let headline = document.getElementById("anchorProduct")
     if(!filterChocie || filterChocie == "Alla Produkter") {
-        console.log("no session saved")
         headline.innerText = filterChocie   
        
         renderProducts(getAllProducts())
       
     }
     else {
-        console.log(filterChocie.categoryId)
         headline.innerText = "Produkter > " + filterChocie.name   
 
         renderProducts(getAllProdsInCategory(filterChocie.categoryId))
