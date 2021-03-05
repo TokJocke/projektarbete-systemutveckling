@@ -9,12 +9,11 @@ let selectedShipper;
 
 function initSite() {
     if (body){
-				renderShippers()
+		renderShippers()
         renderProducts()
         amountInCart() 
         currentUser() 
         hideNewsInputs()
-
         signUpNews()   
     }
 }
@@ -61,6 +60,7 @@ async function renderProducts() {
 				headlineDiv.append(headlineOne,headlineTwo)
 
 				productWrapper.append(headlineDiv)
+
  
         if(cart[0] != false){
 
@@ -298,6 +298,7 @@ async function update (change){
     if(change == "decrease" && this.quantity == 1){
         change = "remove"
     }
+
     let thisProductId = this.productId 
     if (thisProductId == null) {
         thisProductId = this.offerName
@@ -309,9 +310,8 @@ async function update (change){
     body.append("action", change)
     body.append("productId", JSON.stringify(thisProductId))
     
-    const response = await makeReq("./api/recievers/cartReciever.php", "POST", body)
-    console.log("Kolla ==== ", response)
-    
+    const response = await makeReq("./api/recievers/cartReciever.php", "POST", body)  
+
     renderProducts()
     amountInCart()
 }
@@ -408,7 +408,7 @@ async function sendOrder(){
         renderProducts()
 				window.location = "./myPage.html"
 
-        console.log(response)
       
     }
 }
+

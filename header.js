@@ -101,9 +101,7 @@ function headerBtnLink() {
     let menuBtn = document.getElementById("menuBtn")
     let menu = document.getElementsByClassName("menu")[0]//Change name this and the button above
     let headerBox = document.getElementsByClassName("headerBox")
-  
-    console.log(headerTop)
-    
+   
     menu.addEventListener("click", () => {
       header.classList.toggle("growHeader")
       menuBtn.classList.toggle("change");
@@ -112,13 +110,10 @@ function headerBtnLink() {
         for(let i = 0; i < headerBox.length; i++) {
           
             headerBox[i].className = "showHeaderContent headerBox slideRight"
-            console.log("if")
           }
   
         }
         else {
-          console.log("else")
-  
             window.setTimeout(() => {
   
               for(let i = 0; i < headerBox.length; i++) {

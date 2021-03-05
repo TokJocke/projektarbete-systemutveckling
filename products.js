@@ -66,8 +66,8 @@ export async function renderProducts(fromWhere) {
         let addToCartBtn = document.createElement("button")
 
         let p = document.createElement("p")
-        p.innerText = "Logga in för att lägga till i varukorg"
-        p.style.fontSize = "12px"
+        p.innerText = "Logga in"
+        p.style.fontSize = "0.7rem"
         let myBtn = document.createElement("div")
         myBtn.className = "addToCartBtn"
         myBtn.append(p)
@@ -92,6 +92,7 @@ export async function renderProducts(fromWhere) {
        
         if(userCheck === "NotLogged") {
             productDivWrapper.append(productDiv, myBtn)
+           
         }
         
         else if(userCheck === "Logged") {
@@ -185,7 +186,6 @@ async function update (change){
     body.append("productId", JSON.stringify(thisProductId))
     
     const response = await makeReq("./api/recievers/cartReciever.php", "POST", body)
-    console.log(response)
     
     amountInCart ()
     
@@ -199,7 +199,7 @@ async function update (change){
     if(userCheck === "Logged") {
         let response = await makeReq("./api/recievers/cartReciever.php?count", "GET",)
         cartdiv.innerHTML = response[0].antal
-   
+
     }
   
     else {
@@ -210,9 +210,6 @@ async function update (change){
     export async function renderProductsInOffer() {
         let allOffers = await getAllOffers()
         let discountBox = document.getElementsByClassName("discountItems")[0]
-        console.log("allOffers = ", allOffers)
-/*         console.log("discBox = ", discountBox)   
-        console.log("for render offerProds = ", getAllProdInOffer, allOffers) */
          
         allOffers.forEach(offer => {
             let offerDiv = document.createElement("div")
@@ -220,8 +217,6 @@ async function update (change){
             
             offerDiv.className = "productBoxWrapper"
             createProdFromOffer(offer.offerName, offerDiv)
-             
-            //console.log("inforeach = ", getAllProdInOffer)
 
             offerName.innerText = offer.offerName
             offerDiv.append(offerName)
@@ -233,18 +228,19 @@ async function update (change){
 
     async function createProdFromOffer(param, parent) {
         let allProdsFromOffer = await testing(param)
-        console.log("in fuunc",allProdsFromOffer)
+
         let totalPrice = []
         let discount 
+
         
         allProdsFromOffer.forEach(product => {
             let name = document.createElement("p")
             name.innerText = product.productName + " x " + product.quantity
             
+
             totalPrice.push(product.price * product.quantity)
             discount = product.discount / 100
             
-
 
             parent.append(name)
         });
@@ -273,6 +269,7 @@ async function update (change){
         parent.append(renderTotalPrice, renderDiscountPrice, addOfferToCartBtn)
     
     }
+
 
 
     async function addOffer(pricesArray) {

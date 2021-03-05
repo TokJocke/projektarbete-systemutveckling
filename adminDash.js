@@ -20,6 +20,7 @@ export function myAdminBox() {
     let adminOfferBoxBtn = document.createElement("button")
     let adminOrderBtn = document.createElement("button")
     let adminUserBtn = document.createElement("button")
+    let UserNewsletterBtn = document.createElement("button")
 
     adminBox.id = "adminProductBox"
     adminUppdateBoxBtn.className = "adminProductBoxBtn"
@@ -27,42 +28,43 @@ export function myAdminBox() {
     adminOfferBoxBtn.className = "adminProductBoxBtn"
     adminOrderBtn.className = "adminProductBoxBtn"
     adminUserBtn.className = "adminProductBoxBtn"
+    UserNewsletterBtn.className = "adminProductBoxBtn"
     
     adminUppdateBoxBtn.innerText = "Update"
     adminAddBoxBtn.innerText = "Add"
     adminOfferBoxBtn.innerText = "Offers"
     adminOrderBtn.innerText = "Mark Order"
     adminUserBtn.innerText = "User Admin"
+    UserNewsletterBtn.innerText = "User Newsletter"
 
-    adminProductWrapp.append(adminUppdateBoxBtn, adminAddBoxBtn, adminOfferBoxBtn, adminOrderBtn, adminUserBtn, adminBox)
+    adminProductWrapp.append(adminUppdateBoxBtn, adminAddBoxBtn, adminOfferBoxBtn, adminOrderBtn, adminUserBtn, UserNewsletterBtn, adminBox)
 
     adminUpdateProductPanel() 
  
     adminAddBoxBtn.addEventListener("click", () => {
-        console.log("add")
         adminBox.innerHTML = ""
         adminAddProductPanel()
     })
 
     adminUppdateBoxBtn.addEventListener("click", () => {
-        console.log("uppdate")
         adminUpdateProductPanel()
     })
 
     adminOfferBoxBtn.addEventListener("click", () => {
-        console.log("Offers")
         adminOfferPanel()
 
     })
     adminOrderBtn.addEventListener("click", () => {
-        console.log("orderPanel")
         loadOrders() 
     })
     
     adminUserBtn.addEventListener("click", () => {
-        console.log("userPanel")
         loadUsers()
-    }) 
+    })
+    
+    UserNewsletterBtn.addEventListener("click", () => {
+        loadNewsletterSigns()
+    })
 
     return adminProductWrapp
 }
@@ -190,7 +192,6 @@ async function deleteProduct() {
     
         const response = await makeReq("./api/recievers/productReciever.php", "POST", data)
         adminUpdateProductPanel()
-        console.log(response)
     } 
     
 }
@@ -259,7 +260,7 @@ function cancel() {
 
 //Function for updateing products in DB
 async function update() {
-    console.log(this.productId)//Med .bind lösning blir denna "this.productId"
+    //Med .bind lösning blir denna "this.productId"
     let input = document.getElementsByTagName("input")
     let myInputValueArray = []
     let inputCategory = document.getElementById("editPopUpCategory")
@@ -278,7 +279,6 @@ async function update() {
     data.append("product", JSON.stringify(myInputValueArray))
 
     const response = await makeReq("./api/recievers/productReciever.php", "POST", data)
-    console.log("response = ", response)
   
     removeElementById("editPopUpDiv")
     adminUpdateProductPanel()
@@ -300,7 +300,6 @@ async function sendProductData() {
     data.append("productData", JSON.stringify(productData))
 
     const response = await makeReq("./api/recievers/productReciever.php", "POST", data)
-    console.log(response) 
 }
 
 
@@ -435,9 +434,7 @@ async function adminOfferPanel() {
 } 
 
 async function dropDownValue() {
-    console.log("värde =", this.value)
     let sortedByOffer = await getAllProdsInOffer(this.value)
-    console.log(sortedByOffer) 
     renderEditOfferTable(this.value) 
 }
 
@@ -512,9 +509,7 @@ async function addProductsToOffer() {                                           
                 checked: offerCheck[i].value,
                 quantity: offerQuantity[i].value                                         //Varför funkar denna?
             }
-            console.log("value= ", offerCheck[i].value)
             checkedArray.push(checkAndQuantity)
-            console.log(checkedArray)
         }
     } 
     let body = new FormData()
@@ -522,8 +517,7 @@ async function addProductsToOffer() {                                           
     body.set("newOfferName", JSON.stringify(offerName))
     body.set("offerDiscount", JSON.stringify(offerDiscount))
    
-    const response = await makeReq("./api/recievers/offerReciever.php", "POST", body)
-    console.log(response)   
+    const response = await makeReq("./api/recievers/offerReciever.php", "POST", body)  
 }
 
 async function removeProductsFromOffer() {
@@ -540,19 +534,15 @@ async function removeProductsFromOffer() {
     body.set("removeOfferCheck", JSON.stringify(checkedArray))
 
     const response = await makeReq("./api/recievers/offerReciever.php", "POST", body)
-    console.log(response) 
     renderEditOfferTable(this[0].offerId)
 }
 
 async function removeOffer() {
                                                                                                         //WORKING HERE
-    console.log(this)
-
     if (confirm("are you sure you want to delete offer with ID = " + this + " from products?")) {        
         let data = new FormData()
         data.append("removeOffer", JSON.stringify(this))
         const response = await makeReq("./api/recievers/offerReciever.php", "POST", data)
-        console.log(response)
         adminEditOfferPanel()
 
     }
@@ -562,7 +552,6 @@ async function removeOffer() {
 
 async function getOrders() {
     const response = await makeReq("./api/recievers/orderReciever.php", "GET")
-    console.log(response)
     return response
 }
 
@@ -646,14 +635,12 @@ async function updateShippingStatus() {
             myArray.push(cb[i].value)           
          }
     }       
-            console.log(myArray)
 
     let body = new FormData()
     body.set("cbArray", JSON.stringify(myArray))     
     body.set("action", "loadAdminOrder")     
     
     const response = await makeReq("./api/recievers/orderReciever.php", "POST", body)
-    console.log(response)
     loadOrders()
     return response 
 }
@@ -663,7 +650,6 @@ async function updateShippingStatus() {
 //Hämta användare
 async function getUsers() {
     const response = await makeReq("./api/recievers/userReciever.php?getUsers", "GET")
-    console.log(response)
     return response
 }
 //laddar panel med alla användare
@@ -752,7 +738,6 @@ async function updateUserStatus() {
             notCheckedArr.push(cb[i].value)
          }
     }       
-            console.log("hej", checkedArr, "då", notCheckedArr)
 
 
     let body = new FormData()
@@ -763,8 +748,53 @@ async function updateUserStatus() {
   
   
     const response = await makeReq("./api/recievers/userReciever.php", "POST", body)
-    console.log(response)
     loadUsers()
     return response 
 }
+// funktion som listar nyhetsbrev subscribers
+async function getUserNewsletters() {
+    const response = await makeReq("./api/recievers/userReciever.php?getNewsletter", "GET")
+    return response
+}
+
+async function loadNewsletterSigns() {
+    let adminBox = document.getElementById("adminProductBox")
+    adminBox.innerHTML = ""
+    let header = document.createElement("h1")
+    header.align = "center"
+    header.innerText = "Users signed up for newsletter"
+    adminProductBox.append(header)
+  
+    //hämtar ordrar
+    let getNews = await getUserNewsletters() 
+
+    //skapar table med titlar.
+    let myTable = document.createElement("table")
+    let titleTr = document.createElement("tr")
+    titleTr.align = "center"
+    let nameTitle = document.createElement("td")
+    let EmailTitle = document.createElement("td")
+   
+    nameTitle.innerHTML = "<h3>Name</h3>"
+    EmailTitle.innerHTML = "<h3>Email</h3>"
+   
     
+    titleTr.append(nameTitle, EmailTitle)
+    myTable.append(titleTr)
+    adminBox.append(myTable)
+
+    getNews.forEach(user => {
+      
+        for (let i = 0; i < user.length; i++) {
+            let newRow = document.createElement("tr")
+            newRow.align = "center"
+            let name = document.createElement("td")
+            let email = document.createElement("td")
+            email.innerText = user[i].email
+            name.innerText = user[i].name
+            newRow.append(name, email)
+            myTable.append(newRow)
+        }
+      
+    })  
+}

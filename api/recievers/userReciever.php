@@ -19,8 +19,12 @@ try {
             }else if(isset($_GET["getUsers"])){
                 
                 $ur = new UserRepo(); 
-               
                 echo json_encode($ur->getAllUsers());       
+            }
+
+            else if(isset($_GET["getNewsletter"])){   
+                $ur = new UserRepo(); 
+                echo json_encode($ur->getFromNewsletter());       
             }
 
              if(isset($_GET["checkUser"])) {

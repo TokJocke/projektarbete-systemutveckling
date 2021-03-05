@@ -26,9 +26,7 @@ function initSite() {
 }
 
 async function getUserInfo() {
-
     const response = await makeReq("./api/recievers/userReciever.php?user", "GET")
-	console.log(response)
 	return response
     
 }
@@ -137,9 +135,7 @@ async function renderUserInfo (){
 	//append everything
 	container.append(infoName,infoUserId,infoAddress,infoZip,infoEmail,infoPhoneNr, infoIsAdmin)
 	wrapper.append(header, container)
-    console.log("response" , info)
-    
-	
+   	
 }
 
 export async function currentUser () {
@@ -159,16 +155,13 @@ export async function currentUser () {
 async function checkIfAdmin (){
 	let check = await makeReq("./api/recievers/userReciever.php?check", "GET")
 	let result = check
-	console.log(result)
 	let infoIsAdmin = document.getElementById("infoIsAdmin")
 	infoIsAdmin.innerHTML = "Admin:" + " " + result
 	
 }
 // gets the current logged in users order history
 async function getCurrentUserOrder() {
-    const response = await makeReq("./api/recievers/orderReciever.php?user", "GET")
-    console.log(response)
-	
+    const response = await makeReq("./api/recievers/orderReciever.php?user", "GET")	
     return response
 }
 async function loadOldOrders() {
@@ -189,7 +182,6 @@ async function loadOldOrders() {
 		content.innerHTML = " "
 		return
 	}
-	console.log(getAllOrders)
 
     //skapar table med titlar.
     let myTable = document.createElement("table")
@@ -244,16 +236,12 @@ async function loadOldOrders() {
             checkbox.checked = true 
 			checkbox.type = "none"
 			checkbox.value = "Mottagen"
-			/* checkbox.style.width = "8vw"
-        	checkbox.style.height = "5vh"
-			checkbox.style.background = "#4CAF50" */
         }
 		
         recieved.append(checkbox)
         newRow.append(orderId, orderDate, shipped, recieved)
         myTable.append(newRow)
-        /* } */
-        
+          
     })  
 
 }
@@ -276,7 +264,6 @@ async function updateShippingStatus() {
     body.set("action", "pending")     
     
     const response = await makeReq("./api/recievers/orderReciever.php", "POST", body)
-    console.log(response)
     loadOldOrders()
     return response 
 }
@@ -284,7 +271,6 @@ async function updateShippingStatus() {
 async function checklogout() {
 	let logoutBtn = document.getElementById("logoutBtn")
 	const checkUser = await makeReq("./api/recievers/userReciever.php?checkUser", "GET")
-  	console.log(checkUser)
 	logoutBtn.addEventListener("click", logout)
 	  
 	if(checkUser === "NotLogged") {
@@ -296,7 +282,6 @@ async function logout() {
 	body = new FormData()
 	body.set("action", "logout")
 	const response = await makeReq("./api/recievers/userReciever.php", "POST", body)
-  	console.log(response)
 	window.location = "index.html"
 }
 
