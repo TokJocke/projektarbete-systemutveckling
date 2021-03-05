@@ -28,7 +28,6 @@ export async function makeReq(path, method, body) {
 
 export async function getAllCategorys() {
     const response = await makeReq("./api/recievers/categoryReciever.php", "GET")
-    console.log(response)
     return response
 }
 

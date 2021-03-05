@@ -213,5 +213,22 @@ function fetchNewsInfo(){
   $result = $this->db->fetchQuery($query);
   return $result;
 }
+// lista på alla som subscribar på newsletter
+function getFromNewsletter() {
+  $emailsArray = array();
+  $allEmails = $this->db->fetchQuery("SELECT newsletter.email, user.email, user.name, user.userId FROM newsletter INNER JOIN user ON newsletter.userId = user.userId"); 
+  $anotherEmails = $this->db->fetchQuery("SELECT email, name from newsletter"); 
+  array_push($emailsArray, $allEmails, $anotherEmails);
+  $emailsArray = $this->createUserList($emailsArray); 
+  return $emailsArray;
+}
+
+function createNewsList($array) {
+  $emailArray = array();
+  foreach ($array as $item) { 
+      array_push($emailArray, $item);
+  }
+  return $emailArray;
+}
 
 }

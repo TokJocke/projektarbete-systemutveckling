@@ -20,6 +20,7 @@ export function myAdminBox() {
     let adminOfferBoxBtn = document.createElement("button")
     let adminOrderBtn = document.createElement("button")
     let adminUserBtn = document.createElement("button")
+    let UserNewsletterBtn = document.createElement("button")
 
     adminBox.id = "adminProductBox"
     adminUppdateBoxBtn.className = "adminProductBoxBtn"
@@ -27,14 +28,16 @@ export function myAdminBox() {
     adminOfferBoxBtn.className = "adminProductBoxBtn"
     adminOrderBtn.className = "adminProductBoxBtn"
     adminUserBtn.className = "adminProductBoxBtn"
+    UserNewsletterBtn.className = "adminProductBoxBtn"
     
     adminUppdateBoxBtn.innerText = "Update"
     adminAddBoxBtn.innerText = "Add"
     adminOfferBoxBtn.innerText = "Offers"
     adminOrderBtn.innerText = "Mark Order"
     adminUserBtn.innerText = "User Admin"
+    UserNewsletterBtn.innerText = "User Newsletter"
 
-    adminProductWrapp.append(adminUppdateBoxBtn, adminAddBoxBtn, adminOfferBoxBtn, adminOrderBtn, adminUserBtn, adminBox)
+    adminProductWrapp.append(adminUppdateBoxBtn, adminAddBoxBtn, adminOfferBoxBtn, adminOrderBtn, adminUserBtn, UserNewsletterBtn, adminBox)
 
     adminUpdateProductPanel() 
  
@@ -57,7 +60,11 @@ export function myAdminBox() {
     
     adminUserBtn.addEventListener("click", () => {
         loadUsers()
-    }) 
+    })
+    
+    UserNewsletterBtn.addEventListener("click", () => {
+        loadNewsletterSigns()
+    })
 
     return adminProductWrapp
 }
@@ -744,4 +751,50 @@ async function updateUserStatus() {
     loadUsers()
     return response 
 }
+// funktion som listar nyhetsbrev subscribers
+async function getUserNewsletters() {
+    const response = await makeReq("./api/recievers/userReciever.php?getNewsletter", "GET")
+    return response
+}
+
+async function loadNewsletterSigns() {
+    let adminBox = document.getElementById("adminProductBox")
+    adminBox.innerHTML = ""
+    let header = document.createElement("h1")
+    header.align = "center"
+    header.innerText = "Users signed up for newsletter"
+    adminProductBox.append(header)
+  
+    //hämtar ordrar
+    let getNews = await getUserNewsletters() 
+
+    //skapar table med titlar.
+    let myTable = document.createElement("table")
+    let titleTr = document.createElement("tr")
+    titleTr.align = "center"
+    let nameTitle = document.createElement("td")
+    let EmailTitle = document.createElement("td")
+   
+    nameTitle.innerHTML = "<h3>Name</h3>"
+    EmailTitle.innerHTML = "<h3>Email</h3>"
+   
     
+    titleTr.append(nameTitle, EmailTitle)
+    myTable.append(titleTr)
+    adminBox.append(myTable)
+
+    getNews.forEach(user => {
+      
+        for (let i = 0; i < user.length; i++) {
+            let newRow = document.createElement("tr")
+            newRow.align = "center"
+            let name = document.createElement("td")
+            let email = document.createElement("td")
+            email.innerText = user[i].email
+            name.innerText = user[i].name
+            newRow.append(name, email)
+            myTable.append(newRow)
+        }
+      
+    })  
+}
