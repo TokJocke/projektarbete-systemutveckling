@@ -17,12 +17,23 @@ class OrderRepo
 
     function placeOrder($shippingId, $array)
     {
-        // hämtar cart
-        //$cart = $this->activeUserCart();
-        
-        
+        $userId = $_SESSION["user"];
         $productCart = $array[0];
         $offerCart = $array[1];
+
+        $orderDate = date("l jS \of F Y h:i:s A");
+
+        $query = ('
+        INSERT INTO orders (userId, orderDate, shippingId) 
+        VALUES (:userId, :orderDate, :shippingId)');
+        $entity = array(
+            ':userId' => $userId,
+            ':orderDate' => $orderDate,
+            ':shippingId' => $shippingId,
+        );
+        $this->db->runQuery($query, $entity);
+        
+       
 
         // gör en check på ifall unitsinstock är mindre än quantity
         if(!empty($productCart)) {
@@ -35,18 +46,7 @@ class OrderRepo
                     }
             } 
              //kontrollera ifall lagetstatus stämmer
-             $userId = $_SESSION["user"];
-             $orderDate = date("l jS \of F Y h:i:s A");
-    
-             $query = ('
-             INSERT INTO orders (userId, orderDate, shippingId) 
-             VALUES (:userId, :orderDate, :shippingId)');
-             $entity = array(
-                 ':userId' => $userId,
-                 ':orderDate' => $orderDate,
-                 ':shippingId' => $shippingId,
-             );
-             $this->db->runQuery($query, $entity);
+
              $this->turnCartToOrderItem($productCart);
             // return "ORDER SKICKAD";
              // foreach loop för alla cartitems,
@@ -55,19 +55,6 @@ class OrderRepo
         if(!empty($offerCart)) {
 
             $nyArray = array();
-
-            $userId = $_SESSION["user"];
-            $orderDate = date("l jS \of F Y h:i:s A");
-            $query = ('
-            INSERT INTO orders (userId, orderDate, shippingId) 
-            VALUES (:userId, :orderDate, :shippingId)');
-            $entity = array(
-                ':userId' => $userId,
-                ':orderDate' => $orderDate,
-                ':shippingId' => $shippingId,
-            );
-
-            $this->db->runQuery($query, $entity);
          
             foreach ($offerCart as $offer) {
                 $offerPrice = array();
@@ -98,7 +85,10 @@ class OrderRepo
             
      
         } 
-    $this->emptyCart($userId);  
+
+
+
+        $this->emptyCart($userId);  
     }
     
     
