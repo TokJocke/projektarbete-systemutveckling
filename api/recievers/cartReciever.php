@@ -44,7 +44,16 @@
                     // action = add
                 } else if ($_POST["action"] == "add") {
                     echo json_encode($cr->addProductToCart($userId, $productId));
+                } else if ($_POST["action"] == "addOffer") {
+                   
+                    $offer = json_decode($_POST["offer"]);
+                    $offerName = $offer[0][0]->offerName;
+                        /* $userId, $offerName, $quantity */
+                    echo json_encode($cr->addOfferToCart((int)$userId, $offerName));
+                    //echo json_encode($offerName);
+
                 }
+                
             }
 
 

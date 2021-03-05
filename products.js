@@ -36,7 +36,7 @@ export async function getAllProdsInOffer(name) {
     return response
 }
 
-async function testing(name) {
+export async function testing(name) {
 
         const response = await makeReq("./api/recievers/offerReciever.php?testing=" + name,  "GET")
         return response
@@ -176,7 +176,8 @@ async function update (change){
     }
     let thisProductId = this.productId
     
-    
+    console.log("update, ", this)
+
     //skapar en body
     let body = new FormData()
     
@@ -198,6 +199,7 @@ async function update (change){
     if(userCheck === "Logged") {
         let response = await makeReq("./api/recievers/cartReciever.php?count", "GET",)
         cartdiv.innerHTML = response[0].antal
+
     }
   
     else {
@@ -213,6 +215,7 @@ async function update (change){
             let offerDiv = document.createElement("div")
             let offerName = document.createElement("h2")   
             
+            offerDiv.className = "productBoxWrapper"
             createProdFromOffer(offer.offerName, offerDiv)
 
             offerName.innerText = offer.offerName
@@ -225,16 +228,62 @@ async function update (change){
 
     async function createProdFromOffer(param, parent) {
         let allProdsFromOffer = await testing(param)
-        let priceArr = []
-        
+
+        let totalPrice = []
+        let discount 
+
         
         allProdsFromOffer.forEach(product => {
             let name = document.createElement("p")
             name.innerText = product.productName + " x " + product.quantity
             
+
+            totalPrice.push(product.price * product.quantity)
+            discount = product.discount / 100
+            
+
             parent.append(name)
         });
+        let calculatedTotal = totalPrice.reduce((total, currentValue)=>{
+            return total + currentValue})
+        let discountTotal = Math.floor(calculatedTotal - (calculatedTotal * discount))
+        let renderTotalPrice = document.createElement("h2")
+        let renderDiscountPrice = document.createElement("h2")
+        let addOfferToCartBtn = document.createElement("button")
+        addOfferToCartBtn.className = "addToCartBtn"
+        
+        renderTotalPrice.id="renderTotalPrice"
+        renderTotalPrice.innerText = calculatedTotal + " kr"
+        renderTotalPrice.style.textDecoration = "line-through"
+        renderDiscountPrice.id="renderDiscountPrice"
+        renderDiscountPrice.innerText = discountTotal + " kr"
+        renderDiscountPrice.style.color = "red"
+        addOfferToCartBtn.innerText = "Lägg till i kundvagn"
 
+        let pricesArray = []
+
+        pricesArray.push(calculatedTotal, discountTotal)
+        
+        addOfferToCartBtn.addEventListener("click", addOffer.bind(allProdsFromOffer, pricesArray))
+
+        parent.append(renderTotalPrice, renderDiscountPrice, addOfferToCartBtn)
+    
     }
 
+
+
+    async function addOffer(pricesArray) {
+        let offer = []
+        offer.push(this, pricesArray)
+        console.log(offer)
+
+        let body = new FormData()
+        body.append("action", "addOffer")
+        body.append("offer", JSON.stringify(offer))
+        
+        const response = await makeReq("./api/recievers/cartReciever.php", "POST", body)
+        console.log(response)
+        amountInCart()
+  
+    }
 

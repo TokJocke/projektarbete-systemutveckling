@@ -342,20 +342,20 @@ async function adminOfferPanel() {
     offerName.id = "newOfferName"
     offerDiscount.id = "offerDiscount"
     let addToOfferBtn = document.createElement("button")
-    let editOfferBtn = document.createElement("button")
-    let confirmBtn = document.createElement("button")
+/*     let editOfferBtn = document.createElement("button")
+ */    let confirmBtn = document.createElement("button")
 
-    editOfferBtn.addEventListener("click", adminEditOfferPanel)
-
+/*     editOfferBtn.addEventListener("click", adminEditOfferPanel)
+ */
    confirmBtn.addEventListener("click", addProductsToOffer)                                /* WORKING HERE!!!! */
     
     addToOfferBtn.innerText = "Add products to offer"
-    editOfferBtn.innerText = "Edit Offer"
-    confirmBtn.innerText = "Create Offer"
+/*     editOfferBtn.innerText = "Edit Offer"
+ */    confirmBtn.innerText = "Create Offer"
 
 
     confirmDiv.append(confirmBtn, offerDiscount, offerName)
-    offerButtonDiv.append(addToOfferBtn, editOfferBtn)
+    offerButtonDiv.append(addToOfferBtn, /* editOfferBtn */)
     optionDiv.append(offerButtonDiv)
     titleTr.append(productIdTitleTd, productNameTitleTd, productPriceTitleTd, productInStockTitleTd, quantityTitleTd, addToOfferTitleTd)
     myTable.append(titleTr)
@@ -398,8 +398,8 @@ async function adminOfferPanel() {
 }
 
 
-//Panel for Edeting offers
-async function adminEditOfferPanel(value) {
+//Panel for Edeting offers      Blev inte klar då hela offers blev omgjord i sista minut
+/*  async function adminEditOfferPanel(value) {
     let allOffers = await getAllOffers() 
     let adminBox = document.getElementById("adminProductBox")
     let myTable = document.createElement("table")
@@ -431,7 +431,7 @@ async function adminEditOfferPanel(value) {
     adminBox.append(optionDiv, myTable)
 
     renderEditOfferTable(offerDropDown.value)                                                      //MÅÅÅÅÅÅÅSSTEEE FIIIIXAAAA EDIT RENDER
-}
+} 
 
 async function dropDownValue() {
     let sortedByOffer = await getAllProdsInOffer(this.value)
@@ -494,7 +494,7 @@ async function renderEditOfferTable(offerName) {                                
     }) 
     myTable.append(buttonDiv)
 }
-
+ */
 
 async function addProductsToOffer() {                                                                               //WORKING HEEEEERE
     let offerCheck = document.getElementsByClassName("offerCheck")
